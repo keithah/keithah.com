@@ -1,0 +1,9 @@
+{
+  "name": "Stint",
+  "description": "Self-hosted coding activity and AI telemetry console for personal engineering with ingestion, stats, goals, and a dashboard.",
+  "repo": "https://github.com/keithah/stint",
+  "lang": "Go / TypeScript",
+  "status": "active",
+  "tags": ["go", "typescript", "telemetry", "analytics"],
+  "isProduct": false
+}

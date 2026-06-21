@@ -1,9 +1,0 @@
-{
-  "name": "HADMtime",
-  "description": "Self-hosted WakaTime-compatible coding activity tracker with ingestion, auth, stats jobs, summaries, goals, and a dashboard.",
-  "repo": "https://github.com/keithah/hadmtime",
-  "lang": "Go / TypeScript",
-  "status": "active",
-  "tags": ["go", "typescript", "wakatime", "analytics"],
-  "isProduct": false
-}
