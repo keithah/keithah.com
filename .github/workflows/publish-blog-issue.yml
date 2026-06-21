@@ -1,0 +1,33 @@
+name: Publish Blog Issue
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: Issue number to publish
+        required: true
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: blog-issue-${{ github.event.issue.number || inputs.issue }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.label.name == 'publish' && contains(github.event.issue.labels.*.name, 'blog')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+      - name: Publish post from issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue }}
+        run: node scripts/publish-blog-issue.mjs

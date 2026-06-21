@@ -1,0 +1,61 @@
+name: Blog post
+description: Draft or publish a blog post from a GitHub Issue
+title: "Blog: "
+labels: ["blog"]
+body:
+  - type: input
+    id: post-title
+    attributes:
+      label: Post title
+      description: The public title shown on the site.
+      placeholder: My Post Title
+    validations:
+      required: true
+  - type: input
+    id: slug
+    attributes:
+      label: Slug
+      description: Optional. Lowercase URL slug; leave blank to derive it from the title.
+      placeholder: my-post-title
+    validations:
+      required: false
+  - type: input
+    id: date
+    attributes:
+      label: Date
+      description: Optional. Use YYYY-MM-DD; leave blank for today.
+      placeholder: "2026-06-21"
+    validations:
+      required: false
+  - type: input
+    id: description
+    attributes:
+      label: Description
+      description: Optional RSS/meta summary.
+      placeholder: Short summary for feeds and previews.
+    validations:
+      required: false
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: Optional comma-separated tags.
+      placeholder: streaming, home automation
+    validations:
+      required: false
+  - type: input
+    id: products
+    attributes:
+      label: Products
+      description: Optional comma-separated product slugs for product changelogs.
+      placeholder: pingscope, overhear
+    validations:
+      required: false
+  - type: textarea
+    id: body
+    attributes:
+      label: Body
+      description: Write the post in Markdown.
+      placeholder: Write the post here.
+    validations:
+      required: true

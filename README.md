@@ -26,22 +26,14 @@ public/
   CNAME           ← keithah.com
 ```
 
-## Writing a post (mobile)
+## Writing a post
 
-1. Create `src/content/posts/my-post-title.md` in the GitHub app
-2. Add frontmatter:
-   ```yaml
-   ---
-   title: My Post Title
-   date: 2025-06-20
-   description: Optional summary for RSS
-tags: [streaming, home automation]
-   products: [pingscope]   # links post into /pingscope changelog — omit if not product-related
-   draft: false
-   ---
-   ```
-3. Write markdown below the `---`
-4. Commit to main → deploys in ~45s
+1. Open a new GitHub issue and choose the `Blog post` template.
+2. Fill out the title, optional slug/date/description/tags/products, and Markdown body.
+3. Leave the issue open while it is a draft.
+4. Add the `publish` label when it is ready.
+
+The `Publish Blog Issue` workflow converts the issue into `src/content/posts/[slug].md`, commits it to `main`, closes the issue, and the Pages deploy workflow publishes the site.
 
 ## Adding a project
 
