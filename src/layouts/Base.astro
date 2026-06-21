@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+interface Props {
+  title?: string;
+  description?: string;
+  activeNav?: string;
+}
+const { title = 'Keith Herrington', description = 'Technical Product @ TuneIn · Exec Director, Kodi Foundation · aspirational slopcoder.', activeNav } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  <link rel="alternate" type="application/rss+xml" title="Keith Herrington" href="/rss.xml" />
+  <title>{title === 'Keith Herrington' ? title : `${title} · keithah`}</title>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">~/<span>keithah</span></a>
+    <div class="nav-links">
+      <a href="/posts" class:list={[{ active: activeNav === 'posts' }]}>posts</a>
+      <a href="/projects" class:list={[{ active: activeNav === 'projects' }]}>projects</a>
+      <a href="/products" class:list={[{ active: activeNav === 'products' }]}>products</a>
+      <a href="/about" class:list={[{ active: activeNav === 'about' }]}>about</a>
+      <a href="/rss.xml">rss</a>
+    </div>
+  </nav>
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <span class="footer-l">keithah.com · astro · <a href="https://github.com/keithah/keithah.com">src</a></span>
+    <div class="footer-r">
+      <a href="https://github.com/keithah">github</a>
+      <a href="https://keithah.substack.com">substack</a>
+      <a href="/rss.xml">rss</a>
+      <a href="https://matrix.to/#/@keithah:beeper.com">matrix</a>
+    </div>
+  </footer>
+</body>
+</html>

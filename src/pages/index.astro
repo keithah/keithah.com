@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts    = await getCollection('posts',    p => !p.data.draft);
+const projects = await getCollection('projects');
+const products = await getCollection('products');
+
+const recentPosts = posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0,5);
+---
+<Base>
+  <div class="sh" style="margin-bottom:4px">$ whoami</div>
+  <h1 style="font-size:22px;font-weight:500;margin-bottom:8px;letter-spacing:-0.3px">Keith Herrington</h1>
+  <p style="font-size:12px;color:var(--dim);line-height:1.75;margin-bottom:16px;max-width:520px">
+    <span style="color:var(--muted)">Technical Product @ TuneIn</span>
+    <span style="color:var(--dimmer)"> &middot; </span>
+    <span style="color:var(--muted)">Exec Director, Kodi Foundation</span>
+    <span style="color:var(--dimmer)"> &middot; </span>
+    <span style="color:var(--muted)">aspirational slopcoder.</span><br />
+    Building tools for streaming infra, open source media, and analysis.
+  </p>
+
+  <div class="tags" style="margin-bottom:32px">
+    <a class="tag" href="https://plex.tv" target="_blank" rel="noopener">streaming</a>
+    <a class="tag hl" href="https://homebridge.io" target="_blank" rel="noopener">home automation</a>
+    <a class="tag" href="https://asterisk.org" target="_blank" rel="noopener">telecom</a>
+    <a class="tag hl" href="https://vivalahiphop.com" target="_blank" rel="noopener">hip hop</a>
+    <a class="tag" href="https://thedailychurnpodcast.com" target="_blank" rel="noopener">travel</a>
+    <a class="tag hl" href="https://matrix.to/#/@keithah:beeper.com" target="_blank" rel="noopener">matrix</a>
+  </div>
+
+  {recentPosts.length > 0 && (
+    <>
+      <div class="sh">recent posts</div>
+      <div class="post-list" style="margin-bottom:32px">
+        {recentPosts.map(p => (
+          <div class="post-row">
+            <span class="post-date">{p.data.date.toISOString().slice(0,10)}</span>
+            <a href={`/posts/${p.slug}`} class="post-title">{p.data.title}</a>
+            <span class="pill pill-post">post</span>
+          </div>
+        ))}
+      </div>
+    </>
+  )}
+
+  <hr />
+
+  <div class="sh">projects &amp; products</div>
+  <div class="card-grid" style="margin-bottom:8px">
+    {projects.map(p => (
+      <div class={`card ${p.data.isProduct ? 'is-product' : ''}`}>
+        <div class="card-top">
+          <span class="card-name">{p.data.name}</span>
+          <div class="card-meta">
+            {p.data.isProduct && <span class="card-product-pill">product</span>}
+            <span class="card-lang">{p.data.lang}</span>
+          </div>
+        </div>
+        <p class="card-desc">{p.data.description}</p>
+        <div class="card-links">
+          <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>
+          {p.data.isProduct && <a href={`/${p.id.replace('.json','')}`} class="prod">keithah.com/{p.id.replace('.json','')} &rarr;</a>}
+        </div>
+      </div>
+    ))}
+  </div>
+  <p style="font-size:10px;color:var(--dimmer);margin-bottom:28px">green border = has a product page at keithah.com/[name]</p>
+
+  <hr />
+
+  <div class="status-row">
+    {projects.map(p => (
+      <div class="status">
+        <span class={`dot ${p.data.status === 'active' || p.data.status === 'stable' ? '' : p.data.status === 'beta' ? 'amber' : 'dim'}`}></span>
+        {p.data.name.toLowerCase()} &middot; {p.data.status}
+      </div>
+    ))}
+  </div>
+</Base>

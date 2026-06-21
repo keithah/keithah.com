@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map(p => ({ params: { slug: p.slug }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const { Content } = await product.render();
+const d = product.data;
+
+// Pull related posts
+const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(product.slug));
+posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title={d.name} description={d.tagline}>
+  <nav style="font-size:10px;color:var(--dimmer);margin-bottom:20px">
+    <a href="/" style="color:var(--dimmer)">keithah.com</a>
+    <span style="margin:0 6px">/</span>
+    <span style="color:var(--green)">{product.slug}</span>
+    <span style="float:right;display:flex;gap:16px">
+      <a href="#docs">docs</a>
+      <a href="#changelog">changelog</a>
+      <a href="#support">support</a>
+      <a href={d.repo} target="_blank" rel="noopener">github</a>
+    </span>
+  </nav>
+
+  <div style="margin-bottom:24px">
+    <h1 class="product-name">{d.name}</h1>
+    <p class="product-tagline">{d.tagline}</p>
+    <div class="product-badges">
+      {d.platforms.map(p => <span class="product-badge hl">{p}</span>)}
+      <span class="product-badge">{d.lang}</span>
+      <span class="product-badge">{d.version}</span>
+      <span class="product-badge">MIT</span>
+    </div>
+  </div>
+
+  <hr />
+
+  <div id="docs" class="prose" style="margin-bottom:28px">
+    <Content />
+  </div>
+
+  {posts.length > 0 && (
+    <>
+      <hr />
+      <div id="changelog">
+        <div class="sh" style="margin-bottom:12px">changelog / related posts</div>
+        <div class="changelog">
+          {posts.map(p => (
+            <div class="changelog-row">
+              <span class="cl-date">{p.data.date.toISOString().slice(0,10)}</span>
+              <a href={`/posts/${p.slug}`} class="cl-msg" style="color:var(--muted)">{p.data.title}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )}
+
+  <hr />
+
+  <div id="support">
+    <div class="sh" style="margin-bottom:12px">support</div>
+    <div class="support-box">
+      <h3>open a ticket</h3>
+      <p>Submitting sends a message directly to Keith. Include your OS version and what you were doing when it broke.</p>
+      <form class="form-stack" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <input type="hidden" name="product" value={d.name} />
+        <input type="text" name="name" placeholder="your name or github handle" required />
+        <input type="email" name="email" placeholder="email (optional, for follow-up)" />
+        <input type="text" name="version" placeholder={`version (current: ${d.version})`} />
+        <textarea name="message" placeholder="what's broken? OS version, steps to reproduce..."></textarea>
+        <button type="submit" class="btn">send ticket &rarr;</button>
+      </form>
+    </div>
+  </div>
+</Base>

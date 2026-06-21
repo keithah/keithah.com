@@ -1,0 +1,9 @@
+{
+  "name": "Sounding",
+  "description": "Native Swift stream monitor for Icecast and HLS with ad markers, transcripts, speaker diarization, search, and SQLite history.",
+  "repo": "https://github.com/keithah/sounding",
+  "lang": "Swift",
+  "status": "active",
+  "tags": ["swift", "streaming", "hls", "transcription"],
+  "isProduct": false
+}

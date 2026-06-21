@@ -1,0 +1,9 @@
+{
+  "name": "PingScope",
+  "description": "macOS/iOS network latency monitor. Starlink gRPC dish telemetry, fault classification, multi-interface breakdown.",
+  "repo": "https://github.com/keithah/pingscope",
+  "lang": "Swift 6.2",
+  "status": "beta",
+  "tags": ["swift", "networking", "starlink", "macos", "ios"],
+  "isProduct": true
+}

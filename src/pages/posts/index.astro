@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('posts', p => !p.data.draft))
+  .sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Base title="Posts" activeNav="posts">
+  <div class="sh" style="margin-bottom:4px">$ ls posts/</div>
+  <h1 style="font-size:20px;font-weight:500;margin-bottom:24px">Posts</h1>
+  {posts.length === 0 ? (
+    <p style="font-size:12px;color:var(--dim)">Nothing here yet. Check back soon.</p>
+  ) : (
+    <div class="post-list">
+      {posts.map(p => (
+        <div class="post-row">
+          <span class="post-date">{p.data.date.toISOString().slice(0,10)}</span>
+          <a href={`/posts/${p.slug}`} class="post-title">{p.data.title}</a>
+          {p.data.products.map(prod => <span class="pill pill-product">{prod}</span>)}
+        </div>
+      ))}
+    </div>
+  )}
+</Base>

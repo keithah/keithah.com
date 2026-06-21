@@ -1,0 +1,9 @@
+{
+  "name": "tidemark",
+  "description": "CLI for detecting SCTE-35/ID3/ICY ad markers in live broadcast streams.",
+  "repo": "https://github.com/keithah/tidemark",
+  "lang": "Go",
+  "status": "stable",
+  "tags": ["go", "streaming", "hls", "scte35", "broadcast"],
+  "isProduct": false
+}

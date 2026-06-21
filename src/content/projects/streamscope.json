@@ -1,0 +1,9 @@
+{
+  "name": "StreamScope",
+  "description": "Browser-based HLS stream intelligence for manifest logs, ad markers, anomalies, playback, and shareable session reports.",
+  "repo": "https://github.com/keithah/streamscope",
+  "lang": "TypeScript",
+  "status": "stable",
+  "tags": ["typescript", "streaming", "hls", "scte35"],
+  "isProduct": false
+}
