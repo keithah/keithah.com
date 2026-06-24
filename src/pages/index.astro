@@ -4,21 +4,21 @@ import { getCollection } from 'astro:content';
 
 const posts    = await getCollection('posts',    p => !p.data.draft);
 const projects = await getCollection('projects');
-const products = await getCollection('products');
 
 const recentPosts = posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0,5);
+
+// Featured work: products first, then by status priority. Show 4 max.
+const rank = { active: 0, beta: 1, stable: 2, internal: 3, archived: 4 };
+const featured = [...projects].sort((a, b) => {
+  if (a.data.isProduct !== b.data.isProduct) return a.data.isProduct ? -1 : 1;
+  return (rank[a.data.status] ?? 9) - (rank[b.data.status] ?? 9);
+}).slice(0, 4);
 ---
 <Base>
   <div class="sh" style="margin-bottom:4px">$ whoami</div>
-  <h1 style="font-size:22px;font-weight:500;margin-bottom:8px;letter-spacing:-0.3px">Keith Herrington</h1>
-  <p style="font-size:12px;color:var(--dim);line-height:1.75;margin-bottom:16px;max-width:520px">
-    <span style="color:var(--muted)">Technical Product @ TuneIn</span>
-    <span style="color:var(--dimmer)"> &middot; </span>
-    <span style="color:var(--muted)">Exec Director, Kodi Foundation</span>
-    <span style="color:var(--dimmer)"> &middot; </span>
-    <span style="color:var(--muted)">aspirational slopcoder.</span><br />
-    Building tools for streaming infra, open source media, and analysis.
-  </p>
+  <h1 class="hero-name">Keith Herrington</h1>
+  <p class="hero-bio">I build tools for streaming infrastructure, open-source media, and stream analysis.</p>
+  <p class="hero-role">Technical PM &middot; open-source builder &middot; Executive Director, Kodi Foundation</p>
 
   <div class="tags" style="margin-bottom:32px">
     <a class="tag" href="https://plex.tv" target="_blank" rel="noopener">streaming</a>
@@ -46,26 +46,26 @@ const recentPosts = posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valu
 
   <hr />
 
-  <div class="sh">projects &amp; products</div>
+  <div class="sh">featured work</div>
   <div class="card-grid" style="margin-bottom:8px">
-    {projects.map(p => (
+    {featured.map(p => (
       <div class={`card ${p.data.isProduct ? 'is-product' : ''}`}>
         <div class="card-top">
           <span class="card-name">{p.data.name}</span>
           <div class="card-meta">
-            {p.data.isProduct && <span class="card-product-pill">product</span>}
+            {p.data.isProduct && <span class="card-product-pill">app</span>}
             <span class="card-lang">{p.data.lang}</span>
           </div>
         </div>
         <p class="card-desc">{p.data.description}</p>
         <div class="card-links">
           <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>
-          {p.data.isProduct && <a href={`/${p.id.replace('.json','')}`} class="prod">keithah.com/{p.id.replace('.json','')} &rarr;</a>}
+          {p.data.isProduct && <a href={`/products/${p.id.replace('.json','')}`} class="prod">product page &rarr;</a>}
         </div>
       </div>
     ))}
   </div>
-  <p style="font-size:10px;color:var(--dimmer);margin-bottom:28px">green border = has a product page at keithah.com/[name]</p>
+  <p style="margin-bottom:28px"><a href="/work" class="see-all">&rarr; see all work</a></p>
 
   <hr />
 

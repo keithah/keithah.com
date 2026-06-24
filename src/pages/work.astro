@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+
+// Sort: products first, then by status priority
+const rank = { active: 0, beta: 1, stable: 2, internal: 3, archived: 4 };
+const items = projects.sort((a, b) => {
+  if (a.data.isProduct !== b.data.isProduct) return a.data.isProduct ? -1 : 1;
+  return (rank[a.data.status] ?? 9) - (rank[b.data.status] ?? 9);
+});
+
+const langTokens = (lang) => ['go', 'swift', 'typescript'].filter(l => lang.toLowerCase().includes(l));
+
+const filters = [
+  { key: 'all',        label: 'all' },
+  { key: 'apps',       label: 'apps' },
+  { key: 'tools',      label: 'tools' },
+  { key: 'go',         label: 'go' },
+  { key: 'swift',      label: 'swift' },
+  { key: 'typescript', label: 'typescript' },
+];
+---
+<Base title="Work" activeNav="work">
+  <div class="sh" style="margin-bottom:4px">$ ls work/</div>
+  <h1 class="page-title">Work</h1>
+
+  <div class="filter-bar">
+    {filters.map(f => (
+      <button class="filter-btn" data-filter={f.key} class:list={[{ active: f.key === 'all' }]}>{f.label}</button>
+    ))}
+  </div>
+
+  <div class="card-grid" id="work-grid">
+    {items.map(p => {
+      const slug = p.id.replace('.json', '');
+      return (
+        <div class={`card ${p.data.isProduct ? 'is-product' : ''}`}
+             data-type={p.data.isProduct ? 'apps' : 'tools'}
+             data-langs={langTokens(p.data.lang).join(' ')}>
+          <div class="card-top">
+            <span class="card-name">{p.data.name}</span>
+            <div class="card-meta">
+              {p.data.isProduct && <span class="card-product-pill">app</span>}
+              <span class="card-lang">{p.data.lang}</span>
+            </div>
+          </div>
+          <p class="card-desc">{p.data.description}</p>
+          <div class="card-links">
+            <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>
+            {p.data.isProduct && <a href={`/products/${slug}`} class="prod">product page &rarr;</a>}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <p style="font-size:10px;color:var(--dimmer);margin-top:12px">green border + “app” badge = has a product page</p>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('#work-grid .card');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      cards.forEach(card => {
+        const type = card.getAttribute('data-type');
+        const langs = (card.getAttribute('data-langs') || '').split(' ');
+        const match = filter === 'all' || type === filter || langs.includes(filter);
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>

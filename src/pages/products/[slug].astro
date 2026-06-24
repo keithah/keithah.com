@@ -28,14 +28,19 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     </span>
   </nav>
 
-  <div style="margin-bottom:24px">
-    <h1 class="product-name">{d.name}</h1>
+  <div class="product-hero">
+    <div class="product-hero-head">
+      <h1 class="product-name">{d.name}</h1>
+      <span class="product-version">{d.version}</span>
+    </div>
     <p class="product-tagline">{d.tagline}</p>
-    <div class="product-badges">
-      {d.platforms.map(p => <span class="product-badge hl">{p}</span>)}
-      <span class="product-badge">{d.lang}</span>
-      <span class="product-badge">{d.version}</span>
-      <span class="product-badge">MIT</span>
+    <div class="product-cta-row">
+      <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>
+      <span class="product-meta-row">
+        {d.platforms.join(' / ')}
+        <span class="product-meta-sep">&middot;</span>{d.lang}
+        <span class="product-meta-sep">&middot;</span>MIT
+      </span>
     </div>
   </div>
 
@@ -67,16 +72,9 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
   <div id="support">
     <div class="sh" style="margin-bottom:12px">support</div>
     <div class="support-box">
-      <h3>open a ticket</h3>
-      <p>Submitting sends a message directly to Keith. Include your OS version and what you were doing when it broke.</p>
-      <form class="form-stack" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <input type="hidden" name="product" value={d.name} />
-        <input type="text" name="name" placeholder="your name or github handle" required />
-        <input type="email" name="email" placeholder="email (optional, for follow-up)" />
-        <input type="text" name="version" placeholder={`version (current: ${d.version})`} />
-        <textarea name="message" placeholder="what's broken? OS version, steps to reproduce..."></textarea>
-        <button type="submit" class="btn">send ticket &rarr;</button>
-      </form>
+      <h3>open an issue</h3>
+      <p>Found a bug or have a request? Open an issue on GitHub. Include your OS version and what you were doing when it broke.</p>
+      <a href={`${d.repo}/issues/new`} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
     </div>
   </div>
 </Base>

@@ -23,8 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <a href="/" class="nav-logo">~/<span>keithah</span></a>
     <div class="nav-links">
       <a href="/posts" class:list={[{ active: activeNav === 'posts' }]}>posts</a>
-      <a href="/projects" class:list={[{ active: activeNav === 'projects' }]}>projects</a>
-      <a href="/products" class:list={[{ active: activeNav === 'products' }]}>products</a>
+      <a href="/work" class:list={[{ active: activeNav === 'work' }]}>work</a>
       <a href="/about" class:list={[{ active: activeNav === 'about' }]}>about</a>
       <a href="/rss.xml">rss</a>
     </div>
