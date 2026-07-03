@@ -259,6 +259,30 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   line-height: 1.7;
 }
 
+.ps-tease {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 8px 10px;
+  border: 0.5px solid rgba(89, 219, 104, 0.34);
+  border-radius: 999px;
+  background: rgba(89, 219, 104, 0.08);
+}
+
+.ps-tease span {
+  color: var(--ps-green);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ps-tease strong {
+  color: var(--ps-ink);
+  font-size: 10px;
+  font-weight: 500;
+}
+
 .ps-actions {
   display: flex;
   flex-wrap: wrap;
@@ -375,7 +399,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
 .ps-feature-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
 
@@ -408,6 +432,12 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   color: var(--ps-muted);
   font-size: 12px;
   line-height: 1.6;
+}
+
+.ps-card-ios {
+  background:
+    linear-gradient(160deg, rgba(89, 219, 104, 0.12), rgba(47, 134, 255, 0.06)),
+    rgba(255, 255, 255, 0.025);
 }
 
 .ps-overlay-showcase {
