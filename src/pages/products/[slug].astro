@@ -10,12 +10,187 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 const { Content } = await product.render();
 const d = product.data;
+const isPingScope = product.slug === 'pingscope';
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(product.slug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <Base title={d.name} description={d.tagline}>
+  {isPingScope ? (
+    <div class="ps-page">
+      <nav class="ps-subnav" aria-label="PingScope sections">
+        <a href="/" class="ps-breadcrumb">keithah.com</a>
+        <span>/</span>
+        <span>pingscope</span>
+        <span class="ps-subnav-links">
+          <a href="#features">features</a>
+          <a href="#download">download</a>
+          <a href="#support">support</a>
+          <a href={d.repo} target="_blank" rel="noopener">github</a>
+        </span>
+      </nav>
+
+      <section class="ps-hero" aria-labelledby="pingscope-title">
+        <div class="ps-hero-copy">
+          <p class="ps-eyebrow">Native macOS network visibility</p>
+          <div class="ps-title-row">
+            <img src="/products/pingscope/app-icon.png" alt="" width="54" height="54" />
+            <h1 id="pingscope-title">PingScope</h1>
+          </div>
+          <p class="ps-lede">A menu-bar latency monitor that tells you whether the problem is local, upstream, or the destination before you start guessing.</p>
+          <div class="ps-actions">
+            <a class="ps-btn ps-primary" href="https://apps.apple.com/us/app/pingscope-keep-connected/id6759278369?mt=12">Mac App Store</a>
+            <a class="ps-btn" id="ps-download" href="https://github.com/keithah/pingscope/releases/download/v0.2.1/PingScope-v0.2.1.dmg">Download 0.2.1</a>
+            <a class="ps-btn ps-ghost" href="#support">Support</a>
+          </div>
+          <p class="ps-release-note" id="ps-release-note">Latest Developer ID release: v0.2.1. This link updates from GitHub when a newer DMG is published.</p>
+        </div>
+        <div class="ps-shot-wrap">
+          <img class="ps-shot" src="/products/pingscope/popover-current.png" alt="PingScope popover showing all hosts, current latency, graph, and recent samples." />
+          <div class="ps-float ps-float-top" aria-hidden="true">
+            <strong>4ms</strong>
+            <span>Healthy</span>
+          </div>
+          <div class="ps-float ps-float-bottom" aria-hidden="true">
+            <strong>3 enabled hosts</strong>
+            <span>Cloudflare, Google, and the default gateway shown together.</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="ps-section" aria-labelledby="ps-features-title">
+        <div class="ps-section-head">
+          <h2 id="ps-features-title">Built for the moment the network feels wrong.</h2>
+          <p>PingScope stays quiet in the menu bar until you need detail. Open the popover for live history, switch hosts, or pin the overlay during calls and debugging sessions.</p>
+        </div>
+        <div class="ps-feature-grid">
+          <article class="ps-card">
+            <span>01</span>
+            <h3>Always visible</h3>
+            <p>A compact status dot and latency readout live in the menu bar, with a floating overlay when a connection needs closer watching.</p>
+          </article>
+          <article class="ps-card">
+            <span>02</span>
+            <h3>Failure context</h3>
+            <p>Monitor gateway and remote hosts together to tell the difference between Wi-Fi, router, ISP, and destination trouble.</p>
+          </article>
+          <article class="ps-card">
+            <span>03</span>
+            <h3>Local first</h3>
+            <p>Settings, retained history, exports, and widget snapshots stay on your Mac. Developer ID builds support Sparkle updates.</p>
+          </article>
+        </div>
+        <div class="ps-overlay-showcase">
+          <div>
+            <p class="ps-kicker">Overlay mode</p>
+            <h3>Pin the signal when the connection matters.</h3>
+            <p>Keep PingScope floating above calls, uploads, games, and terminal sessions. The overlay stays compact while preserving the latency, health, and loss signals that matter in the moment.</p>
+          </div>
+          <img src="/products/pingscope/overlay.png" alt="PingScope floating overlay with a latency graph, current status, and packet-loss summary." />
+        </div>
+      </section>
+
+      <section id="download" class="ps-section" aria-labelledby="ps-download-title">
+        <div class="ps-download-panel">
+          <div>
+            <h2 id="ps-download-title">Download the current macOS build.</h2>
+            <p>The App Store build is the simplest install path. The Developer ID DMG is loaded from the latest public GitHub release and has a current static fallback.</p>
+            <div class="ps-actions">
+              <a class="ps-btn ps-primary" href="https://apps.apple.com/us/app/pingscope-keep-connected/id6759278369?mt=12">Open App Store</a>
+              <a class="ps-btn" id="ps-download-secondary" href="https://github.com/keithah/pingscope/releases/download/v0.2.1/PingScope-v0.2.1.dmg">Download 0.2.1 DMG</a>
+            </div>
+          </div>
+          <dl class="ps-release-box" aria-live="polite">
+            <dt>Version</dt>
+            <dd id="ps-release-version">v0.2.1</dd>
+            <dt>Published</dt>
+            <dd id="ps-release-date">June 29, 2026</dd>
+            <dt>Package</dt>
+            <dd id="ps-release-asset">PingScope-v0.2.1.dmg</dd>
+            <dt>Notes</dt>
+            <dd><a id="ps-release-link" href="https://github.com/keithah/pingscope/releases/tag/v0.2.1">release notes</a></dd>
+          </dl>
+        </div>
+      </section>
+
+      <section id="support" class="ps-section" aria-labelledby="ps-support-title">
+        <div class="ps-support-grid">
+          <div>
+            <h2 id="ps-support-title">Support that starts with useful details.</h2>
+            <p>Send a bug report or request to <a href="mailto:keith+pingscope@hadm.net">keith+pingscope@hadm.net</a>. The form opens your email app with the fields filled in.</p>
+          </div>
+          <form class="ps-form" id="ps-support-form">
+            <input type="text" name="name" placeholder="your name" autocomplete="name" />
+            <input type="email" name="email" placeholder="email for follow-up" autocomplete="email" />
+            <input type="text" name="version" placeholder="PingScope version, if known" />
+            <select name="topic">
+              <option>Bug report</option>
+              <option>Feature request</option>
+              <option>Install or update help</option>
+              <option>Other</option>
+            </select>
+            <textarea name="message" placeholder="what happened? Include macOS version, network type, and what you were doing."></textarea>
+            <button class="ps-btn ps-primary" type="submit">Email support</button>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <script is:inline>
+      const releaseAPI = 'https://api.github.com/repos/keithah/pingscope/releases/latest';
+      const downloadButtons = [
+        document.getElementById('ps-download'),
+        document.getElementById('ps-download-secondary')
+      ];
+      const versionText = (tagName) => tagName.replace(/^v/i, '');
+      const releaseDate = (value) => new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      }).format(new Date(value));
+
+      fetch(releaseAPI, { headers: { Accept: 'application/vnd.github+json' } })
+        .then((response) => {
+          if (!response.ok) throw new Error('release lookup failed');
+          return response.json();
+        })
+        .then((release) => {
+          const dmg = release.assets.find((asset) => asset.name.endsWith('.dmg'));
+          if (!dmg) return;
+
+          const version = versionText(release.tag_name);
+          downloadButtons.forEach((button) => {
+            button.href = dmg.browser_download_url;
+          });
+          downloadButtons[0].textContent = `Download ${version}`;
+          downloadButtons[1].textContent = `Download ${version} DMG`;
+          document.getElementById('ps-release-note').textContent = `Latest Developer ID release: ${release.tag_name}. Download information loaded from GitHub.`;
+          document.getElementById('ps-release-version').textContent = release.tag_name;
+          document.getElementById('ps-release-date').textContent = releaseDate(release.published_at);
+          document.getElementById('ps-release-asset').textContent = dmg.name;
+          document.getElementById('ps-release-link').href = release.html_url;
+        })
+        .catch(() => {
+          document.getElementById('ps-release-note').textContent = 'Latest Developer ID release: v0.2.1. GitHub release lookup is temporarily unavailable.';
+        });
+
+      document.getElementById('ps-support-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const topic = data.get('topic') || 'Support';
+        const body = [
+          `Name: ${data.get('name') || ''}`,
+          `Email: ${data.get('email') || ''}`,
+          `Version: ${data.get('version') || ''}`,
+          '',
+          data.get('message') || ''
+        ].join('\n');
+        window.location.href = `mailto:keith+pingscope@hadm.net?subject=${encodeURIComponent(`PingScope support: ${topic}`)}&body=${encodeURIComponent(body)}`;
+      });
+    </script>
+  ) : (
+    <>
   <nav style="font-size:10px;color:var(--dimmer);margin-bottom:20px">
     <a href="/" style="color:var(--dimmer)">keithah.com</a>
     <span style="margin:0 6px">/</span>
@@ -77,4 +252,6 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href={`${d.repo}/issues/new`} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
     </div>
   </div>
+    </>
+  )}
 </Base>
