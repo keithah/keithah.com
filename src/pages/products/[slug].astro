@@ -45,10 +45,10 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           </div>
           <div class="ps-actions">
             <a class="ps-btn ps-primary" href="https://apps.apple.com/us/app/pingscope-keep-connected/id6759278369?mt=12">Mac App Store</a>
-            <a class="ps-btn" id="ps-download" href="https://github.com/keithah/pingscope/releases/download/v0.2.1/PingScope-v0.2.1.dmg">Download 0.2.1</a>
+            <a class="ps-btn" id="ps-download" href="https://github.com/keithah/pingscope/releases/download/v0.3.0/PingScope-v0.3.0.dmg">Download 0.3.0</a>
             <a class="ps-btn ps-ghost" href="#support">Support</a>
           </div>
-          <p class="ps-release-note" id="ps-release-note">Latest Developer ID release: v0.2.1. This link updates from GitHub when a newer DMG is published.</p>
+          <p class="ps-release-note" id="ps-release-note">Latest Developer ID release: v0.3.0. This link updates from GitHub when a newer DMG is published.</p>
         </div>
         <div class="ps-shot-wrap">
           <img class="ps-shot" src="/products/pingscope/popover-current.png" alt="PingScope popover showing all hosts, current latency, graph, and recent samples." />
@@ -107,18 +107,18 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
             <p>The App Store build is the simplest install path. The Developer ID DMG is loaded from the latest public GitHub release and has a current static fallback.</p>
             <div class="ps-actions">
               <a class="ps-btn ps-primary" href="https://apps.apple.com/us/app/pingscope-keep-connected/id6759278369?mt=12">Open App Store</a>
-              <a class="ps-btn" id="ps-download-secondary" href="https://github.com/keithah/pingscope/releases/download/v0.2.1/PingScope-v0.2.1.dmg">Download 0.2.1 DMG</a>
+              <a class="ps-btn" id="ps-download-secondary" href="https://github.com/keithah/pingscope/releases/download/v0.3.0/PingScope-v0.3.0.dmg">Download 0.3.0 DMG</a>
             </div>
           </div>
           <dl class="ps-release-box" aria-live="polite">
             <dt>Version</dt>
-            <dd id="ps-release-version">v0.2.1</dd>
+            <dd id="ps-release-version">v0.3.0</dd>
             <dt>Published</dt>
-            <dd id="ps-release-date">June 29, 2026</dd>
+            <dd id="ps-release-date">July 3, 2026</dd>
             <dt>Package</dt>
-            <dd id="ps-release-asset">PingScope-v0.2.1.dmg</dd>
+            <dd id="ps-release-asset">PingScope-v0.3.0.dmg</dd>
             <dt>Notes</dt>
-            <dd><a id="ps-release-link" href="https://github.com/keithah/pingscope/releases/tag/v0.2.1">release notes</a></dd>
+            <dd><a id="ps-release-link" href="https://github.com/keithah/pingscope/releases/tag/v0.3.0">release notes</a></dd>
           </dl>
         </div>
       </section>
@@ -181,7 +181,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           document.getElementById('ps-release-link').href = release.html_url;
         })
         .catch(() => {
-          document.getElementById('ps-release-note').textContent = 'Latest Developer ID release: v0.2.1. GitHub release lookup is temporarily unavailable.';
+          document.getElementById('ps-release-note').textContent = 'Latest Developer ID release: v0.3.0. GitHub release lookup is temporarily unavailable.';
         });
 
       document.getElementById('ps-support-form').addEventListener('submit', (event) => {

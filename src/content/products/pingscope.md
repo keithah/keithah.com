@@ -4,7 +4,7 @@ tagline: Network latency monitoring for macOS
 description: Native menu-bar latency monitoring for macOS that helps separate local, upstream, and destination failures.
 repo: https://github.com/keithah/pingscope
 lang: Swift 6.2
-version: 0.2.1
+version: 0.3.0
 status: beta
 platforms: [macOS 14+]
 tags: [networking, swift, macos, menu bar]
