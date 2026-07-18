@@ -37,6 +37,7 @@ const products = defineCollection({
     status: z.enum(['active', 'beta', 'stable', 'archived']),
     platforms: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
+    license: z.string().default('MIT'),
   }),
 });
 

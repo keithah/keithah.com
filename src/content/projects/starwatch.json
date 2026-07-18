@@ -1,0 +1,9 @@
+{
+  "name": "Starwatch",
+  "description": "Starlink monitoring & control for OpenWrt/GL.iNet routers. Local gRPC dish telemetry, tiered history, merged outage timeline, alerts, guarded router controls, and an embedded dashboard.",
+  "repo": "https://github.com/keithah/openwrt-starwatch",
+  "lang": "Go",
+  "status": "beta",
+  "tags": ["go", "starlink", "openwrt", "glinet", "networking"],
+  "isProduct": true
+}
