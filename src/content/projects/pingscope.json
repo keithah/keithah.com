@@ -4,6 +4,13 @@
   "repo": "https://github.com/keithah/pingscope",
   "lang": "Swift 6.2",
   "status": "beta",
-  "tags": ["swift", "networking", "starlink", "macos", "ios"],
-  "isProduct": true
+  "tags": [
+    "swift",
+    "networking",
+    "starlink",
+    "macos",
+    "ios"
+  ],
+  "isProduct": true,
+  "featured": 1
 }

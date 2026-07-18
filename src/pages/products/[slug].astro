@@ -11,13 +11,142 @@ const { product } = Astro.props;
 const { Content } = await product.render();
 const d = product.data;
 const isPingScope = product.slug === 'pingscope';
+const isStarwatch = product.slug === 'starwatch';
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(product.slug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <Base title={d.name} description={d.tagline}>
-  {isPingScope ? (
+  {isStarwatch ? (
+    <div class="ps-page">
+      <nav class="ps-subnav" aria-label="Starwatch sections">
+        <a href="/" class="ps-breadcrumb">keithah.com</a>
+        <span>/</span>
+        <span>starwatch</span>
+        <span class="ps-subnav-links">
+          <a href="#features">features</a>
+          <a href="#install">install</a>
+          <a href="#support">support</a>
+          <a href={d.repo} target="_blank" rel="noopener">github</a>
+        </span>
+      </nav>
+
+      <section class="ps-hero sw-hero" aria-labelledby="starwatch-title">
+        <div class="ps-hero-copy">
+          <p class="ps-eyebrow">Local Starlink control on your router</p>
+          <h1 id="starwatch-title" class="sw-title">Starwatch <span class="sw-ver">{d.version}</span></h1>
+          <p class="ps-lede">Turn the router behind your Starlink dish into a full-time monitor and control panel — dish telemetry, 30-day history, a merged outage timeline, alerts, and guarded controls, all on the router with no Starlink account and no cloud.</p>
+          <div class="sw-install-row">
+            <code class="sw-cmd">wget -qO- https://keithah.github.io/openwrt-starwatch/install.sh | sh</code>
+            <button class="ps-btn sw-copy" type="button">copy</button>
+          </div>
+          <div class="ps-actions">
+            <a class="ps-btn ps-primary" href={d.repo} target="_blank" rel="noopener">View on GitHub</a>
+            <a class="ps-btn ps-ghost" id="sw-release-link" href={`${d.repo}/releases`} target="_blank" rel="noopener">Release notes</a>
+          </div>
+          <p class="ps-release-note">Signed opkg feed &middot; aarch64_cortex-a53 (GL.iNet &amp; OpenWrt) &middot; AGPL-3.0.</p>
+        </div>
+        <div class="ps-shot-wrap sw-shot-wrap">
+          <img class="sw-shot" src="/products/starwatch/dashboard-overview.png" alt="Starwatch dashboard with icon-rail navigation, live telemetry graph, and status header." />
+        </div>
+      </section>
+
+      <section id="features" class="ps-section" aria-labelledby="sw-features-title">
+        <div class="ps-section-head">
+          <h2 id="sw-features-title">Everything the dish knows, kept and made useful.</h2>
+          <p>Starwatch reads the dish's local gRPC API once a second, keeps history the dish itself can't, and surfaces it in a dashboard embedded right in LuCI and the GL.iNet panel.</p>
+        </div>
+        <div class="ps-feature-grid">
+          <article class="ps-card">
+            <span>01</span>
+            <h3>Telemetry &amp; controls</h3>
+            <p>Latency, throughput, power draw, obstruction map, alignment, and GPS &mdash; plus audited reboot, stow, snow-melt, sleep schedule, and speed test.</p>
+          </article>
+          <article class="ps-card">
+            <span>02</span>
+            <h3>History &amp; outage truth</h3>
+            <p>30 days of on-router history, and a merged timeline that tells a dish outage apart from an unreachable dish apart from an upstream path problem.</p>
+          </article>
+          <article class="ps-card">
+            <span>03</span>
+            <h3>VPN-proof access</h3>
+            <p>A self-healing 192.168.100.1/32 route keeps the dish reachable even when a VPN owns the default route &mdash; without touching your general routing.</p>
+          </article>
+          <article class="ps-card">
+            <span>04</span>
+            <h3>Guarded router control</h3>
+            <p>On double-NAT setups, read and safely change the Starlink router's Wi-Fi and clients &mdash; readback-confirmed, with write-only passphrases.</p>
+          </article>
+        </div>
+        <div class="ps-overlay-showcase">
+          <div>
+            <p class="ps-kicker">Panel and phone</p>
+            <h3>The same dashboard, in the panel or in your pocket.</h3>
+            <p>The seven-section icon rail collapses to a mobile drawer, so the full Overview, telemetry, and controls travel from the GL.iNet Applications panel to your phone &mdash; token-authenticated and offline-first.</p>
+          </div>
+          <img class="sw-shot-mobile" src="/products/starwatch/dashboard-mobile.png" alt="Starwatch dashboard on a phone showing the mobile section drawer." />
+        </div>
+      </section>
+
+      <section id="install" class="ps-section" aria-labelledby="sw-install-title">
+        <div class="ps-download-panel">
+          <div>
+            <h2 id="sw-install-title">Install from the signed feed.</h2>
+            <p>SSH into your router as root and run the one-liner. It checks your architecture, picks the GL.iNet or LuCI package automatically, pins the feed's signing key, and never forces a downgrade. Then open <strong>Applications &rarr; Starwatch</strong>, <strong>Services &rarr; Starwatch</strong>, or port 9633.</p>
+            <div class="sw-install-row">
+              <code class="sw-cmd">wget -qO- https://keithah.github.io/openwrt-starwatch/install.sh | sh</code>
+              <button class="ps-btn sw-copy" type="button">copy</button>
+            </div>
+          </div>
+          <dl class="ps-release-box">
+            <dt>Version</dt>
+            <dd id="sw-release-version">{d.version}</dd>
+            <dt>Architecture</dt>
+            <dd>aarch64_cortex-a53</dd>
+            <dt>Feed</dt>
+            <dd>usign-signed</dd>
+            <dt>Packages</dt>
+            <dd><a id="sw-release-assets" href={`${d.repo}/releases`}>daemon + panel app</a></dd>
+          </dl>
+        </div>
+      </section>
+
+      <section id="support" class="ps-section" aria-labelledby="sw-support-title">
+        <div class="ps-support-grid">
+          <div>
+            <h2 id="sw-support-title">Open source, local, and yours.</h2>
+            <p>Starwatch is AGPL-3.0. Report bugs or request features as a GitHub issue; security reports go through the private policy in <a href={`${d.repo}/blob/main/SECURITY.md`} target="_blank" rel="noopener">SECURITY.md</a>.</p>
+          </div>
+          <div class="sw-support-actions">
+            <a class="ps-btn ps-primary" href={`${d.repo}/issues/new`} target="_blank" rel="noopener">Open an issue</a>
+            <a class="ps-btn" href={d.repo} target="_blank" rel="noopener">Browse the code</a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script is:inline>
+      document.querySelectorAll('.sw-copy').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          navigator.clipboard?.writeText('wget -qO- https://keithah.github.io/openwrt-starwatch/install.sh | sh').then(() => {
+            const old = btn.textContent; btn.textContent = 'copied'; setTimeout(() => { btn.textContent = old; }, 1400);
+          });
+        });
+      });
+      fetch('https://api.github.com/repos/keithah/openwrt-starwatch/releases/latest', { headers: { Accept: 'application/vnd.github+json' } })
+        .then((r) => r.ok ? r.json() : Promise.reject())
+        .then((rel) => {
+          document.getElementById('sw-release-version').textContent = rel.tag_name;
+          document.getElementById('sw-release-link').href = rel.html_url;
+          const ipks = rel.assets.filter((a) => a.name.endsWith('.ipk')).length;
+          const assets = document.getElementById('sw-release-assets');
+          if (ipks) assets.textContent = ipks + ' packages';
+          assets.href = rel.html_url;
+        })
+        .catch(() => {});
+    </script>
+  ) : isPingScope ? (
     <div class="ps-page">
       <nav class="ps-subnav" aria-label="PingScope sections">
         <a href="/" class="ps-breadcrumb">keithah.com</a>

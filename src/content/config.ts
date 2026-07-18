@@ -22,6 +22,7 @@ const projects = defineCollection({
     status: z.enum(['active', 'beta', 'stable', 'internal', 'archived']),
     tags: z.array(z.string()).default([]),
     isProduct: z.boolean().default(false),
+    featured: z.number().optional(),
   }),
 });
 

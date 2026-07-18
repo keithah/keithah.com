@@ -7,12 +7,10 @@ const projects = await getCollection('projects');
 
 const recentPosts = posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0,5);
 
-// Featured work: products first, then by status priority. Show 4 max.
-const rank = { active: 0, beta: 1, stable: 2, internal: 3, archived: 4 };
-const featured = [...projects].sort((a, b) => {
-  if (a.data.isProduct !== b.data.isProduct) return a.data.isProduct ? -1 : 1;
-  return (rank[a.data.status] ?? 9) - (rank[b.data.status] ?? 9);
-}).slice(0, 4);
+// Featured work: explicit `featured` rank in each project's data (lower first).
+const featured = projects
+  .filter(p => p.data.featured != null)
+  .sort((a, b) => (a.data.featured as number) - (b.data.featured as number));
 ---
 <Base>
   <div class="sh" style="margin-bottom:4px">$ whoami</div>

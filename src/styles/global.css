@@ -586,3 +586,16 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
     width: 100%;
   }
 }
+
+/* Starwatch product page */
+.sw-hero { min-height: auto; padding: 26px 0 8px; align-items: center; }
+.sw-title { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 12px; margin: 0 0 16px; }
+.sw-ver { font-size: 13px; font-weight: 500; color: var(--green); border: 1px solid var(--green-bd); background: var(--green-bg); border-radius: 6px; padding: 2px 8px; letter-spacing: 0; }
+.sw-install-row { display: flex; gap: 8px; align-items: stretch; margin-top: 22px; flex-wrap: wrap; }
+.sw-cmd { flex: 1 1 auto; min-width: 0; display: block; padding: 12px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 9px; color: var(--green); font-size: 12.5px; overflow-x: auto; white-space: nowrap; }
+.sw-copy { flex: 0 0 auto; }
+.sw-shot-wrap { min-height: auto; }
+.sw-shot { position: relative; z-index: 2; width: min(100%, 640px); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 30px 80px #0009; }
+.sw-shot-mobile { width: min(100%, 300px); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 20px 60px #0009; justify-self: center; }
+.sw-support-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
+@media (max-width: 760px) { .sw-title { font-size: 30px; } .sw-shot { width: 100%; } }

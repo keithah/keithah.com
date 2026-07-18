@@ -4,6 +4,13 @@
   "repo": "https://github.com/keithah/tidemark",
   "lang": "Go",
   "status": "stable",
-  "tags": ["go", "streaming", "hls", "scte35", "broadcast"],
-  "isProduct": false
+  "tags": [
+    "go",
+    "streaming",
+    "hls",
+    "scte35",
+    "broadcast"
+  ],
+  "isProduct": false,
+  "featured": 4
 }

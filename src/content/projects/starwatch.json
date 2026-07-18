@@ -4,6 +4,13 @@
   "repo": "https://github.com/keithah/openwrt-starwatch",
   "lang": "Go",
   "status": "beta",
-  "tags": ["go", "starlink", "openwrt", "glinet", "networking"],
-  "isProduct": true
+  "tags": [
+    "go",
+    "starlink",
+    "openwrt",
+    "glinet",
+    "networking"
+  ],
+  "isProduct": true,
+  "featured": 2
 }

@@ -4,6 +4,12 @@
   "repo": "https://github.com/keithah/stint",
   "lang": "Go / TypeScript",
   "status": "active",
-  "tags": ["go", "typescript", "telemetry", "analytics"],
-  "isProduct": false
+  "tags": [
+    "go",
+    "typescript",
+    "telemetry",
+    "analytics"
+  ],
+  "isProduct": false,
+  "featured": 3
 }
