@@ -6,7 +6,8 @@
     "dev":     "astro dev",
     "build":   "astro build",
     "preview": "astro preview",
-    "validate:pingscope": "npm run build && node scripts/validate-pingscope-product-page.mjs"
+    "validate:pingscope": "npm run build && node scripts/validate-pingscope-product-page.mjs",
+    "validate:wattline": "node scripts/validate-wattline-product-page.mjs"
   },
   "dependencies": {
     "astro": "^4.16.0",
