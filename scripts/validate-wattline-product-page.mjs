@@ -142,6 +142,12 @@ if (!html.includes(pendingTestFlight)) {
 if (/href="[^"]*testflight/i.test(html)) {
   throw new Error('Wattline must not contain a TestFlight href');
 }
+if (!html.includes('wt-router-stack')) {
+  throw new Error('Wattline router images must use the integrated router stack');
+}
+if (html.includes('wt-router-captures')) {
+  throw new Error('Wattline router images must not use the equal-card layout');
+}
 
 if (!html.includes('ps-wattline')) throw new Error('Wattline page is missing its scoped class');
 for (const [name, unrelatedHtml] of [
