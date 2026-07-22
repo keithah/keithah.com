@@ -22,6 +22,7 @@ const prohibited = [
   'App Store',
   'remote relay is ready',
   'hardware validated',
+  'Learn the shape before touching the hardware.',
 ];
 
 for (const value of required) {
@@ -40,17 +41,37 @@ const images = [
   {
     name: 'onboarding',
     path: '/products/wattline/onboarding.png',
+    width: '1206',
+    height: '2622',
     lazy: true,
   },
   {
     name: 'nearby devices',
     path: '/products/wattline/nearby-devices.png',
+    width: '1206',
+    height: '2622',
     lazy: true,
   },
   {
     name: 'dashboard',
     path: '/products/wattline/dashboard.png',
+    width: '1206',
+    height: '2622',
     lazy: false,
+  },
+  {
+    name: 'router pairing',
+    path: '/products/wattline/router-pairing.png',
+    width: '984',
+    height: '1092',
+    lazy: true,
+  },
+  {
+    name: 'router panel',
+    path: '/products/wattline/router-panel.png',
+    width: '984',
+    height: '2488',
+    lazy: true,
   },
 ];
 
@@ -79,8 +100,8 @@ for (const image of images) {
     hasExactAttribute(candidate, 'src', image.path),
   );
   if (!tag) throw new Error(`missing ${image.name} screenshot image tag`);
-  if (!hasExactAttribute(tag, 'width', '1206') || !hasExactAttribute(tag, 'height', '2622')) {
-    throw new Error(`${image.name} screenshot dimensions must be 1206 by 2622`);
+  if (!hasExactAttribute(tag, 'width', image.width) || !hasExactAttribute(tag, 'height', image.height)) {
+    throw new Error(`${image.name} screenshot dimensions must be ${image.width} by ${image.height}`);
   }
   if (!hasExactAttribute(tag, 'decoding', 'async')) {
     throw new Error(`${image.name} screenshot must decode asynchronously`);
