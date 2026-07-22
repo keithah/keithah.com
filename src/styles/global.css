@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -771,6 +771,16 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   .ps-pingscope .ps-hero-copy { animation: ps-enter 620ms both ease-out; }
   .ps-pingscope .ps-hero-console { animation: ps-enter 720ms 100ms both ease-out; }
   @keyframes ps-enter { from { opacity: 0; transform: translateY(18px); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ps-pingscope .ps-btn {
+    transition: none;
+  }
+
+  .ps-pingscope .ps-btn:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 1100px) {
