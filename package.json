@@ -10,7 +10,7 @@
     "validate:wattline": "npm run build && node scripts/validate-wattline-product-page.mjs"
   },
   "dependencies": {
-    "astro": "^4.16.0",
+    "astro": "^6.4.6",
     "@astrojs/rss": "^4.0.0"
   }
 }
