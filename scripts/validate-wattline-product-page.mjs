@@ -56,6 +56,17 @@ const images = [
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
+const hasExactAttribute = (tag, name, value) => {
+  const escapedName = escapeRegExp(name);
+  const escapedValue = escapeRegExp(value);
+  return new RegExp(`(?:^|\\s)${escapedName}="${escapedValue}"(?=\\s|/?>)`, 'i').test(tag);
+};
+
+const exactAttributeValue = (tag, name) => {
+  const escapedName = escapeRegExp(name);
+  return tag.match(new RegExp(`(?:^|\\s)${escapedName}="([^"]+)"(?=\\s|/?>)`, 'i'))?.[1];
+};
+
 for (const image of images) {
   const assetPath = join(dist, image.path.replace(/^\//, ''));
   await access(assetPath);
@@ -64,20 +75,21 @@ for (const image of images) {
     throw new Error(`${image.name} screenshot must be larger than 10,000 bytes`);
   }
 
-  const escapedPath = escapeRegExp(image.path);
-  const tag = html.match(new RegExp(`<img\\b(?=[^>]*\\bsrc="${escapedPath}")[^>]*>`, 'i'))?.[0];
+  const tag = (html.match(/<img\b[^>]*>/gi) ?? []).find((candidate) =>
+    hasExactAttribute(candidate, 'src', image.path),
+  );
   if (!tag) throw new Error(`missing ${image.name} screenshot image tag`);
-  if (!/\bwidth="1206"/.test(tag) || !/\bheight="2622"/.test(tag)) {
+  if (!hasExactAttribute(tag, 'width', '1206') || !hasExactAttribute(tag, 'height', '2622')) {
     throw new Error(`${image.name} screenshot dimensions must be 1206 by 2622`);
   }
-  if (!tag.includes('decoding="async"')) {
+  if (!hasExactAttribute(tag, 'decoding', 'async')) {
     throw new Error(`${image.name} screenshot must decode asynchronously`);
   }
-  if (image.lazy !== tag.includes('loading="lazy"')) {
+  if (image.lazy !== hasExactAttribute(tag, 'loading', 'lazy')) {
     throw new Error(`${image.name} screenshot lazy-loading behavior is incorrect`);
   }
 
-  const alt = tag.match(/\balt="([^"]+)"/)?.[1] ?? '';
+  const alt = exactAttributeValue(tag, 'alt') ?? '';
   if (alt.trim().split(/\s+/).length < 6) {
     throw new Error(`${image.name} screenshot needs meaningful six-word alt text`);
   }
