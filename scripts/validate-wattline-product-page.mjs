@@ -10,7 +10,12 @@ const starwatchHtml = await readFile(join(dist, 'products/starwatch/index.html')
 const required = [
   'Wattline',
   'https://github.com/keithah/wattline',
-  'Bluetooth Low Energy',
+  'Know what your battery is doing.',
+  'See the charge',
+  'Control the outputs',
+  'Run on a schedule',
+  'Direct and local',
+  'Browser monitoring and automation',
   'TestFlight coming soon',
   'https://github.com/keithah/openwrt-wattline',
   '/products/wattline/onboarding.png',
@@ -18,6 +23,8 @@ const required = [
   '/products/wattline/dashboard.png',
 ];
 const prohibited = [
+  'Direct Bluetooth control',
+  'Bluetooth is the everyday connection.',
   'https://testflight.apple.com',
   'App Store',
   'remote relay is ready',
@@ -29,8 +36,20 @@ for (const value of required) {
   if (!html.includes(value)) throw new Error(`missing: ${value}`);
 }
 
-if (html.indexOf('Bluetooth Low Energy') > html.indexOf('openwrt-wattline')) {
-  throw new Error('Bluetooth Low Energy must precede openwrt-wattline');
+const narrativeOrder = [
+  'See the charge',
+  'Control the outputs',
+  'Run on a schedule',
+  'Direct and local',
+  'Browser monitoring and automation',
+];
+let priorNarrativePosition = -1;
+for (const value of narrativeOrder) {
+  const position = html.indexOf(value);
+  if (position <= priorNarrativePosition) {
+    throw new Error(`Wattline narrative order is incorrect at: ${value}`);
+  }
+  priorNarrativePosition = position;
 }
 
 for (const value of prohibited) {
