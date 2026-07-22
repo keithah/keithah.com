@@ -147,107 +147,146 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
         .catch(() => {});
     </script>
   ) : isPingScope ? (
-    <div class="ps-page">
+    <div class="ps-page ps-pingscope">
       <nav class="ps-subnav" aria-label="PingScope sections">
-        <a href="/" class="ps-breadcrumb">keithah.com</a>
-        <span>/</span>
-        <span>pingscope</span>
+        <a href="#top" class="ps-brand" aria-label="PingScope home">
+          <img src="/products/pingscope/app-icon.png" alt="" width="30" height="30" />
+          <strong>PingScope</strong>
+        </a>
         <span class="ps-subnav-links">
-          <a href="#features">features</a>
-          <a href="#download">download</a>
-          <a href="#support">support</a>
-          <a href={d.repo} target="_blank" rel="noopener">github</a>
+          <a href="#features">Features</a>
+          <a href="#platforms">Platforms</a>
+          <a href="#download">Download</a>
+          <a href="#support">Support</a>
+          <a href={d.repo} target="_blank" rel="noopener">GitHub</a>
         </span>
       </nav>
 
-      <section class="ps-hero" aria-labelledby="pingscope-title">
+      <section id="top" class="ps-hero" aria-labelledby="pingscope-title">
         <div class="ps-hero-copy">
-          <p class="ps-eyebrow">Native macOS network visibility</p>
-          <div class="ps-title-row">
-            <img src="/products/pingscope/app-icon.png" alt="" width="54" height="54" />
-            <h1 id="pingscope-title">PingScope</h1>
-          </div>
-          <p class="ps-lede">A menu-bar latency monitor that tells you whether the problem is local, upstream, or the destination before you start guessing.</p>
-          <div class="ps-tease" aria-label="iOS version status">
-            <span>Coming soon</span>
-            <strong>iOS companion version</strong>
-          </div>
+          <p class="ps-eyebrow"><span></span> Redesigned for macOS + iPhone</p>
+          <h1 id="pingscope-title">See where<br />the network<br /><em>breaks.</em></h1>
+          <p class="ps-lede">PingScope is a graph-first latency monitor that makes local, upstream, and destination health legible at a glance—across Mac and iPhone.</p>
           <div class="ps-actions">
             <a class="ps-btn ps-primary" href="https://apps.apple.com/us/app/pingscope-keep-connected/id6759278369?mt=12">Mac App Store</a>
-            <a class="ps-btn" id="ps-download" href="https://github.com/keithah/pingscope/releases/download/v0.3.0/PingScope-v0.3.0.dmg">Download 0.3.0</a>
-            <a class="ps-btn ps-ghost" href="#support">Support</a>
+            <a class="ps-btn ps-testflight" href="https://testflight.apple.com/join/rvBuNjMz">External TestFlight</a>
+            <a class="ps-btn" id="ps-download" href="https://github.com/keithah/pingscope/releases/download/v0.5.0/PingScope-v0.5.0.dmg">Download 0.5.0</a>
+            <a class="ps-btn ps-ghost" href={d.repo} target="_blank" rel="noopener">GitHub</a>
           </div>
-          <p class="ps-release-note" id="ps-release-note">Latest Developer ID release: v0.3.0. This link updates from GitHub when a newer DMG is published.</p>
+          <p class="ps-release-note" id="ps-release-note">Latest Developer ID release: v0.5.0. Download information loads from GitHub.</p>
         </div>
-        <div class="ps-shot-wrap">
-          <img class="ps-shot" src="/products/pingscope/popover-current.png" alt="PingScope popover showing all hosts, current latency, graph, and recent samples." />
-          <div class="ps-float ps-float-top" aria-hidden="true">
-            <strong>4ms</strong>
-            <span>Healthy</span>
-          </div>
-          <div class="ps-float ps-float-bottom" aria-hidden="true">
-            <strong>3 enabled hosts</strong>
-            <span>Cloudflare, Google, and the default gateway shown together.</span>
-          </div>
+        <div class="ps-hero-console" aria-label="PingScope on Mac and iPhone">
+          <div class="ps-console-label ps-console-label-mac"><span>01</span> Mac · All Hosts</div>
+          <img class="ps-hero-mac" src="/products/pingscope/mac-all-hosts.png" alt="PingScope for Mac showing a color-matched All Hosts latency graph and per-host readings." />
+          <img class="ps-hero-phone ps-hero-signal" src="/products/pingscope/ios-signal.png" alt="PingScope for iPhone Signal view comparing four hosts with live latency readings." />
+          <img class="ps-hero-phone ps-hero-ring" src="/products/pingscope/ios-ring.png" alt="PingScope for iPhone Ring view showing four distinct host health rings." />
+          <div class="ps-console-label ps-console-label-ios"><span>02</span> iPhone · Signal + Ring</div>
         </div>
       </section>
 
       <section id="features" class="ps-section" aria-labelledby="ps-features-title">
         <div class="ps-section-head">
-          <h2 id="ps-features-title">Built for the moment the network feels wrong.</h2>
-          <p>PingScope stays quiet in the menu bar until you need detail. Open the popover for live history, switch hosts, or pin the overlay during calls and debugging sessions.</p>
+          <p class="ps-index">01 / Signal</p>
+          <h2 id="ps-features-title">Built for the moment the network <em>feels wrong.</em></h2>
+          <p>One glance separates a local failure from an upstream slowdown or a destination problem—before the guesswork starts.</p>
         </div>
         <div class="ps-feature-grid">
           <article class="ps-card">
-            <span>01</span>
-            <h3>Always visible</h3>
-            <p>A compact status dot and latency readout live in the menu bar, with a floating overlay when a connection needs closer watching.</p>
+            <span>01</span><i aria-hidden="true"></i>
+            <h3>Graph first</h3>
+            <p>Smooth live histories, compact statistics, and per-host sparklines keep the signal visible without repeating it.</p>
           </article>
           <article class="ps-card">
-            <span>02</span>
-            <h3>Failure context</h3>
-            <p>Monitor gateway and remote hosts together to tell the difference between Wi-Fi, router, ISP, and destination trouble.</p>
+            <span>02</span><i aria-hidden="true"></i>
+            <h3>Every host together</h3>
+            <p>Stable identity colors follow hosts through graphs, rings, widgets, and Live Activities.</p>
           </article>
           <article class="ps-card">
-            <span>03</span>
-            <h3>Local first</h3>
-            <p>Settings, retained history, exports, and widget snapshots stay on your Mac. Developer ID builds support Sparkle updates.</p>
-          </article>
-          <article class="ps-card ps-card-ios">
-            <span>04</span>
-            <h3>iOS is next</h3>
-            <p>A companion iPhone view is in progress for checking the same signal away from the menu bar. Mac stays first; mobile is coming.</p>
+            <span>03</span><i aria-hidden="true"></i>
+            <h3>Useful context</h3>
+            <p>Compare gateway, upstream, and destination paths. Connectivity tips are optional and off by default.</p>
           </article>
         </div>
-        <div class="ps-overlay-showcase">
-          <div>
-            <p class="ps-kicker">Overlay mode</p>
-            <h3>Pin the signal when the connection matters.</h3>
-            <p>Keep PingScope floating above calls, uploads, games, and terminal sessions. The overlay stays compact while preserving the latency, health, and loss signals that matter in the moment.</p>
-          </div>
-          <img src="/products/pingscope/overlay.png" alt="PingScope floating overlay with a latency graph, current status, and packet-loss summary." />
+      </section>
+
+      <section id="platforms" class="ps-section" aria-labelledby="ps-platforms-title">
+        <div class="ps-section-head">
+          <p class="ps-index">02 / Platforms</p>
+          <h2 id="ps-platforms-title">One signal.<br />Two native homes.</h2>
+          <p>Use PingScope where the network problem happens. Mac stays close in the menu bar; iPhone carries multi-host monitoring with you.</p>
+        </div>
+        <div class="ps-platform-grid">
+          <article class="ps-platform-card ps-platform-mac">
+            <div class="ps-platform-copy">
+              <p class="ps-kicker">PingScope for Mac</p>
+              <h3>Quiet until the network gets loud.</h3>
+              <p>Keep latency in the menu bar, open the detailed All Hosts graph, or pin a compact overlay during calls, uploads, and debugging.</p>
+            </div>
+            <div class="ps-platform-media ps-platform-media-mac">
+              <img src="/products/pingscope/mac-all-hosts.png" alt="PingScope for Mac All Hosts window with four colored latency series and host sparklines." />
+              <img class="ps-overlay-image" src="/products/pingscope/overlay.png" alt="PingScope floating Mac overlay showing live latency, graph, and connection health." />
+            </div>
+            <div class="ps-platform-actions">
+              <a class="ps-btn ps-primary" href="https://apps.apple.com/us/app/pingscope-keep-connected/id6759278369?mt=12">Mac App Store</a>
+              <a class="ps-btn" href="https://testflight.apple.com/join/rvBuNjMz">External TestFlight</a>
+            </div>
+          </article>
+          <article class="ps-platform-card ps-platform-ios">
+            <div class="ps-platform-copy">
+              <p class="ps-kicker">PingScope for iPhone</p>
+              <h3>Every host, from two clear angles.</h3>
+              <p>Compare hosts in one color-matched graph or switch to concentric health rings, then follow the same state from widgets and Live Activities.</p>
+            </div>
+            <div class="ps-platform-media ps-platform-media-ios">
+              <img src="/products/pingscope/ios-signal.png" alt="PingScope for iPhone Signal view with four live host series and latency statistics." />
+              <img src="/products/pingscope/ios-ring.png" alt="PingScope for iPhone Ring view with matching colors and current host health." />
+            </div>
+            <div class="ps-platform-actions">
+              <a class="ps-btn ps-primary" href="https://testflight.apple.com/join/rvBuNjMz">External TestFlight</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="ambient" class="ps-section" aria-labelledby="ps-ambient-title">
+        <div class="ps-section-head">
+          <p class="ps-index">03 / Ambient</p>
+          <h2 id="ps-ambient-title">Still visible when the app steps away.</h2>
+          <p>Color-matched host state stays glanceable on the Home Screen, Lock Screen, and Dynamic Island.</p>
+        </div>
+        <div class="ps-ambient-grid">
+          <figure class="ps-ambient-card">
+            <figcaption><span>Widget</span><strong>All hosts, one compact history.</strong></figcaption>
+            <img src="/products/pingscope/ios-widget.png" alt="PingScope iPhone widget showing four color-keyed hosts and their latency histories." />
+          </figure>
+          <figure class="ps-ambient-card">
+            <figcaption><span>Live Activity</span><strong>The current signal follows the session.</strong></figcaption>
+            <img src="/products/pingscope/ios-live-activity.png" alt="PingScope iPhone Live Activity showing multiple host latencies on the Lock Screen." />
+          </figure>
         </div>
       </section>
 
       <section id="download" class="ps-section" aria-labelledby="ps-download-title">
         <div class="ps-download-panel">
           <div>
-            <h2 id="ps-download-title">Download the current macOS build.</h2>
-            <p>The App Store build is the simplest install path. The Developer ID DMG is loaded from the latest public GitHub release and has a current static fallback.</p>
+            <p class="ps-index">04 / Download</p>
+            <h2 id="ps-download-title">Take the signal with you.</h2>
+            <p>Install from the Mac App Store, join the same external beta on Mac or iPhone, or download the signed Developer ID build from GitHub.</p>
             <div class="ps-actions">
               <a class="ps-btn ps-primary" href="https://apps.apple.com/us/app/pingscope-keep-connected/id6759278369?mt=12">Open App Store</a>
-              <a class="ps-btn" id="ps-download-secondary" href="https://github.com/keithah/pingscope/releases/download/v0.3.0/PingScope-v0.3.0.dmg">Download 0.3.0 DMG</a>
+              <a class="ps-btn ps-testflight" href="https://testflight.apple.com/join/rvBuNjMz">External TestFlight</a>
+              <a class="ps-btn" id="ps-download-secondary" href="https://github.com/keithah/pingscope/releases/download/v0.5.0/PingScope-v0.5.0.dmg">Download 0.5.0 DMG</a>
             </div>
           </div>
           <dl class="ps-release-box" aria-live="polite">
             <dt>Version</dt>
-            <dd id="ps-release-version">v0.3.0</dd>
+            <dd id="ps-release-version">v0.5.0</dd>
             <dt>Published</dt>
-            <dd id="ps-release-date">July 3, 2026</dd>
+            <dd id="ps-release-date">Current release</dd>
             <dt>Package</dt>
-            <dd id="ps-release-asset">PingScope-v0.3.0.dmg</dd>
+            <dd id="ps-release-asset">PingScope-v0.5.0.dmg</dd>
             <dt>Notes</dt>
-            <dd><a id="ps-release-link" href="https://github.com/keithah/pingscope/releases/tag/v0.3.0">release notes</a></dd>
+            <dd><a id="ps-release-link" href="https://github.com/keithah/pingscope/releases/tag/v0.5.0">release notes</a></dd>
           </dl>
         </div>
       </section>
@@ -310,7 +349,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           document.getElementById('ps-release-link').href = release.html_url;
         })
         .catch(() => {
-          document.getElementById('ps-release-note').textContent = 'Latest Developer ID release: v0.3.0. GitHub release lookup is temporarily unavailable.';
+          document.getElementById('ps-release-note').textContent = 'Latest Developer ID release: v0.5.0. GitHub release lookup is temporarily unavailable.';
         });
 
       document.getElementById('ps-support-form').addEventListener('submit', (event) => {
