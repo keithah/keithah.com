@@ -10,4 +10,6 @@ platforms: [iPhone, iPad, Mac]
 tags: [bluetooth, power, swift, apple]
 ---
 
+# Wattline
+
 Wattline is in active development. Connect directly to a compatible nearby power device over Bluetooth Low Energy; the optional router companion belongs later in the setup.

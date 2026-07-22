@@ -876,6 +876,7 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
   --ps-panel: var(--wt-panel);
   --ps-line: var(--wt-line);
   --ps-green: var(--wt-blue);
+
   width: 100vw;
   max-width: none;
   overflow: clip;
