@@ -382,8 +382,8 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <nav class="ps-subnav" aria-label="Wattline sections">
         <a href="#top" class="ps-brand">Wattline</a>
         <span class="ps-subnav-links">
-          <a href="#ble">Bluetooth</a>
-          <a href="#screens">App</a>
+          <a href="#power">Power</a>
+          <a href="#local">Local</a>
           <a href="#router">Router</a>
           <a href="#follow">Follow</a>
         </span>
@@ -391,63 +391,66 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 
       <section id="top" class="ps-hero wt-hero" aria-labelledby="wattline-title">
         <div class="ps-hero-copy">
-          <p class="ps-eyebrow"><span aria-hidden="true"></span> Direct Bluetooth control</p>
-          <h1 id="wattline-title">Power, close at hand.</h1>
-          <p class="ps-lede">Wattline is an Apple companion app for compatible power devices. It connects directly with <strong>Bluetooth Low Energy</strong>, so the everyday path stays close, simple, and in your hands.</p>
+          <p class="ps-eyebrow"><span aria-hidden="true"></span> Live battery and output control</p>
+          <h1 id="wattline-title">Know what your battery is doing.</h1>
+          <p class="ps-lede">See charge, live output, and runtime at a glance—then control the ports and routines that keep your gear running.</p>
           <div class="ps-actions">
             <a class="ps-btn ps-primary" href={d.repo} target="_blank" rel="noopener">View on GitHub</a>
             <span class="ps-btn wt-pending" aria-disabled="true">TestFlight coming soon</span>
           </div>
-          <p class="ps-release-note">Development preview for iPhone, iPad, and Mac. No cloud account required for direct Bluetooth control.</p>
+          <p class="ps-release-note">A local companion for iPhone, iPad, and Mac. The dashboard values shown are generated Demo Mode examples, not physical readings.</p>
         </div>
         <div class="wt-hero-capture">
           <div class="wt-signal" aria-hidden="true"><i></i><i></i><i></i></div>
           <img src="/products/wattline/dashboard.png" alt="Wattline Demo Mode dashboard with a DEMO badge and generated power status readings." width="1206" height="2622" decoding="async" fetchpriority="high" />
+          <dl class="wt-hero-metrics" aria-label="Example Wattline dashboard readings">
+            <div class="wt-charge"><dt>Battery</dt><dd>62%</dd></div>
+            <div class="wt-draw"><dt>Live output</dt><dd>44.8 W</dd></div>
+            <div><dt>Runtime</dt><dd>2 h 7 m</dd></div>
+            <div><dt>DC port</dt><dd>Discharging</dd></div>
+          </dl>
         </div>
       </section>
 
-      <section id="ble" class="ps-section wt-ble" aria-labelledby="wattline-ble-title">
+      <section id="power" class="ps-section wt-power" aria-labelledby="wattline-power-title">
         <div class="ps-section-head">
           <div>
-            <p class="ps-index">01 / Bluetooth</p>
-            <h2 id="wattline-ble-title">Bluetooth is the everyday connection.</h2>
+            <p class="ps-index">01 / Power console</p>
+            <h2 id="wattline-power-title">The numbers that decide what stays on.</h2>
           </div>
-          <p>Start with the power device beside you. A router and cloud account are not prerequisites for discovering, pairing, or checking a compatible device.</p>
+          <p>Wattline puts the state of your power station first, so you can make a decision before a port, a limit, or a schedule becomes a problem.</p>
         </div>
-        <div class="ps-feature-grid">
-          <article class="ps-card">
-            <span>01</span>
-            <i class="wt-card-mark wt-scan" aria-hidden="true"></i>
-            <h3>Discover</h3>
-            <p>Look for compatible nearby devices over Bluetooth Low Energy without asking the router to mediate.</p>
+        <div class="wt-capability-bands">
+          <article class="wt-capability wt-charge-band">
+            <p class="ps-index">01</p>
+            <div><h3>See the charge</h3><p>Read capacity, voltage, current, direction, and the runtime you have left without digging through settings.</p></div>
+            <strong>62<small>%</small></strong>
           </article>
-          <article class="ps-card">
-            <span>02</span>
-            <i class="wt-card-mark wt-link" aria-hidden="true"></i>
-            <h3>Connect</h3>
-            <p>Pair from the app, then keep one clear owner for the direct device connection.</p>
+          <article class="wt-capability wt-output-band">
+            <p class="ps-index">02</p>
+            <div><h3>Control the outputs</h3><p>Switch DC and USB-C, manage bypass, and set a power limit that matches the gear on the other end.</p></div>
+            <strong>44.8<small>W</small></strong>
           </article>
-          <article class="ps-card">
-            <span>03</span>
-            <i class="wt-card-mark wt-status" aria-hidden="true"></i>
-            <h3>View status</h3>
-            <p>See the current power information where it matters: beside the device, not behind an account wall.</p>
+          <article class="wt-capability wt-schedule-band">
+            <p class="ps-index">03</p>
+            <div><h3>Run on a schedule</h3><p>Keep repeatable on-device routines for charging, output, and the moments your setup should handle itself.</p></div>
+            <strong>24<small>/7</small></strong>
           </article>
         </div>
       </section>
 
-      <section id="screens" class="ps-section wt-screens" aria-labelledby="wattline-screens-title">
+      <section id="local" class="ps-section wt-local" aria-labelledby="wattline-local-title">
         <div class="ps-section-head">
           <div>
-            <p class="ps-index">02 / App flow</p>
-            <h2 id="wattline-screens-title">The first connection is deliberately ordinary.</h2>
+            <p class="ps-index">02 / Connection</p>
+            <h2 id="wattline-local-title">Direct and local.</h2>
           </div>
-          <p>Open Wattline, choose a nearby compatible device, and keep a readable view of its state. The dashboard shown here is <strong>Demo Mode</strong>: its status readings are generated examples, not physical measurements.</p>
+          <p>Wattline uses Bluetooth Low Energy to talk straight to a nearby compatible power device. No account, cloud service, or router is required for the everyday view and controls.</p>
         </div>
         <div class="wt-screen-grid">
           <figure class="wt-screen wt-screen-onboarding">
             <img src="/products/wattline/onboarding.png" alt="Wattline welcome screen offering Connect a device and Try Demo Mode." width="1206" height="2622" loading="lazy" decoding="async" />
-            <figcaption><span>01</span> Choose a nearby device, or open Demo Mode to explore the app safely.</figcaption>
+            <figcaption><span>01</span> Connect directly to a nearby compatible power device.</figcaption>
           </figure>
           <figure class="wt-screen wt-screen-nearby">
             <img src="/products/wattline/nearby-devices.png" alt="Wattline Devices screen looking for nearby compatible power devices." width="1206" height="2622" loading="lazy" decoding="async" />
@@ -460,8 +463,8 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
         <div class="wt-router-panel">
           <div>
             <p class="ps-index">03 / Optional companion</p>
-            <h2 id="wattline-router-title">Optional router, broader reach.</h2>
-            <p><code>wattlined</code> runs on an OpenWrt or GL.iNet router and can add local-network access and automation to a Wattline setup. It is a companion for later, not a requirement for direct Bluetooth use.</p>
+            <h2 id="wattline-router-title">Browser monitoring and automation.</h2>
+            <p><code>wattlined</code> on an OpenWrt or GL.iNet router adds browser-based pairing, monitoring, and automation to a Wattline setup. It is a companion for later, not a requirement for direct local control.</p>
             <p>Remote access remains under hardware validation. Follow the companion project for router-side setup and progress.</p>
             <a class="ps-btn" href="https://github.com/keithah/openwrt-wattline" target="_blank" rel="noopener">Explore openwrt-wattline</a>
           </div>
@@ -473,14 +476,11 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
             <div><span>Automation</span><small>Local network</small></div>
           </div>
         </div>
-        <div class="wt-router-captures">
-          <figure>
+        <div class="wt-router-stack">
+          <img class="wt-router-stack-main" src="/products/wattline/router-panel.png" alt="Wattline's GL.iNet router panel showing battery, ports, schedules, and power controls." width="984" height="2488" loading="lazy" decoding="async" />
+          <figure class="wt-router-stack-pairing">
             <img src="/products/wattline/router-pairing.png" alt="Wattline's GL.iNet router panel pairing a Link-Power device from a browser." width="984" height="1092" loading="lazy" decoding="async" />
-            <figcaption><span>Pair in the router panel</span> Scan, select a device, and pair without an SSH session.</figcaption>
-          </figure>
-          <figure>
-            <img src="/products/wattline/router-panel.png" alt="Wattline's GL.iNet router panel showing battery, ports, schedules, and power controls." width="984" height="2488" loading="lazy" decoding="async" />
-            <figcaption><span>Monitor and automate</span> See battery and port state, adjust controls, and manage schedules from the router.</figcaption>
+            <figcaption>Pair and monitor from the router when a browser view suits the setup.</figcaption>
           </figure>
         </div>
       </section>
@@ -489,7 +489,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
         <div>
           <p class="ps-index">04 / Follow along</p>
           <h2 id="wattline-follow-title">Build the connection you need.</h2>
-          <p>Wattline is in active development. The source is the best place to follow the direct Bluetooth work as it takes shape.</p>
+          <p>Wattline is in active development. The source is the best place to follow the battery, controls, and local-connection work as it takes shape.</p>
         </div>
         <div class="ps-actions">
           <a class="ps-btn ps-primary" href={d.repo} target="_blank" rel="noopener">View on GitHub</a>

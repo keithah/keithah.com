@@ -867,6 +867,8 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
 .ps-wattline {
   --wt-violet: #a78bfa;
   --wt-blue: #52a8ff;
+  --wt-charge: #47d17a;
+  --wt-draw: #ffab3d;
   --wt-panel: #11101b;
   --wt-line: rgba(218, 210, 255, 0.16);
   --ps-bg: #090813;
@@ -1030,6 +1032,22 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
 .ps-wattline .wt-signal i:nth-child(1) { height: 8px; }
 .ps-wattline .wt-signal i:nth-child(2) { height: 15px; }
 .ps-wattline .wt-signal i:nth-child(3) { height: 23px; background: var(--wt-violet); }
+.ps-wattline .wt-hero-metrics {
+  position: absolute;
+  z-index: 3;
+  bottom: 8%;
+  left: -3%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(116px, 1fr));
+  gap: 8px;
+  width: min(340px, 62%);
+  margin: 0;
+}
+.ps-wattline .wt-hero-metrics > div { padding: 12px 14px; border: 1px solid var(--wt-line); background: rgba(9, 8, 19, 0.9); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3); }
+.ps-wattline .wt-hero-metrics dt { color: var(--ps-dim); font: 500 10px 'JetBrains Mono', monospace; text-transform: uppercase; }
+.ps-wattline .wt-hero-metrics dd { margin: 5px 0 0; color: var(--ps-ink); font: 600 clamp(16px, 2vw, 22px)/1 'IBM Plex Sans', sans-serif; white-space: nowrap; }
+.ps-wattline .wt-hero-metrics .wt-charge dd { color: var(--wt-charge); }
+.ps-wattline .wt-hero-metrics .wt-draw dd { color: var(--wt-draw); }
 
 .ps-wattline .ps-section { padding-block: clamp(84px, 11vw, 150px); border-top: 1px solid var(--wt-line); }
 .ps-wattline .ps-section-head { grid-template-columns: minmax(320px, 1.05fr) minmax(260px, 0.75fr); gap: clamp(28px, 6vw, 88px); align-items: start; margin-bottom: 52px; }
@@ -1037,21 +1055,15 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
 .ps-wattline .ps-section h2 { margin-top: 18px; font-size: clamp(42px, 6vw, 76px); line-height: 0.98; }
 .ps-wattline .ps-section-head > p:last-child { padding-top: 9px; font-size: 16px; }
 
-.ps-wattline .ps-feature-grid { grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--wt-line); }
-.ps-wattline .ps-card { min-height: 285px; border: 0; border-right: 1px solid var(--wt-line); border-radius: 0; padding: 28px; background: rgba(17, 16, 27, 0.7); }
-.ps-wattline .ps-card:last-child { border-right: 0; }
-.ps-wattline .ps-card > span { display: inline-grid; place-items: center; width: 36px; height: 36px; background: rgba(82, 168, 255, 0.1); color: var(--wt-blue); font: 500 12px 'JetBrains Mono', monospace; }
-.ps-wattline .wt-card-mark { position: relative; display: block; width: 52px; height: 24px; margin: 34px 0 26px; }
-.ps-wattline .wt-card-mark::before,
-.ps-wattline .wt-card-mark::after { position: absolute; content: ''; }
-.ps-wattline .wt-scan::before { inset: 0 18px 0 0; border: 2px solid var(--wt-blue); border-radius: 50%; }
-.ps-wattline .wt-scan::after { width: 19px; height: 2px; right: 0; bottom: 2px; background: var(--wt-violet); transform: rotate(45deg); transform-origin: left; }
-.ps-wattline .wt-link::before { width: 19px; height: 11px; top: 5px; left: 3px; border: 2px solid var(--wt-blue); border-radius: 10px; transform: rotate(-32deg); }
-.ps-wattline .wt-link::after { width: 19px; height: 11px; top: 5px; left: 22px; border: 2px solid var(--wt-violet); border-radius: 10px; transform: rotate(-32deg); }
-.ps-wattline .wt-status::before { inset: 0; border: 2px solid var(--wt-blue); border-radius: 3px; }
-.ps-wattline .wt-status::after { width: 31px; height: 2px; left: 10px; top: 11px; background: var(--wt-violet); box-shadow: 0 7px 0 var(--wt-blue); }
-.ps-wattline .ps-card h3 { margin: 0 0 10px; font: 600 20px 'IBM Plex Sans', sans-serif; }
-.ps-wattline .ps-card p { max-width: 320px; font-size: 13px; }
+.ps-wattline .wt-capability-bands { display: grid; border-top: 1px solid var(--wt-line); }
+.ps-wattline .wt-capability { display: grid; grid-template-columns: 90px minmax(220px, 1fr) auto; gap: clamp(18px, 4vw, 70px); align-items: center; min-height: 220px; padding: clamp(28px, 5vw, 62px) 0; border-bottom: 1px solid var(--wt-line); }
+.ps-wattline .wt-capability .ps-index { align-self: start; padding-top: 9px; }
+.ps-wattline .wt-capability h3 { margin: 0 0 12px; font: 400 clamp(32px, 4vw, 58px)/0.96 'Archivo Black', sans-serif; letter-spacing: -0.045em; }
+.ps-wattline .wt-capability p:last-child { max-width: 540px; margin: 0; color: var(--ps-muted); font-size: 16px; line-height: 1.6; }
+.ps-wattline .wt-capability strong { min-width: 160px; color: var(--wt-charge); font: 400 clamp(50px, 7vw, 94px)/0.82 'Archivo Black', sans-serif; letter-spacing: -0.07em; text-align: right; }
+.ps-wattline .wt-capability strong small { margin-left: 5px; font: 500 0.28em 'IBM Plex Sans', sans-serif; letter-spacing: 0; }
+.ps-wattline .wt-output-band strong { color: var(--wt-draw); }
+.ps-wattline .wt-schedule-band strong { color: var(--wt-blue); }
 
 .ps-wattline .wt-screen-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 4vw, 52px); align-items: start; }
 .ps-wattline .wt-screen { margin: 0; padding: clamp(18px, 3vw, 34px); border: 1px solid var(--wt-line); background: linear-gradient(145deg, rgba(82, 168, 255, 0.08), transparent 50%), var(--wt-panel); }
@@ -1071,11 +1083,12 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
 .ps-wattline .wt-router-diagram span { color: var(--ps-ink); font-weight: 600; }
 .ps-wattline .wt-router-diagram small { color: var(--ps-dim); font-size: 11px; }
 .ps-wattline .wt-router-diagram i { width: clamp(14px, 3vw, 36px); height: 1px; background: linear-gradient(90deg, var(--wt-blue), var(--wt-violet)); }
-.ps-wattline .wt-router-captures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 4vw, 52px); margin-top: clamp(26px, 5vw, 52px); }
-.ps-wattline .wt-router-captures figure { display: grid; grid-template-rows: 1fr auto; min-width: 0; margin: 0; padding: clamp(18px, 3vw, 34px); border: 1px solid var(--wt-line); background: linear-gradient(145deg, rgba(167, 139, 250, 0.09), transparent 50%), var(--wt-panel); }
-.ps-wattline .wt-router-captures img { display: block; width: min(100%, 390px); height: auto; margin: auto; border-radius: 20px; box-shadow: 0 24px 54px rgba(0, 0, 0, 0.55); }
-.ps-wattline .wt-router-captures figcaption { max-width: 390px; margin: 22px auto 2px; color: var(--ps-muted); font-size: 13px; line-height: 1.5; }
-.ps-wattline .wt-router-captures figcaption span { display: block; margin-bottom: 6px; color: var(--wt-blue); font: 500 11px 'JetBrains Mono', monospace; text-transform: uppercase; }
+.ps-wattline .wt-router-stack { position: relative; display: grid; place-items: center; min-height: 570px; margin-top: clamp(28px, 5vw, 64px); isolation: isolate; }
+.ps-wattline .wt-router-stack::before { position: absolute; z-index: -1; width: min(620px, 88%); aspect-ratio: 1.1; border: 1px solid rgba(82, 168, 255, 0.2); border-radius: 50%; background: radial-gradient(circle, rgba(82, 168, 255, 0.15), transparent 62%); content: ''; }
+.ps-wattline .wt-router-stack-main { width: min(100%, 338px); max-height: 515px; border-radius: 20px; box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(218, 210, 255, 0.15); object-fit: cover; object-position: top; transform: rotate(2deg); }
+.ps-wattline .wt-router-stack-pairing { position: absolute; right: max(5%, calc(50% - 340px)); bottom: 9%; width: min(250px, 38%); margin: 0; padding: 9px; border: 1px solid var(--wt-line); background: rgba(9, 8, 19, 0.9); box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45); transform: rotate(-4deg); }
+.ps-wattline .wt-router-stack-pairing img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.ps-wattline .wt-router-stack-pairing figcaption { margin: 9px 3px 2px; color: var(--ps-muted); font-size: 11px; line-height: 1.4; }
 
 .ps-wattline .wt-follow { display: grid; grid-template-columns: minmax(280px, 1fr) auto; gap: 40px; align-items: end; }
 .ps-wattline .wt-follow h2 { margin: 18px 0; }
@@ -1095,10 +1108,11 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
   .ps-wattline .ps-hero { min-height: auto; padding-top: 78px; }
   .ps-wattline .wt-hero-capture { min-height: 530px; width: min(100%, 580px); margin-inline: auto; }
   .ps-wattline .ps-section-head { gap: 18px; }
-  .ps-wattline .ps-feature-grid { grid-template-columns: 1fr; }
-  .ps-wattline .ps-card { min-height: 220px; border-right: 0; border-bottom: 1px solid var(--wt-line); }
-  .ps-wattline .ps-card:last-child { border-bottom: 0; }
+  .ps-wattline .wt-hero-metrics { position: static; width: min(100%, 460px); margin: 0 auto; }
+  .ps-wattline .wt-capability { grid-template-columns: 60px 1fr; }
+  .ps-wattline .wt-capability strong { grid-column: 2; justify-self: start; min-width: 0; text-align: left; }
   .ps-wattline .wt-router-diagram { max-width: 620px; }
+  .ps-wattline .wt-router-stack { min-height: 510px; }
   .ps-wattline .wt-follow .ps-actions { justify-content: flex-start; }
 }
 
@@ -1114,6 +1128,7 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
   .ps-wattline .wt-hero-capture { min-height: 430px; margin-top: 16px; }
   .ps-wattline .wt-hero-capture img { width: min(100%, 278px); border-radius: 25px; }
   .ps-wattline .wt-signal { top: 6%; right: 0; transform: scale(0.86); transform-origin: top right; }
+  .ps-wattline .wt-hero-metrics { grid-template-columns: 1fr 1fr; width: 100%; margin-top: 18px; }
   .ps-wattline .ps-section { padding-block: 78px; }
   .ps-wattline .ps-section h2 { font-size: clamp(38px, 13vw, 54px); }
   .ps-wattline .wt-screen-grid { grid-template-columns: 1fr; }
@@ -1124,9 +1139,13 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
   .ps-wattline .wt-router-diagram { grid-template-columns: 1fr; justify-items: stretch; }
   .ps-wattline .wt-router-diagram > div { min-height: 82px; }
   .ps-wattline .wt-router-diagram i { width: 1px; height: 20px; justify-self: center; }
-  .ps-wattline .wt-router-captures { grid-template-columns: 1fr; }
-  .ps-wattline .wt-router-captures figure { padding: 20px; }
-  .ps-wattline .wt-router-captures img { max-width: 300px; border-radius: 16px; }
+  .ps-wattline .wt-capability { grid-template-columns: 1fr; gap: 16px; min-height: 0; }
+  .ps-wattline .wt-capability .ps-index { padding-top: 0; }
+  .ps-wattline .wt-capability strong { grid-column: auto; }
+  .ps-wattline .wt-router-stack { display: block; min-height: 0; margin-top: 36px; }
+  .ps-wattline .wt-router-stack::before { display: none; }
+  .ps-wattline .wt-router-stack-main { display: block; width: min(100%, 290px); max-height: 440px; margin-inline: auto; transform: none; }
+  .ps-wattline .wt-router-stack-pairing { position: static; width: min(100%, 260px); margin: 22px auto 0; transform: none; }
   .ps-wattline .wt-follow { gap: 26px; }
 }
 
