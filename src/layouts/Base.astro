@@ -20,7 +20,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <title>{title === 'Keith Herrington' ? title : `${title} · keithah`}</title>
 </head>
 <body>
-  <nav>
+  <nav aria-label="Primary">
     <a href="/" class="nav-logo">~/<span>keithah</span></a>
     <div class="nav-links">
       <a href="/posts" class:list={[{ active: activeNav === 'posts' }]}>posts</a>

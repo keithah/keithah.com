@@ -303,16 +303,21 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
             <p>Send a bug report or request to <a href="mailto:keith+pingscope@hadm.net">keith+pingscope@hadm.net</a>. The form opens your email app with the fields filled in.</p>
           </div>
           <form class="ps-form" id="ps-support-form">
-            <input type="text" name="name" placeholder="your name" autocomplete="name" />
-            <input type="email" name="email" placeholder="email for follow-up" autocomplete="email" />
-            <input type="text" name="version" placeholder="PingScope version, if known" />
-            <select name="topic">
+            <label class="ps-visually-hidden" for="ps-support-name">Your name</label>
+            <input id="ps-support-name" type="text" name="name" placeholder="your name" autocomplete="name" />
+            <label class="ps-visually-hidden" for="ps-support-email">Email for follow-up</label>
+            <input id="ps-support-email" type="email" name="email" placeholder="email for follow-up" autocomplete="email" />
+            <label class="ps-visually-hidden" for="ps-support-version">PingScope version, if known</label>
+            <input id="ps-support-version" type="text" name="version" placeholder="PingScope version, if known" />
+            <label class="ps-visually-hidden" for="ps-support-topic">Support topic</label>
+            <select id="ps-support-topic" name="topic">
               <option>Bug report</option>
               <option>Feature request</option>
               <option>Install or update help</option>
               <option>Other</option>
             </select>
-            <textarea name="message" placeholder="what happened? Include macOS version, network type, and what you were doing."></textarea>
+            <label class="ps-visually-hidden" for="ps-support-message">What happened?</label>
+            <textarea id="ps-support-message" name="message" placeholder="what happened? Include macOS version, network type, and what you were doing."></textarea>
             <button class="ps-btn ps-primary" type="submit">Email support</button>
           </form>
         </div>

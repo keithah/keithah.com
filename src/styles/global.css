@@ -636,6 +636,16 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 .ps-pingscope .ps-subnav-links a { color: var(--ps-muted); font-weight: 600; }
 .ps-pingscope .ps-subnav a:hover { color: var(--ps-green); }
 
+body:has(.ps-pingscope) > nav .nav-links a,
+body:has(.ps-pingscope) > footer,
+body:has(.ps-pingscope) > footer .footer-l,
+body:has(.ps-pingscope) > footer a { color: var(--muted); }
+
+body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 4px;
+}
+
 .ps-pingscope :where(a, button, input, select, textarea):focus-visible {
   outline: 3px solid var(--ps-green);
   outline-offset: 4px;
@@ -702,7 +712,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 .ps-hero-mac { z-index: 2; width: 50%; left: 2%; top: 8%; transform: rotate(-2deg); border-radius: 24px; }
 .ps-hero-phone { z-index: 4; width: 32%; border-radius: 28px; }
 .ps-hero-signal { right: 23%; top: 11%; transform: rotate(1.5deg); }
-.ps-hero-ring { right: -5%; top: 0; transform: rotate(3.5deg); }
+.ps-hero-ring { right: 0; top: 0; transform: rotate(3.5deg); }
 .ps-console-label {
   position: absolute;
   z-index: 7;
@@ -763,6 +773,17 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 .ps-pingscope .ps-release-box a { color: var(--ps-green); text-decoration: underline; text-underline-offset: 3px; }
 .ps-pingscope .ps-support-grid { grid-template-columns: minmax(280px, 0.75fr) minmax(360px, 1.25fr); gap: 70px; }
 .ps-pingscope .ps-form { border-radius: 0; background: rgba(17, 20, 19, 0.86); }
+.ps-pingscope .ps-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 .ps-pingscope .ps-form input,
 .ps-pingscope .ps-form select,
 .ps-pingscope .ps-form textarea { border-radius: 2px; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; }
@@ -820,7 +841,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   .ps-hero-mac { width: 56%; left: -2%; }
   .ps-hero-phone { width: 37%; }
   .ps-hero-signal { right: 25%; }
-  .ps-hero-ring { right: -5%; }
+  .ps-hero-ring { right: 0; }
   .ps-console-label { display: none; }
   .ps-pingscope .ps-section { padding-block: 78px; }
   .ps-pingscope .ps-section h2 { font-size: clamp(38px, 13vw, 54px); }
