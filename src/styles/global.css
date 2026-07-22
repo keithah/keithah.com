@@ -872,7 +872,7 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
   --ps-bg: #090813;
   --ps-ink: #f3f1ff;
   --ps-muted: #b5b0ca;
-  --ps-dim: #77728e;
+  --ps-dim: #817b98;
   --ps-panel: var(--wt-panel);
   --ps-line: var(--wt-line);
   --ps-green: var(--wt-blue);
