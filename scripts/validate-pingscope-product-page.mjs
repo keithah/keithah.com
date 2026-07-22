@@ -59,6 +59,12 @@ if (body.includes(productFontRequest)) throw new Error('PingScope font request l
 if (unrelatedPages.some((page) => page.includes(productFontRequest))) {
   throw new Error('PingScope font request leaked into an unrelated product page');
 }
+if (html.includes('class="nav-logo"')) {
+  throw new Error('site-wide ~/keithah navigation must be hidden on the PingScope product page');
+}
+if (unrelatedPages.some((page) => !page.includes('class="nav-logo"'))) {
+  throw new Error('site-wide navigation must remain visible on unrelated product pages');
+}
 
 for (const asset of assets) {
   if (!html.includes(`/products/pingscope/${asset}`)) throw new Error(`unreferenced: ${asset}`);

@@ -4,8 +4,14 @@ interface Props {
   title?: string;
   description?: string;
   activeNav?: string;
+  hidePrimaryNav?: boolean;
 }
-const { title = 'Keith Herrington', description = 'Technical Product @ TuneIn · Exec Director, Kodi Foundation · aspirational slopcoder.', activeNav } = Astro.props;
+const {
+  title = 'Keith Herrington',
+  description = 'Technical Product @ TuneIn · Exec Director, Kodi Foundation · aspirational slopcoder.',
+  activeNav,
+  hidePrimaryNav = false,
+} = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -20,15 +26,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <title>{title === 'Keith Herrington' ? title : `${title} · keithah`}</title>
 </head>
 <body>
-  <nav aria-label="Primary">
-    <a href="/" class="nav-logo">~/<span>keithah</span></a>
-    <div class="nav-links">
-      <a href="/posts" class:list={[{ active: activeNav === 'posts' }]}>posts</a>
-      <a href="/work" class:list={[{ active: activeNav === 'work' }]}>work</a>
-      <a href="/about" class:list={[{ active: activeNav === 'about' }]}>about</a>
-      <a href="/rss.xml">rss</a>
-    </div>
-  </nav>
+  {!hidePrimaryNav && (
+    <nav aria-label="Primary">
+      <a href="/" class="nav-logo">~/<span>keithah</span></a>
+      <div class="nav-links">
+        <a href="/posts" class:list={[{ active: activeNav === 'posts' }]}>posts</a>
+        <a href="/work" class:list={[{ active: activeNav === 'work' }]}>work</a>
+        <a href="/about" class:list={[{ active: activeNav === 'about' }]}>about</a>
+        <a href="/rss.xml">rss</a>
+      </div>
+    </nav>
+  )}
   <main>
     <slot />
   </main>

@@ -17,7 +17,7 @@ const isStarwatch = product.slug === 'starwatch';
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(product.slug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base title={d.name} description={d.tagline}>
+<Base title={d.name} description={d.tagline} hidePrimaryNav={isPingScope}>
   <Fragment slot="head">
     {isPingScope && (
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
