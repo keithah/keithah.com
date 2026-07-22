@@ -11,15 +11,16 @@ const { product } = Astro.props;
 const { Content } = await product.render();
 const d = product.data;
 const isPingScope = product.slug === 'pingscope';
+const isWattline = product.slug === 'wattline';
 const isStarwatch = product.slug === 'starwatch';
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(product.slug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base title={d.name} description={d.tagline} hidePrimaryNav={isPingScope}>
+<Base title={d.name} description={d.tagline} hidePrimaryNav={isPingScope || isWattline}>
   <Fragment slot="head">
-    {isPingScope && (
+    {(isPingScope || isWattline) && (
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
     )}
   </Fragment>
@@ -376,6 +377,121 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
         window.location.href = `mailto:keith+pingscope@hadm.net?subject=${encodeURIComponent(`PingScope support: ${topic}`)}&body=${encodeURIComponent(body)}`;
       });
     </script>
+  ) : isWattline ? (
+    <div class="ps-page ps-wattline">
+      <nav class="ps-subnav" aria-label="Wattline sections">
+        <a href="#top" class="ps-brand">Wattline</a>
+        <span class="ps-subnav-links">
+          <a href="#ble">Bluetooth</a>
+          <a href="#screens">App</a>
+          <a href="#router">Router</a>
+          <a href="#follow">Follow</a>
+        </span>
+      </nav>
+
+      <section id="top" class="ps-hero wt-hero" aria-labelledby="wattline-title">
+        <div class="ps-hero-copy">
+          <p class="ps-eyebrow"><span aria-hidden="true"></span> Direct Bluetooth control</p>
+          <h1 id="wattline-title">Power, close at hand.</h1>
+          <p class="ps-lede">Wattline is an Apple companion app for compatible power devices. It connects directly with <strong>Bluetooth Low Energy</strong>, so the everyday path stays close, simple, and in your hands.</p>
+          <div class="ps-actions">
+            <a class="ps-btn ps-primary" href={d.repo} target="_blank" rel="noopener">View on GitHub</a>
+            <span class="ps-btn wt-pending" aria-disabled="true">TestFlight coming soon</span>
+          </div>
+          <p class="ps-release-note">Development preview for iPhone, iPad, and Mac. No cloud account required for direct Bluetooth control.</p>
+        </div>
+        <div class="wt-hero-capture">
+          <div class="wt-signal" aria-hidden="true"><i></i><i></i><i></i></div>
+          <img src="/products/wattline/dashboard.png" alt="Wattline Demo Mode dashboard with a DEMO badge and generated power status readings." width="1206" height="2622" decoding="async" fetchpriority="high" />
+        </div>
+      </section>
+
+      <section id="ble" class="ps-section wt-ble" aria-labelledby="wattline-ble-title">
+        <div class="ps-section-head">
+          <div>
+            <p class="ps-index">01 / Bluetooth</p>
+            <h2 id="wattline-ble-title">Bluetooth is the everyday connection.</h2>
+          </div>
+          <p>Start with the power device beside you. A router and cloud account are not prerequisites for discovering, pairing, or checking a compatible device.</p>
+        </div>
+        <div class="ps-feature-grid">
+          <article class="ps-card">
+            <span>01</span>
+            <i class="wt-card-mark wt-scan" aria-hidden="true"></i>
+            <h3>Discover</h3>
+            <p>Look for compatible nearby devices over Bluetooth Low Energy without asking the router to mediate.</p>
+          </article>
+          <article class="ps-card">
+            <span>02</span>
+            <i class="wt-card-mark wt-link" aria-hidden="true"></i>
+            <h3>Connect</h3>
+            <p>Pair from the app, then keep one clear owner for the direct device connection.</p>
+          </article>
+          <article class="ps-card">
+            <span>03</span>
+            <i class="wt-card-mark wt-status" aria-hidden="true"></i>
+            <h3>View status</h3>
+            <p>See the current power information where it matters: beside the device, not behind an account wall.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="screens" class="ps-section wt-screens" aria-labelledby="wattline-screens-title">
+        <div class="ps-section-head">
+          <div>
+            <p class="ps-index">02 / App flow</p>
+            <h2 id="wattline-screens-title">The first connection is deliberately ordinary.</h2>
+          </div>
+          <p>Open Wattline, choose a nearby compatible device, and keep a readable view of its state. The dashboard shown here is <strong>Demo Mode</strong>: its status readings are generated examples, not physical measurements.</p>
+        </div>
+        <div class="wt-screen-grid">
+          <figure class="wt-screen wt-screen-onboarding">
+            <img src="/products/wattline/onboarding.png" alt="Wattline welcome screen offering Connect a device and Try Demo Mode." width="1206" height="2622" loading="lazy" decoding="async" />
+            <figcaption><span>01</span> Choose a nearby device, or open Demo Mode to explore the app safely.</figcaption>
+          </figure>
+          <figure class="wt-screen wt-screen-nearby">
+            <img src="/products/wattline/nearby-devices.png" alt="Wattline Devices screen looking for nearby compatible power devices." width="1206" height="2622" loading="lazy" decoding="async" />
+            <figcaption><span>02</span> Scan locally for compatible power devices.</figcaption>
+          </figure>
+          <aside class="wt-demo-note">
+            <p class="ps-kicker">Demo Mode</p>
+            <h3>Learn the shape before touching the hardware.</h3>
+            <p>The dashboard image in the hero is a generated demo state. It helps explain the controls without presenting example values as a measurement from a physical device.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="router" class="ps-section wt-router" aria-labelledby="wattline-router-title">
+        <div class="wt-router-panel">
+          <div>
+            <p class="ps-index">03 / Optional companion</p>
+            <h2 id="wattline-router-title">Optional router, broader reach.</h2>
+            <p><code>wattlined</code> runs on an OpenWrt or GL.iNet router and can add local-network access and automation to a Wattline setup. It is a companion for later, not a requirement for direct Bluetooth use.</p>
+            <p>Remote access remains under hardware validation. Follow the companion project for router-side setup and progress.</p>
+            <a class="ps-btn" href="https://github.com/keithah/openwrt-wattline" target="_blank" rel="noopener">Explore openwrt-wattline</a>
+          </div>
+          <div class="wt-router-diagram" aria-label="Optional Wattline router companion diagram">
+            <div><span>Wattline</span><small>Direct BLE</small></div>
+            <i aria-hidden="true"></i>
+            <div><span>wattlined</span><small>Optional router</small></div>
+            <i aria-hidden="true"></i>
+            <div><span>Automation</span><small>Local network</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="follow" class="ps-section wt-follow" aria-labelledby="wattline-follow-title">
+        <div>
+          <p class="ps-index">04 / Follow along</p>
+          <h2 id="wattline-follow-title">Build the connection you need.</h2>
+          <p>Wattline is in active development. The source is the best place to follow the direct Bluetooth work as it takes shape.</p>
+        </div>
+        <div class="ps-actions">
+          <a class="ps-btn ps-primary" href={d.repo} target="_blank" rel="noopener">View on GitHub</a>
+          <span class="wt-follow-status">TestFlight coming soon</span>
+        </div>
+      </section>
+    </div>
   ) : (
     <>
   <nav style="font-size:10px;color:var(--dimmer);margin-bottom:20px">
