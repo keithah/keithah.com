@@ -16,6 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
   <link rel="alternate" type="application/rss+xml" title="Keith Herrington" href="/rss.xml" />
+  <slot name="head" />
   <title>{title === 'Keith Herrington' ? title : `${title} · keithah`}</title>
 </head>
 <body>

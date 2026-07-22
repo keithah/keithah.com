@@ -18,6 +18,11 @@ const posts = await getCollection('posts', p => !p.data.draft && p.data.products
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <Base title={d.name} description={d.tagline}>
+  <Fragment slot="head">
+    {isPingScope && (
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
+    )}
+  </Fragment>
   {isStarwatch ? (
     <div class="ps-page">
       <nav class="ps-subnav" aria-label="Starwatch sections">
@@ -148,7 +153,6 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     </script>
   ) : isPingScope ? (
     <div class="ps-page ps-pingscope">
-      <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Sans:wght@400;500;600&display=swap');</style>
       <nav class="ps-subnav" aria-label="PingScope sections">
         <a href="#top" class="ps-brand" aria-label="PingScope home">
           <img src="/products/pingscope/app-icon.png" alt="" width="30" height="30" />

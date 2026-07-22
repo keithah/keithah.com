@@ -4,6 +4,11 @@ import { dirname, join } from 'node:path';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const html = await readFile(join(root, 'dist/products/pingscope/index.html'), 'utf8');
+const unrelatedPages = await Promise.all([
+  readFile(join(root, 'dist/products/starwatch/index.html'), 'utf8'),
+  readFile(join(root, 'dist/products/overhear/index.html'), 'utf8'),
+]);
+const productFontRequest = 'family=Archivo+Black&family=IBM+Plex+Sans';
 const required = [
   'PingScope for Mac',
   'PingScope for iPhone',
@@ -46,6 +51,13 @@ for (const value of required) {
 
 for (const value of stale) {
   if (html.includes(value)) throw new Error(`stale: ${value}`);
+}
+
+const [head = '', body = ''] = html.split('</head>');
+if (!head.includes(productFontRequest)) throw new Error('PingScope font request must be in the document head');
+if (body.includes(productFontRequest)) throw new Error('PingScope font request leaked into the document body');
+if (unrelatedPages.some((page) => page.includes(productFontRequest))) {
+  throw new Error('PingScope font request leaked into an unrelated product page');
 }
 
 for (const asset of assets) {
