@@ -54,17 +54,20 @@ const images = [
   },
 ];
 
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 for (const image of images) {
-  const assetPath = join(root, 'public', image.path);
+  const assetPath = join(dist, image.path.replace(/^\//, ''));
   await access(assetPath);
   const asset = await stat(assetPath);
   if (asset.size <= 10_000) {
     throw new Error(`${image.name} screenshot must be larger than 10,000 bytes`);
   }
 
-  const tag = html.match(new RegExp(`<img\\b(?=[^>]*\\bsrc="${image.path}")[^>]*>`, 'i'))?.[0];
+  const escapedPath = escapeRegExp(image.path);
+  const tag = html.match(new RegExp(`<img\\b(?=[^>]*\\bsrc="${escapedPath}")[^>]*>`, 'i'))?.[0];
   if (!tag) throw new Error(`missing ${image.name} screenshot image tag`);
-  if (!tag.includes('width="1206" height="2622"')) {
+  if (!/\bwidth="1206"/.test(tag) || !/\bheight="2622"/.test(tag)) {
     throw new Error(`${image.name} screenshot dimensions must be 1206 by 2622`);
   }
   if (!tag.includes('decoding="async"')) {
