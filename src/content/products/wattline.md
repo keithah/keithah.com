@@ -1,7 +1,7 @@
 ---
 name: Wattline
-tagline: Direct Bluetooth control for compatible power devices
-description: An Apple companion app for nearby compatible power devices, built around direct Bluetooth Low Energy control.
+tagline: Live battery monitoring and power control for compatible devices
+description: An Apple companion app for nearby compatible power devices, focused on battery state, output control, and schedules.
 repo: https://github.com/keithah/wattline
 lang: Swift
 version: Development
