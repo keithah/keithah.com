@@ -90,6 +90,29 @@ hr { border: none; border-top: 0.5px solid var(--bg2); margin: 28px 0; }
 .card-links a.gh   { color: var(--green); }
 .card-links a.prod { color: var(--muted); }
 
+/* Open source contributions */
+.oss-intro { font-size: 11px; color: var(--dim); margin: -4px 0 16px; }
+.oss-section-link { display: block; text-decoration: none; margin-top: 20px; }
+.oss-section-link:hover { color: var(--text); }
+.oss-open-heading { margin-top: 28px; }
+.oss-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.oss-card { display: flex; flex-direction: column; min-height: 168px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: 8px; padding: 13px; }
+.oss-card:hover { color: inherit; border-color: var(--green-bd); transform: translateY(-1px); }
+.oss-card:hover .oss-title { color: var(--green); }
+.oss-state { font-size: 9px; color: var(--green); letter-spacing: .05em; }
+.oss-state.merged { color: #67e8f9; }
+.oss-title { font-size: 11px; color: var(--muted); display: block; line-height: 1.45; margin: 12px 0 7px; }
+.oss-repo { font-size: 9px; color: var(--dimmer); display: block; line-height: 1.45; }
+.oss-repo b { font-weight: 400; color: var(--text); }
+.oss-meta { font-size: 9px; color: var(--dimmer); margin-top: auto; padding-top: 12px; }
+.oss-more { font-size: 10px; color: var(--green); display: inline-block; margin-top: 12px; }
+.oss-note { font-size: 10px; color: var(--dimmer); margin-top: 12px; }
+.oss-detail-list { display: flex; flex-direction: column; margin-bottom: 18px; }
+.oss-detail-list a { display: grid; grid-template-columns: 112px 1fr; gap: 12px; padding: 10px 0; border-bottom: .5px solid var(--bg2); }
+.oss-detail-list a:hover b { color: var(--green); }
+.oss-detail-list b { display: block; font-size: 11px; color: var(--muted); font-weight: 400; }
+.oss-detail-list small { display: block; font-size: 9px; color: var(--dimmer); margin-top: 3px; }
+
 /* Status dots */
 .status-row { display: flex; gap: 16px; flex-wrap: wrap; }
 .status { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--dim); }
@@ -170,9 +193,11 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
 @media (max-width: 560px) {
   .card-grid    { grid-template-columns: 1fr; }
+  .oss-grid     { grid-template-columns: 1fr; }
   .feature-grid { grid-template-columns: 1fr; }
   .nav-links    { gap: 12px; }
   .post-date    { display: none; }
+  .oss-detail-list a { grid-template-columns: 1fr; gap: 4px; }
 }
 
 /* PingScope product page */

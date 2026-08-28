@@ -1,14 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', p => !p.data.draft);
-  return posts.map(p => ({ params: { slug: p.slug }, props: { post: p } }));
+  return posts.map(p => ({ params: { slug: p.id }, props: { post: p } }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
 <Base title={post.data.title} activeNav="posts">
   <div style="margin-bottom:24px">

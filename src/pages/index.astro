@@ -11,6 +11,18 @@ const recentPosts = posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valu
 const featured = projects
   .filter(p => p.data.featured != null)
   .sort((a, b) => (a.data.featured as number) - (b.data.featured as number));
+
+const recentlyMerged = [
+  { number: 1837, title: 'feat(kuma): add kuma', repo: 'mvanhorn/printing-press-library', topic: 'infrastructure', lang: 'Go', stars: '1.9k', url: 'https://github.com/mvanhorn/printing-press-library/pull/1837' },
+  { number: 1762, title: 'add Seats.aero award search', repo: 'mvanhorn/printing-press-library', topic: 'travel', lang: 'Go', stars: '1.9k', url: 'https://github.com/mvanhorn/printing-press-library/pull/1762' },
+  { number: 87, title: 'add container health and disk usage summaries', repo: 'atom2ueki/mcp-server-synology', topic: 'home automation', lang: 'Python', stars: '179', url: 'https://github.com/atom2ueki/mcp-server-synology/pull/87' },
+];
+
+const openPullRequests = [
+  { number: 6985, title: 'organize imported sessions by origin and add safe multiselect', repo: 'nesquena/hermes-webui', topic: 'AI / dev tools', lang: 'Python', stars: '17.8k', url: 'https://github.com/nesquena/hermes-webui/pull/6985' },
+  { number: 7040, title: 'keep large migrated sessions responsive', repo: 'nesquena/hermes-webui', topic: 'AI / dev tools', lang: 'Python', stars: '17.8k', url: 'https://github.com/nesquena/hermes-webui/pull/7040' },
+  { number: 6717, title: 'add Matrix notification support', repo: 'coollabsio/coolify', topic: 'matrix', lang: 'PHP', stars: '61.2k', url: 'https://github.com/coollabsio/coolify/pull/6717' },
+];
 ---
 <Base>
   <div class="sh" style="margin-bottom:4px">$ whoami</div>
@@ -34,7 +46,7 @@ const featured = projects
         {recentPosts.map(p => (
           <div class="post-row">
             <span class="post-date">{p.data.date.toISOString().slice(0,10)}</span>
-            <a href={`/posts/${p.slug}`} class="post-title">{p.data.title}</a>
+            <a href={`/posts/${p.id}`} class="post-title">{p.data.title}</a>
             <span class="pill pill-post">post</span>
           </div>
         ))}
@@ -66,6 +78,36 @@ const featured = projects
   <p style="margin-bottom:28px"><a href="/work" class="see-all">&rarr; see all work</a></p>
 
   <hr />
+
+  <div class="sh">open source contributions</div>
+  <p class="oss-intro">A few things I’ve helped make better in projects I use, follow, or care about.</p>
+
+  <a class="sh oss-section-link" href="/opensource">recently merged &rarr;</a>
+  <div class="oss-grid">
+    {recentlyMerged.map(pr => (
+      <a class="oss-card" href={pr.url} target="_blank" rel="noopener">
+        <span class="oss-state merged">MERGED · #{pr.number}</span>
+        <span class="oss-title">{pr.title}</span>
+        <span class="oss-repo"><b>{pr.repo}</b><br />{pr.topic} · {pr.lang}</span>
+        <span class="oss-meta">{pr.stars} ★ · recently</span>
+      </a>
+    ))}
+  </div>
+  <a class="oss-more" href="/opensource">see all merged contributions &rarr;</a>
+
+  <a class="sh oss-section-link oss-open-heading" href="/opensource">open pull requests &rarr;</a>
+  <div class="oss-grid">
+    {openPullRequests.map(pr => (
+      <a class="oss-card" href={pr.url} target="_blank" rel="noopener">
+        <span class="oss-state">OPEN · #{pr.number}</span>
+        <span class="oss-title">{pr.title}</span>
+        <span class="oss-repo"><b>{pr.repo}</b><br />{pr.topic} · {pr.lang}</span>
+        <span class="oss-meta">{pr.stars} ★ · active</span>
+      </a>
+    ))}
+  </div>
+  <a class="oss-more" href="/opensource">see all open pull requests &rarr;</a>
+  <p class="oss-note">static snapshot · refreshed at build time</p>
 
   <div class="status-row">
     {projects.map(p => (

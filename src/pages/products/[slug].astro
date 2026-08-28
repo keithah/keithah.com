@@ -1,21 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
-  return products.map(p => ({ params: { slug: p.slug }, props: { product: p } }));
+  return products.map(p => ({ params: { slug: p.id.replace(/\.md$/, '') }, props: { product: p } }));
 }
 
 const { product } = Astro.props;
-const { Content } = await product.render();
+const { Content } = await render(product);
 const d = product.data;
-const isPingScope = product.slug === 'pingscope';
-const isWattline = product.slug === 'wattline';
-const isStarwatch = product.slug === 'starwatch';
+const productSlug = product.id.replace(/\.md$/, '');
+const isPingScope = productSlug === 'pingscope';
+const isWattline = productSlug === 'wattline';
+const isStarwatch = productSlug === 'starwatch';
 
 // Pull related posts
-const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(product.slug));
+const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(productSlug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <Base title={d.name} description={d.tagline} hidePrimaryNav={isPingScope || isWattline}>
@@ -502,7 +503,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
   <nav style="font-size:10px;color:var(--dimmer);margin-bottom:20px">
     <a href="/" style="color:var(--dimmer)">keithah.com</a>
     <span style="margin:0 6px">/</span>
-    <span style="color:var(--green)">{product.slug}</span>
+    <span style="color:var(--green)">{productSlug}</span>
     <span style="float:right;display:flex;gap:16px">
       <a href="#docs">docs</a>
       <a href="#changelog">changelog</a>
@@ -542,7 +543,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           {posts.map(p => (
             <div class="changelog-row">
               <span class="cl-date">{p.data.date.toISOString().slice(0,10)}</span>
-              <a href={`/posts/${p.slug}`} class="cl-msg" style="color:var(--muted)">{p.data.title}</a>
+              <a href={`/posts/${p.id}`} class="cl-msg" style="color:var(--muted)">{p.data.title}</a>
             </div>
           ))}
         </div>

@@ -14,7 +14,7 @@ const posts = (await getCollection('posts', p => !p.data.draft))
       {posts.map(p => (
         <div class="post-row">
           <span class="post-date">{p.data.date.toISOString().slice(0,10)}</span>
-          <a href={`/posts/${p.slug}`} class="post-title">{p.data.title}</a>
+          <a href={`/posts/${p.id}`} class="post-title">{p.data.title}</a>
           {p.data.products.map(prod => <span class="pill pill-product">{prod}</span>)}
         </div>
       ))}
