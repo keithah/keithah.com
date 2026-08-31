@@ -20,8 +20,8 @@
 }
 
 html { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
-/* The site is intentionally compact; scale the complete page up for readability. */
-body { zoom: 2; width: 380px; max-width: calc(100% / 2); margin: 0 auto; padding: 0 20px; }
+/* Keep the readable scale while giving the desktop layout room to breathe. */
+body { zoom: 1.5; width: min(1200px, calc(100% - 40px)); margin: 0 auto; padding: 0 20px; }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--muted); }
 
