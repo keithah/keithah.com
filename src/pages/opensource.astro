@@ -1,16 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import contributionData from '../data/opensource.json';
 
-const merged = [
-  ['#1837', 'feat(kuma): add kuma', 'mvanhorn/printing-press-library', 'infrastructure', 'https://github.com/mvanhorn/printing-press-library/pull/1837'],
-  ['#1762', 'add Seats.aero award search', 'mvanhorn/printing-press-library', 'travel', 'https://github.com/mvanhorn/printing-press-library/pull/1762'],
-  ['#87', 'add container health and disk usage summaries', 'atom2ueki/mcp-server-synology', 'home automation', 'https://github.com/atom2ueki/mcp-server-synology/pull/87'],
-];
-const open = [
-  ['#6985', 'organize imported sessions by origin and add safe multiselect', 'nesquena/hermes-webui', 'AI / dev tools', 'https://github.com/nesquena/hermes-webui/pull/6985'],
-  ['#7040', 'keep large migrated sessions responsive', 'nesquena/hermes-webui', 'AI / dev tools', 'https://github.com/nesquena/hermes-webui/pull/7040'],
-  ['#6717', 'add Matrix notification support', 'coollabsio/coolify', 'matrix', 'https://github.com/coollabsio/coolify/pull/6717'],
-];
+const merged = contributionData.merged;
+const open = contributionData.open;
 ---
 <Base title="Open source contributions" activeNav="work">
   <div class="sh">$ cat /opensource</div>
@@ -22,11 +15,11 @@ const open = [
     <p>I’m interested in practical improvements that remove friction for real people: a better status summary, a new way to search, a safer interface, or a notification that arrives in the place a team already works.</p>
     <h2>recently merged</h2>
     <div class="oss-detail-list">
-      {merged.map(([number, title, repo, topic, url]) => <a href={url} target="_blank" rel="noopener"><span class="oss-state merged">MERGED · {number}</span><span><b>{title}</b><small>{repo} · {topic}</small></span></a>)}
+      {merged.map(pr => <a href={pr.url} target="_blank" rel="noopener"><span class="oss-state merged">MERGED · #{pr.number}</span><span><b>{pr.title}</b><small>{pr.repo} · {pr.topic}</small></span></a>)}
     </div>
     <h2>open pull requests</h2>
     <div class="oss-detail-list">
-      {open.map(([number, title, repo, topic, url]) => <a href={url} target="_blank" rel="noopener"><span class="oss-state">OPEN · {number}</span><span><b>{title}</b><small>{repo} · {topic}</small></span></a>)}
+      {open.map(pr => <a href={pr.url} target="_blank" rel="noopener"><span class="oss-state">OPEN · #{pr.number}</span><span><b>{pr.title}</b><small>{pr.repo} · {pr.topic}</small></span></a>)}
     </div>
     <p class="oss-note">static snapshot · refreshed at build time</p>
   </div>

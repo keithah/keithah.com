@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import contributionData from '../data/opensource.json';
 
 const posts    = await getCollection('posts',    p => !p.data.draft);
 const projects = await getCollection('projects');
@@ -12,17 +13,9 @@ const featured = projects
   .filter(p => p.data.featured != null)
   .sort((a, b) => (a.data.featured as number) - (b.data.featured as number));
 
-const recentlyMerged = [
-  { number: 1837, title: 'feat(kuma): add kuma', repo: 'mvanhorn/printing-press-library', topic: 'infrastructure', lang: 'Go', stars: '1.9k', url: 'https://github.com/mvanhorn/printing-press-library/pull/1837' },
-  { number: 1762, title: 'add Seats.aero award search', repo: 'mvanhorn/printing-press-library', topic: 'travel', lang: 'Go', stars: '1.9k', url: 'https://github.com/mvanhorn/printing-press-library/pull/1762' },
-  { number: 87, title: 'add container health and disk usage summaries', repo: 'atom2ueki/mcp-server-synology', topic: 'home automation', lang: 'Python', stars: '179', url: 'https://github.com/atom2ueki/mcp-server-synology/pull/87' },
-];
-
-const openPullRequests = [
-  { number: 6985, title: 'organize imported sessions by origin and add safe multiselect', repo: 'nesquena/hermes-webui', topic: 'AI / dev tools', lang: 'Python', stars: '17.8k', url: 'https://github.com/nesquena/hermes-webui/pull/6985' },
-  { number: 7040, title: 'keep large migrated sessions responsive', repo: 'nesquena/hermes-webui', topic: 'AI / dev tools', lang: 'Python', stars: '17.8k', url: 'https://github.com/nesquena/hermes-webui/pull/7040' },
-  { number: 6717, title: 'add Matrix notification support', repo: 'coollabsio/coolify', topic: 'matrix', lang: 'PHP', stars: '61.2k', url: 'https://github.com/coollabsio/coolify/pull/6717' },
-];
+const recentlyMerged = contributionData.merged;
+const openPullRequests = contributionData.open;
+const formatStars = (stars: number) => stars >= 1000 ? `${(stars / 1000).toFixed(1).replace('.0', '')}k` : `${stars}`;
 ---
 <Base>
   <div class="sh" style="margin-bottom:4px">$ whoami</div>
@@ -89,7 +82,7 @@ const openPullRequests = [
         <span class="oss-state merged">MERGED · #{pr.number}</span>
         <span class="oss-title">{pr.title}</span>
         <span class="oss-repo"><b>{pr.repo}</b><br />{pr.topic} · {pr.lang}</span>
-        <span class="oss-meta">{pr.stars} ★ · recently</span>
+        <span class="oss-meta">{formatStars(pr.stars)} ★ · recently</span>
       </a>
     ))}
   </div>
@@ -102,7 +95,7 @@ const openPullRequests = [
         <span class="oss-state">OPEN · #{pr.number}</span>
         <span class="oss-title">{pr.title}</span>
         <span class="oss-repo"><b>{pr.repo}</b><br />{pr.topic} · {pr.lang}</span>
-        <span class="oss-meta">{pr.stars} ★ · active</span>
+        <span class="oss-meta">{formatStars(pr.stars)} ★ · active</span>
       </a>
     ))}
   </div>

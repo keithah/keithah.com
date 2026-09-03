@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev":     "astro dev",
-    "build":   "astro build",
+    "build":   "npm run update:opensource && astro build",
+    "update:opensource": "node scripts/update-opensource.mjs",
     "preview": "astro preview",
     "validate:pingscope": "npm run build && node scripts/validate-pingscope-product-page.mjs",
     "validate:wattline": "npm run build && node scripts/validate-wattline-product-page.mjs"

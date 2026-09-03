@@ -1,0 +1,73 @@
+{
+  "generatedAt": "2026-09-03T00:29:27.160Z",
+  "merged": [
+    {
+      "number": 1895,
+      "title": "feat(kvmctl): add kvmctl",
+      "repo": "mvanhorn/printing-press-library",
+      "topic": "home automation",
+      "lang": "Go",
+      "stars": 1985,
+      "updatedAt": "2026-09-01T09:12:58Z",
+      "url": "https://github.com/mvanhorn/printing-press-library/pull/1895",
+      "state": "merged"
+    },
+    {
+      "number": 5,
+      "title": "feat: harden Plex monitor backend",
+      "repo": "keithah/plexctl",
+      "topic": "streaming",
+      "lang": "Go",
+      "stars": 0,
+      "updatedAt": "2026-09-01T03:15:57Z",
+      "url": "https://github.com/keithah/plexctl/pull/5",
+      "state": "merged"
+    },
+    {
+      "number": 1,
+      "title": "feat: support named multi-target Proxmox routing",
+      "repo": "keithah/ProxmoxMCP-Plus",
+      "topic": "home automation",
+      "lang": "Python",
+      "stars": 0,
+      "updatedAt": "2026-09-01T02:12:45Z",
+      "url": "https://github.com/keithah/ProxmoxMCP-Plus/pull/1",
+      "state": "merged"
+    }
+  ],
+  "open": [
+    {
+      "number": 5,
+      "title": "perf(privacy): avoid unchanged scrubber work",
+      "repo": "keithah/corten-matrix",
+      "topic": "matrix",
+      "lang": "Go",
+      "stars": 0,
+      "updatedAt": "2026-09-02T18:09:26Z",
+      "url": "https://github.com/keithah/corten-matrix/pull/5",
+      "state": "open"
+    },
+    {
+      "number": 1903,
+      "title": "feat(plexctl): add generated Plex monitor CLI",
+      "repo": "mvanhorn/printing-press-library",
+      "topic": "streaming",
+      "lang": "Go",
+      "stars": 1985,
+      "updatedAt": "2026-09-02T15:27:40Z",
+      "url": "https://github.com/mvanhorn/printing-press-library/pull/1903",
+      "state": "open"
+    },
+    {
+      "number": 7040,
+      "title": "fix: keep large migrated sessions responsive",
+      "repo": "nesquena/hermes-webui",
+      "topic": "AI / dev tools",
+      "lang": "Python",
+      "stars": 18000,
+      "updatedAt": "2026-09-02T00:11:43Z",
+      "url": "https://github.com/nesquena/hermes-webui/pull/7040",
+      "state": "open"
+    }
+  ]
+}
