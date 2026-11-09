@@ -9,7 +9,6 @@ status: beta
 platforms: [macOS 14+]
 tags: [swift, macos, calendar, meetings, menu bar]
 license: Proprietary (free)
-repoPublic: false
 downloadUrl: https://keithah.github.io/overhear/releases/v0.2.0/Overhear-0.2.0-local.zip
 privacyUrl: https://keithah.github.io/overhear/privacy.html
 supportEmail: keith+overhear@hadm.net

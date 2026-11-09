@@ -42,17 +42,12 @@ const products = defineCollection({
     platforms: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     license: z.string().default('MIT'),
-    // The fields below are read only by the generic product template, not by
-    // the custom Starwatch, PingScope and Wattline layouts.
-    // Private repositories: no GitHub links, since visitors cannot open them.
-    repoPublic: z.boolean().default(true),
+    // Read only by the generic product template, not by the custom Starwatch,
+    // PingScope and Wattline layouts. Repo visibility is the project's repoPublic.
     downloadUrl: z.string().url().optional(),
     privacyUrl: z.string().url().optional(),
-    // Shown instead of "open an issue"; required when the repo is private.
+    // Shown instead of "open an issue"; the build fails without it for a private repo.
     supportEmail: z.string().email().optional(),
-  }).refine((d) => d.repoPublic || d.supportEmail, {
-    message: 'supportEmail is required when repoPublic is false',
-    path: ['supportEmail'],
   }),
 });
 

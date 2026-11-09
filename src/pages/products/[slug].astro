@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -14,6 +14,12 @@ const productSlug = product.id.replace(/\.md$/, '');
 const isPingScope = productSlug === 'pingscope';
 const isWattline = productSlug === 'wattline';
 const isStarwatch = productSlug === 'starwatch';
+// Repo visibility comes from the project entry, the single source for cards too.
+const project = await getEntry('projects', productSlug);
+const repoPublic = project?.data.repoPublic ?? true;
+if (!repoPublic && !d.supportEmail) {
+  throw new Error(`${productSlug}: a private repo needs supportEmail in the product frontmatter`);
+}
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(productSlug));
@@ -509,7 +515,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href="#changelog">changelog</a>
       <a href="#support">support</a>
       {d.privacyUrl && <a href={d.privacyUrl}>privacy</a>}
-      {d.repoPublic && <a href={d.repo} target="_blank" rel="noopener">github</a>}
+      {repoPublic && <a href={d.repo} target="_blank" rel="noopener">github</a>}
     </span>
   </nav>
 
@@ -521,7 +527,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     <p class="product-tagline">{d.tagline}</p>
     <div class="product-cta-row">
       {d.downloadUrl && <a href={d.downloadUrl} class="btn">Download &rarr;</a>}
-      {d.repoPublic && <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>}
+      {repoPublic && <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>}
       <span class="product-meta-row">
         {d.platforms.join(' / ')}
         <span class="product-meta-sep">&middot;</span>{d.lang}

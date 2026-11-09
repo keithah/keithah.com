@@ -19,7 +19,8 @@ for (const value of required) {
 }
 
 const privateRepo = 'github.com/keithah/overhear';
-for (const page of ['products/overhear/index.html', 'work/index.html', 'index.html']) {
+// index.html shows only featured projects, and Overhear is not featured.
+for (const page of ['products/overhear/index.html', 'work/index.html']) {
   const html = await read(page);
   if (html.includes(privateRepo)) throw new Error(`${page}: links to the private repo ${privateRepo}`);
 }
