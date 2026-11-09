@@ -17,6 +17,9 @@ const isStarwatch = productSlug === 'starwatch';
 // Repo visibility comes from the project entry, the single source for cards too.
 const project = await getEntry('projects', productSlug);
 const repoPublic = project?.data.repoPublic ?? true;
+if (!repoPublic && (isPingScope || isWattline || isStarwatch)) {
+  throw new Error(`${productSlug}: its custom layout links to GitHub and does not support a private repo`);
+}
 if (!repoPublic && !d.supportEmail) {
   throw new Error(`${productSlug}: a private repo needs supportEmail in the product frontmatter`);
 }
