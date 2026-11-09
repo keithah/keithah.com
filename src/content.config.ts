@@ -24,6 +24,8 @@ const projects = defineCollection({
     tags: z.array(z.string()).default([]),
     isProduct: z.boolean().default(false),
     featured: z.number().optional(),
+    // false for private repositories: cards then show no GitHub link.
+    repoPublic: z.boolean().default(true),
   }),
 });
 
@@ -40,12 +42,17 @@ const products = defineCollection({
     platforms: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     license: z.string().default('MIT'),
+    // The fields below are read only by the generic product template, not by
+    // the custom Starwatch, PingScope and Wattline layouts.
     // Private repositories: no GitHub links, since visitors cannot open them.
     repoPublic: z.boolean().default(true),
     downloadUrl: z.string().url().optional(),
     privacyUrl: z.string().url().optional(),
-    // Shown instead of "open an issue" when set (needed while the repo is private).
+    // Shown instead of "open an issue"; required when the repo is private.
     supportEmail: z.string().email().optional(),
+  }).refine((d) => d.repoPublic || d.supportEmail, {
+    message: 'supportEmail is required when repoPublic is false',
+    path: ['supportEmail'],
   }),
 });
 

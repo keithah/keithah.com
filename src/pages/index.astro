@@ -62,7 +62,7 @@ const formatStars = (stars: number) => stars >= 1000 ? `${(stars / 1000).toFixed
         </div>
         <p class="card-desc">{p.data.description}</p>
         <div class="card-links">
-          <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>
+          {p.data.repoPublic && <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>}
           {p.data.isProduct && <a href={`/products/${p.id.replace('.json','')}`} class="prod">product page &rarr;</a>}
         </div>
       </div>

@@ -54,6 +54,8 @@ Edit `src/content/projects/myproject.json`:
 
 Set `"isProduct": true` in the project JSON, then create `src/content/products/myproject.md` with full frontmatter. A landing page appears at `keithah.com/myproject`.
 
+For a product whose repository is private, set `"repoPublic": false` in the project JSON and `repoPublic: false` plus `supportEmail` in the product frontmatter: cards and the product page then hide GitHub links and offer email support. `downloadUrl` and `privacyUrl` add a download button and a privacy link. These product fields work only in the generic product template, not in the custom Starwatch, PingScope and Wattline layouts.
+
 ## Local dev
 
 ```bash

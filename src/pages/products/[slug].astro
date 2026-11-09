@@ -520,7 +520,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     </div>
     <p class="product-tagline">{d.tagline}</p>
     <div class="product-cta-row">
-      {d.downloadUrl && <a href={d.downloadUrl} class="btn">Download {d.version} &rarr;</a>}
+      {d.downloadUrl && <a href={d.downloadUrl} class="btn">Download &rarr;</a>}
       {d.repoPublic && <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>}
       <span class="product-meta-row">
         {d.platforms.join(' / ')}

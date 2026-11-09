@@ -3,7 +3,8 @@
   "description": "macOS menu-bar launcher that shows your next meeting and joins it in one click.",
   "repo": "https://github.com/keithah/overhear",
   "lang": "Swift",
-  "status": "active",
+  "status": "beta",
   "tags": ["swift", "macos", "calendar", "meetings"],
-  "isProduct": true
+  "isProduct": true,
+  "repoPublic": false
 }
