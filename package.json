@@ -8,7 +8,8 @@
     "update:opensource": "node scripts/update-opensource.mjs",
     "preview": "astro preview",
     "validate:pingscope": "npm run build && node scripts/validate-pingscope-product-page.mjs",
-    "validate:wattline": "npm run build && node scripts/validate-wattline-product-page.mjs"
+    "validate:wattline": "npm run build && node scripts/validate-wattline-product-page.mjs",
+    "validate:overhear": "npm run build && node scripts/validate-overhear-product-page.mjs"
   },
   "dependencies": {
     "astro": "^7.1.1",

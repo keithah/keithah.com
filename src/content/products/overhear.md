@@ -8,7 +8,7 @@ version: 0.2.0
 status: beta
 platforms: [macOS 14+]
 tags: [swift, macos, calendar, meetings, menu bar]
-license: Free
+license: Proprietary (free)
 repoPublic: false
 downloadUrl: https://keithah.github.io/overhear/releases/v0.2.0/Overhear-0.2.0-local.zip
 privacyUrl: https://keithah.github.io/overhear/privacy.html
@@ -24,6 +24,6 @@ Overhear lives in your menu bar, watches your calendar, and gets out of the way 
 - **Meeting details** — time, organizer, participants and invite notes before you join
 - **Reminders** — a heads-up before meetings start, with snooze and optional auto-join
 - **Keyboard shortcuts** — join the next meeting or open the list without touching the mouse
-- **Private by design** — reads your calendars through macOS; no account, no tracking, nothing leaves your Mac
+- **Private by design** — reads your calendars through macOS; no account, no tracking, and your calendar data never leaves your Mac (the direct download only checks for updates)
 
 The direct download updates itself through Sparkle. A Mac App Store version is on the way.
