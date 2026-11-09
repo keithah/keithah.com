@@ -1,9 +1,9 @@
 {
   "name": "Overhear",
-  "description": "macOS menu-bar calendar launcher with local on-device meeting transcription.",
+  "description": "macOS menu-bar launcher that shows your next meeting and joins it in one click.",
   "repo": "https://github.com/keithah/overhear",
   "lang": "Swift",
   "status": "active",
-  "tags": ["swift", "macos", "transcription", "calendar"],
+  "tags": ["swift", "macos", "calendar", "meetings"],
   "isProduct": true
 }

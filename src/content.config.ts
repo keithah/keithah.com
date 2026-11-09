@@ -40,6 +40,12 @@ const products = defineCollection({
     platforms: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     license: z.string().default('MIT'),
+    // Private repositories: no GitHub links, since visitors cannot open them.
+    repoPublic: z.boolean().default(true),
+    downloadUrl: z.string().url().optional(),
+    privacyUrl: z.string().url().optional(),
+    // Shown instead of "open an issue" when set (needed while the repo is private).
+    supportEmail: z.string().email().optional(),
   }),
 });
 

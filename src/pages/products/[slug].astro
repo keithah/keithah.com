@@ -508,7 +508,8 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href="#docs">docs</a>
       <a href="#changelog">changelog</a>
       <a href="#support">support</a>
-      <a href={d.repo} target="_blank" rel="noopener">github</a>
+      {d.privacyUrl && <a href={d.privacyUrl}>privacy</a>}
+      {d.repoPublic && <a href={d.repo} target="_blank" rel="noopener">github</a>}
     </span>
   </nav>
 
@@ -519,7 +520,8 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     </div>
     <p class="product-tagline">{d.tagline}</p>
     <div class="product-cta-row">
-      <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>
+      {d.downloadUrl && <a href={d.downloadUrl} class="btn">Download {d.version} &rarr;</a>}
+      {d.repoPublic && <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>}
       <span class="product-meta-row">
         {d.platforms.join(' / ')}
         <span class="product-meta-sep">&middot;</span>{d.lang}
@@ -555,11 +557,19 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   <div id="support">
     <div class="sh" style="margin-bottom:12px">support</div>
-    <div class="support-box">
-      <h3>open an issue</h3>
-      <p>Found a bug or have a request? Open an issue on GitHub. Include your OS version and what you were doing when it broke.</p>
-      <a href={`${d.repo}/issues/new`} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
-    </div>
+    {d.supportEmail ? (
+      <div class="support-box">
+        <h3>email support</h3>
+        <p>Found a bug or have a request? Email it. Include your macOS version, the {d.name} version, and what you were doing when it broke.</p>
+        <a href={`mailto:${d.supportEmail}?subject=${encodeURIComponent(`${d.name} support`)}`} class="btn">{d.supportEmail} &rarr;</a>
+      </div>
+    ) : (
+      <div class="support-box">
+        <h3>open an issue</h3>
+        <p>Found a bug or have a request? Open an issue on GitHub. Include your OS version and what you were doing when it broke.</p>
+        <a href={`${d.repo}/issues/new`} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
+      </div>
+    )}
   </div>
     </>
   )}

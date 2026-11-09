@@ -1,20 +1,29 @@
 ---
 name: Overhear
-tagline: Calendar-aware meeting launcher with on-device transcription
-description: A macOS menu-bar app that surfaces your next meeting, launches it with one click, and transcribes it locally — no cloud, no subscription.
+tagline: Join your next meeting from the menu bar
+description: A macOS menu-bar app that shows your next meeting and opens its join link in one click. It reads your Mac's calendars and keeps everything on your Mac.
 repo: https://github.com/keithah/overhear
 lang: Swift
-version: 0.1-dev
-status: active
+version: 0.2.0
+status: beta
 platforms: [macOS 14+]
-tags: [swift, macos, transcription, calendar, meetings]
+tags: [swift, macos, calendar, meetings, menu bar]
+license: Free
+repoPublic: false
+downloadUrl: https://keithah.github.io/overhear/releases/v0.2.0/Overhear-0.2.0-local.zip
+privacyUrl: https://keithah.github.io/overhear/privacy.html
+supportEmail: keith+overhear@hadm.net
 ---
 
 Overhear lives in your menu bar, watches your calendar, and gets out of the way until you need it.
 
 ## Features
 
-- **One-click join** — launches Zoom, Meet, or Teams directly from the menu bar
-- **On-device transcription** — local Whisper model, nothing leaves your machine
-- **Calendar integration** — EventKit-based, no third-party auth required
-- **Zero subscription** — buy once, runs forever
+- **Next meeting at a glance** — the menu bar shows what's next and how long until it starts
+- **One-click join** — opens Zoom, Google Meet, Microsoft Teams, Webex and dozens more, in their own apps when installed
+- **Meeting details** — time, organizer, participants and invite notes before you join
+- **Reminders** — a heads-up before meetings start, with snooze and optional auto-join
+- **Keyboard shortcuts** — join the next meeting or open the list without touching the mouse
+- **Private by design** — reads your calendars through macOS; no account, no tracking, nothing leaves your Mac
+
+The direct download updates itself through Sparkle. A Mac App Store version is on the way.
