@@ -4,12 +4,12 @@ tagline: Join your next meeting from the menu bar
 description: A macOS menu-bar app that shows your next meeting and opens its join link in one click. It reads your Mac's calendars and keeps everything on your Mac.
 repo: https://github.com/keithah/overhear
 lang: Swift
-version: 0.2.0
+version: 0.2.1
 status: beta
 platforms: [macOS 14+]
 tags: [swift, macos, calendar, meetings, menu bar]
 license: Proprietary (free)
-downloadUrl: https://keithah.github.io/overhear/releases/v0.2.0/Overhear-0.2.0-local.zip
+downloadUrl: https://keithah.github.io/overhear/releases/v0.2.1/Overhear-0.2.1-local.zip
 privacyUrl: https://keithah.github.io/overhear/privacy.html
 supportEmail: keith+overhear@hadm.net
 ---

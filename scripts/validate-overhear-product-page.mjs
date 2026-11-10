@@ -11,7 +11,7 @@ const read = (path) => readFile(join(dist, path), 'utf8');
 const product = await read('products/overhear/index.html');
 const required = [
   'mailto:keith+overhear@hadm.net',
-  'https://keithah.github.io/overhear/releases/v0.2.0/Overhear-0.2.0-local.zip',
+  'https://keithah.github.io/overhear/releases/v0.2.1/Overhear-0.2.1-local.zip',
   'https://keithah.github.io/overhear/privacy.html',
 ];
 for (const value of required) {
