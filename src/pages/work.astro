@@ -48,7 +48,7 @@ const filters = [
           </div>
           <p class="card-desc">{p.data.description}</p>
           <div class="card-links">
-            <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>
+            {p.data.repoPublic && <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>}
             {p.data.isProduct && <a href={`/products/${slug}`} class="prod">product page &rarr;</a>}
           </div>
         </div>
