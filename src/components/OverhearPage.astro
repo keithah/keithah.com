@@ -9,7 +9,10 @@ interface Props {
 }
 const { data } = Astro.props;
 const appStore = data.appStore ?? data.site ?? 'https://apps.apple.com/us/app/overhear-meetings/id6781855070?mt=12';
-const repo = 'https://github.com/keithah/overhear';
+// The source is private, so nothing links to it: a 404 is a worse destination
+// than no link. Public support routes are used instead.
+const privacy = 'https://keithah.github.io/overhear/privacy.html';
+const supportEmail = 'mailto:keith+overhear@hadm.net';
 ---
 
 <div class="ps-page oh-page">
@@ -38,7 +41,7 @@ const repo = 'https://github.com/keithah/overhear';
       </p>
       <div class="ps-actions">
         <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
-        <a class="ps-btn ps-ghost" href={repo} target="_blank" rel="noopener">Source</a>
+        <a class="ps-btn ps-ghost" href={privacy} target="_blank" rel="noopener">Privacy</a>
       </div>
       <p class="ps-release-note">
         macOS 14.0 or later &middot; 2.1 MB &middot; English &middot; rated 4+ &middot; Data Not Collected.
@@ -196,8 +199,7 @@ const repo = 'https://github.com/keithah/overhear';
         </p>
         <div class="ps-actions">
           <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
-          <a class="ps-btn" href={`${repo}/releases`} target="_blank" rel="noopener">Direct download</a>
-          <a class="ps-btn ps-ghost" href={`${repo}/blob/main/README.md`} target="_blank" rel="noopener">README</a>
+          <a class="ps-btn" href={privacy} target="_blank" rel="noopener">Privacy policy</a>
         </div>
       </div>
       <dl class="ps-release-box">
@@ -218,13 +220,13 @@ const repo = 'https://github.com/keithah/overhear';
       <div>
         <h2 id="oh-support-title">Something not joining?</h2>
         <p>
-          Open an issue on GitHub with your macOS version, the service, and what you expected to
-          happen. Overhear is a one-person project, so a reproducible report is the fastest path.
+          Email your macOS version, the meeting service, and what you expected to happen.
+          Overhear is a one-person project, so a reproducible report is the fastest path.
         </p>
       </div>
       <div class="ps-actions">
-        <a class="ps-btn ps-primary" href={`${repo}/issues/new`} target="_blank" rel="noopener">Open an issue</a>
-        <a class="ps-btn" href={repo} target="_blank" rel="noopener">Browse the code</a>
+        <a class="ps-btn ps-primary" href={supportEmail}>Email support</a>
+        <a class="ps-btn" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
       </div>
     </div>
   </section>
