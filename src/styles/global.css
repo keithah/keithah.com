@@ -211,13 +211,6 @@ hr { border: none; border-top: 0.5px solid var(--bg2); margin: 28px 0; }
 .oss-detail-list b { display: block; font-size: 11px; color: var(--muted); font-weight: 400; }
 .oss-detail-list small { display: block; font-size: 9px; color: var(--dimmer); margin-top: 3px; }
 
-/* Status dots */
-.status-row { display: flex; gap: 16px; flex-wrap: wrap; }
-.status { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--dim); }
-.dot       { width: 5px; height: 5px; border-radius: 50%; display: inline-block; background: var(--green); }
-.dot.amber { background: var(--amber); }
-.dot.dim   { background: var(--dimmer); }
-
 /* About */
 .about-table { background: var(--bg2); border: 0.5px solid var(--border); border-radius: 8px; padding: 4px 16px; }
 .about-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 0.5px solid var(--bg3); }
@@ -2349,3 +2342,8 @@ button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   .ps-display .ps-section { padding-block: 70px; }
   .ps-display .ps-section h2 { font-size: clamp(30px, 9.5vw, 44px); }
 }
+
+/* Work page: archived projects sit in their own, quieter section. */
+.work-section + .work-section { margin-top: 28px; }
+.work-section-head { color: var(--dimmer); }
+.work-section[data-section='archived-grid'] .card { opacity: 0.75; }
