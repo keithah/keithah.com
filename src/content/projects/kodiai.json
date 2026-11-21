@@ -3,7 +3,7 @@
   "description": "Installable GitHub App for AI-powered code review, conversational assistance, issue intelligence, and Slack integration.",
   "repo": "https://github.com/xbmc/kodiai",
   "lang": "TypeScript",
-  "status": "active",
+  "status": "archived",
   "tags": ["github-app", "ai", "code-review", "slack"],
   "isProduct": false
 }

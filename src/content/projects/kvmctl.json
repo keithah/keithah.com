@@ -11,5 +11,6 @@
     "go",
     "mcp"
   ],
-  "isProduct": false
+  "isProduct": false,
+  "featured": 5
 }

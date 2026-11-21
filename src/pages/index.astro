@@ -109,14 +109,4 @@ const formatStars = (stars: number) => stars >= 1000 ? `${(stars / 1000).toFixed
     ))}
   </div>
   <a class="oss-more" href="/opensource">see all open pull requests &rarr;</a>
-  <p class="oss-note">static snapshot · refreshed at build time</p>
-
-  <div class="status-row">
-    {projects.map(p => (
-      <div class="status">
-        <span class={`dot ${p.data.status === 'active' || p.data.status === 'stable' ? '' : p.data.status === 'beta' ? 'amber' : 'dim'}`}></span>
-        {p.data.name.toLowerCase()} &middot; {p.data.status}
-      </div>
-    ))}
-  </div>
 </Base>
