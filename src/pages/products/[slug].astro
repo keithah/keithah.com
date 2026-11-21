@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import TraversePage from '../../components/TraversePage.astro';
+import OverhearPage from '../../components/OverhearPage.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -14,18 +16,28 @@ const productSlug = product.id.replace(/\.md$/, '');
 const isPingScope = productSlug === 'pingscope';
 const isWattline = productSlug === 'wattline';
 const isStarwatch = productSlug === 'starwatch';
+const isTraverse = productSlug === 'traverse';
+const isOverhear = productSlug === 'overhear';
+// Pages with a bespoke layout bring their own sub-navigation.
+const hideNav = isPingScope || isWattline || isStarwatch || isTraverse || isOverhear;
+// Not every product has a public repository; fall back to the site or store page.
+const primaryUrl = d.repo ?? d.site ?? d.appStore ?? '';
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(productSlug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base title={d.name} description={d.tagline} hidePrimaryNav={isPingScope || isWattline}>
+<Base title={d.name} description={d.tagline} hidePrimaryNav={hideNav}>
   <Fragment slot="head">
     {(isPingScope || isWattline) && (
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
     )}
   </Fragment>
-  {isStarwatch ? (
+  {isTraverse ? (
+    <TraversePage data={d} />
+  ) : isOverhear ? (
+    <OverhearPage data={d} />
+  ) : isStarwatch ? (
     <div class="ps-page">
       <nav class="ps-subnav" aria-label="Starwatch sections">
         <a href="/" class="ps-breadcrumb">keithah.com</a>
@@ -35,7 +47,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           <a href="#features">features</a>
           <a href="#install">install</a>
           <a href="#support">support</a>
-          <a href={d.repo} target="_blank" rel="noopener">github</a>
+          <a href={primaryUrl} target="_blank" rel="noopener">github</a>
         </span>
       </nav>
 
@@ -508,7 +520,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href="#docs">docs</a>
       <a href="#changelog">changelog</a>
       <a href="#support">support</a>
-      <a href={d.repo} target="_blank" rel="noopener">github</a>
+      <a href={primaryUrl} target="_blank" rel="noopener">github</a>
     </span>
   </nav>
 
@@ -519,7 +531,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     </div>
     <p class="product-tagline">{d.tagline}</p>
     <div class="product-cta-row">
-      <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>
+      <a href={primaryUrl} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>
       <span class="product-meta-row">
         {d.platforms.join(' / ')}
         <span class="product-meta-sep">&middot;</span>{d.lang}
@@ -558,7 +570,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     <div class="support-box">
       <h3>open an issue</h3>
       <p>Found a bug or have a request? Open an issue on GitHub. Include your OS version and what you were doing when it broke.</p>
-      <a href={`${d.repo}/issues/new`} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
+      <a href={d.repo ? `${d.repo}/issues/new` : primaryUrl} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
     </div>
   </div>
     </>

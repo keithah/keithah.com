@@ -1,0 +1,10 @@
+{
+  "name": "Traverse",
+  "description": "Travel eSIM storefront: flat trip pricing instead of $10–15 a day carrier roaming, with a guided install flow. Live at traverse.quest on a single Cloudflare Worker.",
+  "repo": "https://traverse.quest",
+  "lang": "TypeScript",
+  "status": "active",
+  "tags": ["esim", "travel", "cloudflare-workers", "stripe", "react"],
+  "isProduct": true,
+  "featured": 5
+}
