@@ -23,14 +23,17 @@ const isUnroll = productSlug === 'unroll';
 // Pages with a bespoke layout bring their own sub-navigation.
 const hideNav = isPingScope || isWattline || isStarwatch || isTraverse || isOverhear || isUnroll;
 // Not every product has a public repository; fall back to the site or store page.
-const primaryUrl = d.repo ?? d.site ?? d.appStore ?? '';
-// Label the primary action by where it actually goes: not every product is a
-// public repository, and "View on GitHub" onto an App Store page is a lie.
-const primaryLabel = !primaryUrl
-  ? null
-  : d.repo ? 'View on GitHub'
-  : d.appStore ? 'View on the App Store'
-  : 'Visit site';
+// One source of truth: the destination and its label are chosen together, so a
+// product with both a site and a store listing cannot end up mislabelled.
+const primary = d.repo
+  ? { url: d.repo, label: 'View on GitHub', short: 'github' }
+  : d.appStore
+    ? { url: d.appStore, label: 'View on the App Store', short: 'app store' }
+    : d.site
+      ? { url: d.site, label: 'Visit site', short: 'site' }
+      : null;
+const primaryUrl = primary?.url ?? null;
+const primaryLabel = primary?.label ?? null;
 const supportUrl = d.repo ? `${d.repo}/issues/new` : primaryUrl;
 
 // Pull related posts
@@ -59,7 +62,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           <a href="#features">features</a>
           <a href="#install">install</a>
           <a href="#support">support</a>
-          {primaryUrl && <a href={primaryUrl} target="_blank" rel="noopener">{d.repo ? 'github' : d.appStore ? 'app store' : 'site'}</a>}
+          {primary && <a href={primary.url} target="_blank" rel="noopener">{primary.short}</a>}
         </span>
       </nav>
 
@@ -532,7 +535,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href="#docs">docs</a>
       <a href="#changelog">changelog</a>
       <a href="#support">support</a>
-      {primaryUrl && <a href={primaryUrl} target="_blank" rel="noopener">{d.repo ? 'github' : d.appStore ? 'app store' : 'site'}</a>}
+      {primary && <a href={primary.url} target="_blank" rel="noopener">{primary.short}</a>}
     </span>
   </nav>
 

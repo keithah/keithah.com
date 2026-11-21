@@ -91,25 +91,34 @@ try {
     throw new Error('GitHub returned no upstream merged pull requests');
   }
 
-  // Fetch a wider pool for merged rows so the star ranking has something to
-  // choose from. Over-fetch for open rows too, since private projects are
-  // dropped below and the visible list still needs filling.
-  const [mergedPool, openPool] = await Promise.all([
-    Promise.all(mergedRepos.slice(0, 24).map((item) => normalize(item, 'merged'))),
-    Promise.all(openRepos.slice(0, 12).map((item) => normalize(item, 'open'))),
-  ]);
-
-  // Public projects only, in both lists. The private flag is a build-time
-  // filter, so it is stripped before anything is written.
+  // Public projects only. The flag is a build-time filter, so it is stripped
+  // before anything is written.
   const publicOnly = (rows) => rows
     .filter((row) => !row.private)
     .map(({ private: _private, ...row }) => row);
 
+  // Fetch pooled candidates and stop once enough *public* rows are collected.
+  // Taking a fixed number of candidates first would let private repositories
+  // eat the quota and leave the published list short.
+  const collectPublic = async (items, state, want) => {
+    const picked = [];
+    const batch = 6;
+    for (let i = 0; i < items.length && picked.length < want; i += batch) {
+      const rows = await Promise.all(items.slice(i, i + batch).map((item) => normalize(item, state)));
+      picked.push(...publicOnly(rows));
+    }
+    return picked.slice(0, want);
+  };
+
+  // Merged rows need a wider pool than the three shown, because the star
+  // ranking chooses among them.
+  const mergedPool = await collectPublic(mergedRepos.slice(0, 24), 'merged', 12);
+  const open = await collectPublic(openRepos.slice(0, 12), 'open', 3);
+
   // Most-starred project first; ties fall back to name for a stable snapshot.
-  const featuredMerged = publicOnly(mergedPool)
+  const featuredMerged = mergedPool
     .sort((a, b) => b.stars - a.stars || a.repo.localeCompare(b.repo))
     .slice(0, 3);
-  const open = publicOnly(openPool).slice(0, 3);
 
   // An empty open list is a valid state, not a failure: it means no upstream
   // pull request is open right now.
