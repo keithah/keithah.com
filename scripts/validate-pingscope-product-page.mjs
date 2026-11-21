@@ -4,9 +4,10 @@ import { dirname, join } from 'node:path';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const html = await readFile(join(root, 'dist/products/pingscope/index.html'), 'utf8');
+// Overhear, Traverse and Unroll share PingScope's display fonts on purpose, so
+// only a page with its own type stays in this list.
 const unrelatedPages = await Promise.all([
   readFile(join(root, 'dist/products/starwatch/index.html'), 'utf8'),
-  readFile(join(root, 'dist/products/overhear/index.html'), 'utf8'),
 ]);
 const productFontRequest = 'family=Archivo+Black&family=IBM+Plex+Sans';
 const required = [
