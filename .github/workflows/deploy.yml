@@ -12,8 +12,10 @@ on:
 permissions:
   contents: read
 
+# A pull-request build should not queue behind a production deploy, and it must
+# never cancel one, so each pull request gets its own group.
 concurrency:
-  group: pages
+  group: pages-${{ github.event_name }}-${{ github.event.pull_request.number || 'main' }}
   cancel-in-progress: false
 
 jobs:

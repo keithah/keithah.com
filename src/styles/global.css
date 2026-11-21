@@ -951,6 +951,13 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
   .ps-platform-media { min-height: 390px; }
 }
 
+/* The two column hero above needs 300 + 480 plus its gap, which does not fit
+   between its own breakpoint and the shared one-column rule at 920px. In that
+   band the columns shrink to minmax(0, ...) so the page cannot scroll. */
+@media (max-width: 1000px) {
+  .ps-pingscope .ps-hero { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+}
+
 @media (max-width: 900px) {
   .ps-pingscope .ps-hero,
   .ps-pingscope .ps-section-head,
@@ -1297,17 +1304,28 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
 }
 
 /* Starwatch product page */
-.sw-hero { min-height: auto; padding: 26px 0 8px; align-items: center; }
+/* Starwatch's hero is the shared .ps-hero grid, whose 0.82fr/1.18fr columns
+   cannot both hold content in the ~920-1000px band: the second one collapses
+   to zero and the screenshot overflows it. Track sizes here are explicit and
+   minmax(0, ...) so neither column can be forced wider than its share. */
+.sw-hero {
+  min-height: auto;
+  padding: 26px 0 8px;
+  align-items: center;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
 .sw-title { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 12px; margin: 0 0 16px; }
 .sw-ver { font-size: 13px; font-weight: 500; color: var(--green); border: 1px solid var(--green-bd); background: var(--green-bg); border-radius: 6px; padding: 2px 8px; letter-spacing: 0; }
 .sw-install-row { display: flex; gap: 8px; align-items: stretch; margin-top: 22px; flex-wrap: wrap; }
 .sw-cmd { flex: 1 1 auto; min-width: 0; display: block; padding: 12px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 9px; color: var(--green); font-size: 12.5px; overflow-x: auto; white-space: nowrap; }
 .sw-copy { flex: 0 0 auto; }
-.sw-shot-wrap { min-height: auto; }
-.sw-shot { position: relative; z-index: 2; width: min(100%, 640px); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 30px 80px var(--shot-shadow); }
+/* The image sits in a grid column inside the zoomed box, so `100%` is not the
+   space actually available. Cap it against the container and let it shrink. */
+.sw-shot-wrap { min-height: auto; min-width: 0; }
+.sw-shot { position: relative; z-index: 2; width: 100%; max-width: 640px; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 30px 80px var(--shot-shadow); }
 .sw-shot-mobile { width: min(100%, 300px); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 20px 60px var(--shot-shadow); justify-self: center; }
 .sw-support-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
-@media (max-width: 760px) { .sw-title { font-size: 30px; } .sw-shot { width: 100%; } }
+@media (max-width: 760px) { .sw-title { font-size: 30px; } }
 
 /* ==========================================================================
    Light theme adjustments for the bespoke product pages.

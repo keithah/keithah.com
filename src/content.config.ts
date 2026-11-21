@@ -26,6 +26,8 @@ const projects = defineCollection({
     featured: z.number().optional(),
     // false for private repositories: cards then show no GitHub link.
     repoPublic: z.boolean().default(true),
+    // Keep an unlisted project out of the home and work listings.
+    noindex: z.boolean().default(false),
   }),
 });
 

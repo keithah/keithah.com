@@ -16,7 +16,8 @@ const recentPosts = posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valu
 
 // Featured work: explicit `featured` rank in each project's data (lower first).
 const featured = projects
-  .filter(p => p.data.featured != null)
+  // Unlisted products stay off every listing, even if they gain a featured rank.
+  .filter(p => p.data.featured != null && !p.data.noindex)
   .sort((a, b) => (a.data.featured as number) - (b.data.featured as number));
 
 const recentlyMerged = contributionData.merged;

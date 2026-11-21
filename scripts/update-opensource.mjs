@@ -120,6 +120,12 @@ try {
     .sort((a, b) => b.stars - a.stars || a.repo.localeCompare(b.repo))
     .slice(0, 3);
 
+  // The published list is empty if every candidate was private, which the
+  // search-level check above cannot see.
+  if (featuredMerged.length === 0) {
+    throw new Error('No public upstream merged pull requests to publish');
+  }
+
   // An empty open list is a valid state, not a failure: it means no upstream
   // pull request is open right now.
   if (open.length === 0) console.warn('No open upstream pull requests to publish.');
