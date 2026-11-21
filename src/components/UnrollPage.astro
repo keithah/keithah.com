@@ -9,166 +9,162 @@ const { data } = Astro.props;
 const testflight = data.site ?? 'https://testflight.apple.com/join/1RdVtffd';
 ---
 
-<div class="ps-page ur-page">
+<div class="ps-page ps-display ur-page">
   <nav class="ps-subnav" aria-label="Unroll sections">
     <a href="#top" class="ps-brand" aria-label="Unroll home">
       <strong>Unroll</strong>
     </a>
     <span class="ps-subnav-links">
-      <a href="#detection">Detection</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#modes">Delivery</a>
-      <a href="#status">Status</a>
+      <a href="#how">How it works</a>
+      <a href="#results">Results</a>
+      <a href="#listen">Listen</a>
+      <a href="#beta">Beta</a>
     </span>
   </nav>
 
   <section id="top" class="ps-hero ur-hero" aria-labelledby="unroll-title">
     <div class="ps-hero-copy">
-      <p class="ps-eyebrow"><span aria-hidden="true"></span> Private beta &middot; iOS app</p>
-      <h1 id="unroll-title">The ad break, already gone.</h1>
+      <p class="ps-eyebrow"><span aria-hidden="true"></span> Private beta &middot; iPhone</p>
+      <h1 id="unroll-title">Podcasts, minus the <em>ad breaks.</em></h1>
       <p class="ps-lede">
-        Unroll finds sponsor reads inside a podcast episode and removes them before you hear them.
-        The app runs the whole pipeline on-device &mdash; no account, nothing uploaded.
+        Unroll finds the sponsor reads in your podcasts and skips them before you ever hear them.
+        Everything happens on your iPhone &mdash; no account, nothing uploaded.
       </p>
       <div class="ps-actions">
         <a class="ps-btn ps-primary" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
       </div>
       <p class="ps-release-note">
-        Measured across 52 episodes and 55.9 hours, including eight episodes annotated after the
-        detector was frozen.
+        Tested on 52 episodes &mdash; nearly 56 hours of real podcasts.
       </p>
     </div>
-    <div class="ur-hero-stats" aria-label="Headline detection results: 95.9% of ads removed, no false cuts, no show audio lost, 55.9 hours evaluated.">
+    <div class="ur-hero-stats" aria-label="Test results: 95.9% of ads removed, no wrong cuts, none of the show lost, 55.9 hours tested.">
       <dl>
         <div><dt>Ads removed</dt><dd>95.9<small>%</small></dd></div>
-        <div><dt>False cuts</dt><dd>0</dd></div>
-        <div><dt>Show audio lost</dt><dd>0.0<small>s</small></dd></div>
-        <div><dt>Audio evaluated</dt><dd>55.9<small>h</small></dd></div>
+        <div><dt>Wrong cuts</dt><dd>0</dd></div>
+        <div><dt>Of your show lost</dt><dd>0.0<small>s</small></dd></div>
+        <div><dt>Hours tested</dt><dd>55.9<small>h</small></dd></div>
       </dl>
     </div>
   </section>
 
-  <section id="detection" class="ps-section ur-detection" aria-labelledby="ur-detection-title">
+  <section id="how" class="ps-section ur-detection" aria-labelledby="ur-detection-title">
     <div class="ps-section-head">
-      <p class="ps-index">01 / Detection</p>
+      <p class="ps-index">01 / How it works</p>
       <div>
-        <h2 id="ur-detection-title">A cascade, with a gate at the end.</h2>
+        <h2 id="ur-detection-title">It listens first, <em>so you don't have to.</em></h2>
       </div>
       <p>
-        Not one model asked to be clever. Cheap, specific signals first, then progressively more
-        expensive ones, and a strict versioned policy gate before anything is cut.
+        Unroll checks each episode several different ways before it touches anything, and it only
+        skips what it's sure about.
       </p>
     </div>
     <ol class="ur-cascade">
       <li>
         <span>01</span>
         <div>
-          <h3>Known fingerprints</h3>
-          <p>Recurring sponsor audio and show-specific cue templates match the ads a show runs every episode.</p>
+          <h3>It recognises repeat ads</h3>
+          <p>The same sponsor spots turn up episode after episode. Unroll knows them when it hears them.</p>
         </div>
       </li>
       <li>
         <span>02</span>
         <div>
-          <h3>Splice candidates</h3>
-          <p>Loudness, silence, VAD and transition analysis find the joins where an insertion sits.</p>
+          <h3>It hears where ads are dropped in</h3>
+          <p>Ads are usually inserted into an episode. Unroll listens for the telltale pauses and jumps in sound where one begins and ends.</p>
         </div>
       </li>
       <li>
         <span>03</span>
         <div>
-          <h3>Transcript segmentation</h3>
-          <p>Sponsor and advertisement phrasing in the transcript, corroborated against the audio signals above.</p>
+          <h3>It follows what's being said</h3>
+          <p>Sponsor talk sounds like sponsor talk. Unroll checks the words against what it heard, so both have to agree.</p>
         </div>
       </li>
       <li>
         <span>04</span>
         <div>
-          <h3>Policy gate</h3>
-          <p>A strict, versioned rule decides cut, skip, or pass through. Uncertain segments survive intact.</p>
+          <h3>It only skips when it's sure</h3>
+          <p>If there's any doubt, the audio stays in. You might hear the odd ad, but you won't lose part of your show.</p>
         </div>
       </li>
     </ol>
     <p class="ur-rule">
-      <strong>Automatic or pass-through.</strong> A listener never reviews or approves an episode to
-      get a usable feed. When evidence is thin, the episode plays whole and the diagnostics are
-      recorded &mdash; a passed-through ad costs far less than a wrong cut.
+      <strong>Nothing for you to do.</strong> No reviewing, no approving, no settings to babysit.
+      Episodes show up ready to play, and when Unroll isn't confident it simply plays the episode
+      untouched.
     </p>
   </section>
 
-  <section id="evidence" class="ps-section ur-evidence" aria-labelledby="ur-evidence-title">
+  <section id="results" class="ps-section ur-evidence" aria-labelledby="ur-evidence-title">
     <div class="ps-section-head">
-      <p class="ps-index">02 / Evidence</p>
+      <p class="ps-index">02 / Results</p>
       <div>
-        <h2 id="ur-evidence-title">Numbers that survived auditing.</h2>
+        <h2 id="ur-evidence-title">Tested on <em>real episodes.</em></h2>
       </div>
       <p>
-        Detection is evaluated across a hand-annotated corpus, not sampled from convenient
-        episodes, and the tests that produce these figures are versioned with the detector.
+        Unroll was checked against podcasts where every ad had been marked by hand, then against
+        episodes it had never heard before.
       </p>
     </div>
     <div class="ur-evidence-grid">
       <article>
         <h3>33</h3>
-        <p>hand-annotated episodes across five corpora, including eight built and annotated after the detector was frozen.</p>
+        <p>episodes with every ad marked by hand, so there's no guessing about what Unroll should catch.</p>
       </article>
       <article>
         <h3>19</h3>
-        <p>unannotated episodes reserved for false-positive auditing, so precision is checked against audio nobody tuned on.</p>
+        <p>more episodes used only to make sure it never cuts something that isn't an ad.</p>
+      </article>
+      <article>
+        <h3>8</h3>
+        <p>episodes set aside until Unroll was finished &mdash; a fair test on audio it had never heard.</p>
       </article>
       <article>
         <h3>52</h3>
-        <p>episodes and 55.9 hours in the evaluation set, with the guards that produce each figure checked in.</p>
-      </article>
-      <article>
-        <h3>4&times;</h3>
-        <p>distinct ways this project previously produced a meaningless detection number &mdash; each documented, so the failure cannot quietly return.</p>
+        <p>episodes in all, adding up to nearly 56 hours of listening.</p>
       </article>
     </div>
   </section>
 
-  <section id="modes" class="ps-section ur-modes" aria-labelledby="ur-modes-title">
+  <section id="listen" class="ps-section ur-modes" aria-labelledby="ur-modes-title">
     <div class="ps-section-head">
-      <p class="ps-index">03 / Delivery</p>
+      <p class="ps-index">03 / Listen</p>
       <div>
-        <h2 id="ur-modes-title">Keep your podcast app, or take a small one.</h2>
+        <h2 id="ur-modes-title">Keep your podcast app, <em>or use ours.</em></h2>
       </div>
       <p>
-        One analysis core, two ways to deliver it. Neither asks the listener to manage the result.
+        Two ways to listen. Either way, the ads are handled before you press play.
       </p>
     </div>
     <div class="ur-mode-grid">
       <article class="ur-mode">
-        <p class="ps-index">Proxy feed</p>
-        <h3>Your existing app</h3>
-        <p>A rewritten RSS feed plus rendered audio with accepted intervals removed. Works with Overcast, Pocket Casts, Apple Podcasts and Audiobookshelf &mdash; anything that accepts a custom feed.</p>
-        <p class="ur-mode-caveat">The same-Wi-Fi server is still a one-episode probe. If a player fetches from its own servers instead of the device, the LAN URL is unreachable &mdash; documented, not hidden.</p>
+        <p class="ps-index">In your own app</p>
+        <h3>Works with the app you already use</h3>
+        <p>Unroll gives you an ad-free version of a show's feed. Add it to Overcast, Pocket Casts, Apple Podcasts or Audiobookshelf &mdash; or any app that accepts a custom feed &mdash; and listen as usual.</p>
+        <p class="ur-mode-caveat">Still early: for now this works one episode at a time, on the same Wi-Fi as your iPhone. Apps that download through their own servers can't reach it yet.</p>
       </article>
       <article class="ur-mode ur-mode-player">
-        <p class="ps-index">Simple player</p>
-        <h3>A narrow first-party app</h3>
-        <p>Original audio plus persisted skip zones, with one-tap undo. Nothing destructive happens to the file, so a medium-confidence interval can be surfaced without committing to a cut.</p>
-        <p class="ur-mode-caveat">Deliberately not a feature-complete podcast platform. It plays, skips, and gets out of the way.</p>
+        <p class="ps-index">In the Unroll app</p>
+        <h3>A simple player that skips for you</h3>
+        <p>Play an episode in Unroll and it jumps over the ads on its own. The original audio is never changed, so if it skips something you wanted to hear, one tap brings it back.</p>
+        <p class="ur-mode-caveat">Simple on purpose. It plays, it skips, and it gets out of the way.</p>
       </article>
     </div>
   </section>
 
-  <section id="status" class="ps-section ur-status" aria-labelledby="ur-status-title">
+  <section id="beta" class="ps-section ur-status" aria-labelledby="ur-status-title">
     <div class="ur-status-panel">
       <div>
-        <p class="ps-index">04 / Status</p>
-        <h2 id="ur-status-title">What is verified, and what is not.</h2>
+        <p class="ps-index">04 / Beta</p>
+        <h2 id="ur-status-title">Try it <em>before everyone else.</em></h2>
         <p>
-          The native iOS app is the product and it runs; the build-status notes in the repository are
-          the authority on what has actually been exercised. Episode summaries, topics and action
-          items run through Apple Intelligence on-device and fail closed to empty fields when
-          unavailable. Discovery uses Apple Podcasts and publisher RSS, so no extra credentials are
-          involved.
+          Unroll is in private beta for iPhone, through Apple's TestFlight. Find shows through
+          Apple Podcasts or a show's own feed, with nothing extra to sign up for. On iPhones with
+          Apple Intelligence, Unroll can also add a short summary and topic list to each episode
+          &mdash; again, without anything leaving your phone.
         </p>
         <p>
-          A frozen Python implementation stays in the repository as the behaviour contract the Swift
-          port is tested against, with two deliberate divergences documented rather than quietly
-          reconciled.
+          It's an early build, so expect a few rough edges.
         </p>
       </div>
       <div class="ps-actions">

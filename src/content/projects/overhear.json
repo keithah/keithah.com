@@ -1,6 +1,6 @@
 {
   "name": "Overhear",
-  "description": "macOS menu-bar launcher that shows your next meeting and joins it in one click.",
+  "description": "A free Mac menu-bar app that shows your next meeting and joins it in one click.",
   "repo": "https://github.com/keithah/overhear",
   "lang": "Swift",
   "status": "beta",

@@ -10,7 +10,7 @@ const { data } = Astro.props;
 const site = data.site ?? 'https://traverse.quest';
 ---
 
-<div class="ps-page tv-page">
+<div class="ps-page ps-display tv-page">
   <nav class="ps-subnav" aria-label="Traverse sections">
     <a href={site} class="ps-brand" aria-label="Traverse home" target="_blank" rel="noopener">
       <strong>Traverse</strong>
@@ -18,25 +18,27 @@ const site = data.site ?? 'https://traverse.quest';
     <span class="ps-subnav-links">
       <a href="#pricing">Pricing</a>
       <a href="#setup">Setup</a>
-      <a href="#how">How it works</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#support">Support</a>
       <a href={site} target="_blank" rel="noopener">Visit site</a>
     </span>
   </nav>
 
   <section id="top" class="ps-hero tv-hero" aria-labelledby="traverse-title">
     <div class="ps-hero-copy">
-      <p class="ps-eyebrow"><span aria-hidden="true"></span> Travel eSIMs · live at traverse.quest</p>
-      <h1 id="traverse-title">Keep your number.<br />Skip the <span class="tv-nowrap">$10&ndash;15</span> a day.</h1>
+      <p class="ps-eyebrow"><span aria-hidden="true"></span> Travel eSIMs &middot; traverse.quest</p>
+      <h1 id="traverse-title">Keep your number. <em>Skip the roaming bill.</em></h1>
       <p class="ps-lede">
-        A carrier roaming pass bills you every day you touch data. Traverse is one price for the whole
-        trip: pick a destination, pick how much data, and install before you fly.
+        Your carrier charges <span class="tv-nowrap">$10&ndash;15</span> for every day you use data
+        abroad. Traverse is one price for the whole trip: choose where you're going, choose how
+        much data you need, and set it up before you fly.
       </p>
       <div class="ps-actions">
         <a class="ps-btn ps-primary" href={site} target="_blank" rel="noopener">Find your eSIM</a>
         <a class="ps-btn" href={`${site}/help/phone`} target="_blank" rel="noopener">Check my phone</a>
       </div>
       <p class="ps-release-note">
-        Data only &middot; works alongside your home line if your phone supports it &middot; no subscription, no daily fee.
+        Data only &middot; no subscription, no daily fees &middot; your home number keeps working on phones that support two lines.
         <a class="tv-note-link" href={`${site}/setup`} target="_blank" rel="noopener">Read the setup guide</a>
       </p>
     </div>
@@ -51,7 +53,7 @@ const site = data.site ?? 'https://traverse.quest';
           fetchpriority="high"
         />
         <figcaption>
-          <span>01</span> Destination, trip length, data. One price for the trip.
+          <span>01</span> Where, how long, how much data. One price for the trip.
         </figcaption>
       </figure>
     </div>
@@ -59,39 +61,39 @@ const site = data.site ?? 'https://traverse.quest';
 
   <section id="pricing" class="ps-section tv-pricing" aria-labelledby="tv-pricing-title">
     <div class="ps-section-head">
-      <p class="ps-index">01 / The comparison</p>
+      <p class="ps-index">01 / Pricing</p>
       <div>
-        <h2 id="tv-pricing-title">A week abroad, two ways.</h2>
+        <h2 id="tv-pricing-title">A week abroad, <em>two ways.</em></h2>
       </div>
       <p>
-        Carrier daily passes charge every day you use data, whether you need a lot or a little.
-        A Traverse plan is priced once, for the whole trip.
+        A carrier day pass charges you for every day you use data, whether it's a lot or a little.
+        With Traverse you pay once, for the whole trip.
       </p>
     </div>
     <div class="tv-compare">
       <article class="tv-compare-card">
         <p class="ps-index">Carrier pass</p>
         <strong class="tv-compare-price">$70&ndash;105</strong>
-        <p class="tv-compare-note">7 days &middot; $10&ndash;15 per day, and the meter runs on any day you use data.</p>
+        <p class="tv-compare-note">7 days at $10&ndash;15 a day &mdash; and you're charged for any day you use data at all.</p>
       </article>
       <article class="tv-compare-card tv-compare-win">
         <p class="ps-index">Traverse eSIM</p>
         <strong class="tv-compare-price">One price</strong>
-        <p class="tv-compare-note">For the whole trip. Fixed-data plans start at a few dollars for a country, with regional and global passes when you cross borders.</p>
+        <p class="tv-compare-note">For the whole trip. Single-country plans start at a few dollars, with regional and worldwide plans for when you cross borders.</p>
       </article>
     </div>
     <div class="tv-plans">
       <div class="tv-plan">
         <h3>Fixed data</h3>
-        <p>1 GB to 100 GB, valid for the plan's window. Cheapest for a known trip length and a known appetite for data.</p>
+        <p>From 1 GB to 100 GB to use across your trip. The best value when you know how long you're away and roughly how much you'll use.</p>
       </div>
       <div class="tv-plan">
         <h3>Daily</h3>
-        <p>For trips where you'd rather not guess the total. Pay for the days you use.</p>
+        <p>Not sure how much you'll need? Pay only for the days you use.</p>
       </div>
       <div class="tv-plan">
         <h3>Regional &amp; global</h3>
-        <p>Europe across 35 countries, or Global across 117 &mdash; one plan for a multi-country itinerary, with per-country add-ons when you need them.</p>
+        <p>One plan for Europe (35 countries) or the whole world (117 countries), so a multi-stop trip needs just one eSIM. Add extra countries when you need them.</p>
       </div>
     </div>
   </section>
@@ -100,11 +102,11 @@ const site = data.site ?? 'https://traverse.quest';
     <div class="ps-section-head">
       <p class="ps-index">02 / Setup</p>
       <div>
-        <h2 id="tv-setup-title">Install with screenshots, not guesswork.</h2>
+        <h2 id="tv-setup-title">Set up in minutes, <em>with pictures.</em></h2>
       </div>
       <p>
-        The install flow is five steps, each drawn on a phone screen with the roaming settings that
-        avoid carrier fees called out. Most plans only start when they first connect abroad, so
+        Five simple steps, each shown on a phone screen, including the settings that stop your
+        carrier from charging you. Most plans only start when you first connect abroad, so
         installing early costs nothing.
       </p>
     </div>
@@ -119,20 +121,21 @@ const site = data.site ?? 'https://traverse.quest';
           decoding="async"
         />
         <figcaption>
-          <span>02</span> Five steps, annotated on a phone screen.
+          <span>02</span> Five steps, each shown on a phone screen.
         </figcaption>
       </figure>
       <div class="tv-steps">
         <ol>
-          <li><strong>Check your phone.</strong> Unlocked, and eSIM-capable. Carrier Lock should read <em>No SIM restrictions</em>, and an EID should be present. Takes 30 seconds.</li>
-          <li><strong>Pick a plan.</strong> Where you're going, how long, and roughly how much data.</li>
-          <li><strong>Pay once.</strong> No subscription, no daily fee. Your QR code and install link land on the order page and in your email.</li>
-          <li><strong>Install.</strong> Settings &rarr; Cellular &rarr; Add eSIM, on Wi-Fi at home or at the gate.</li>
-          <li><strong>Go.</strong> Turn roaming off on your home line to stop it carrying data.</li>
+          <li><strong>Check your phone.</strong> It needs to be unlocked and able to use an eSIM. In Settings, Carrier Lock should say <em>No SIM restrictions</em>. It takes about 30 seconds.</li>
+          <li><strong>Pick a plan.</strong> Where you're going, for how long, and roughly how much data.</li>
+          <li><strong>Pay once.</strong> No subscription, no daily fee. Your QR code and install link show up on your order page and in your email.</li>
+          <li><strong>Install.</strong> Open Settings &rarr; Cellular &rarr; Add eSIM while you're on Wi-Fi, at home or at the gate.</li>
+          <li><strong>Go.</strong> When you land, turn off roaming on your home line so your carrier can't charge you for data.</li>
         </ol>
         <p class="tv-caveat">
-          Some plans can't be reinstalled &mdash; don't delete the eSIM once it's installed. Traverse is
-          data only: carrier calls and texts still run on your home line, at your carrier's rates.
+          Good to know: some plans can only be installed once, so don't delete the eSIM after
+          setting it up. Traverse is data only &mdash; regular calls and texts still go through
+          your home line, at your carrier's rates.
         </p>
       </div>
     </div>
@@ -142,11 +145,11 @@ const site = data.site ?? 'https://traverse.quest';
     <div class="ps-section-head">
       <p class="ps-index">03 / Destinations</p>
       <div>
-        <h2 id="tv-dest-title">Pick a country. See the price.</h2>
+        <h2 id="tv-dest-title">Pick a country. <em>See the price.</em></h2>
       </div>
       <p>
-        Every destination page shows the live catalog for that country &mdash; the actual plans, the
-        actual networks, and the price for the duration you chose.
+        Every destination has its own page with today's plans, the local networks you'll connect
+        to, and the price for the trip length you choose.
       </p>
     </div>
     <figure class="tv-dest-shot">
@@ -159,42 +162,41 @@ const site = data.site ?? 'https://traverse.quest';
         decoding="async"
       />
       <figcaption>
-        <span>03</span> Italy: plans, networks, and multi-country add-ons on one page.
+        <span>03</span> Italy: plans, networks and multi-country options on one page.
       </figcaption>
     </figure>
   </section>
 
-  <section id="how" class="ps-section tv-how" aria-labelledby="tv-how-title">
+  <section id="why" class="ps-section tv-how" aria-labelledby="tv-how-title">
     <div class="ps-section-head">
-      <p class="ps-index">04 / Under the hood</p>
+      <p class="ps-index">04 / Peace of mind</p>
       <div>
-        <h2 id="tv-how-title">A storefront that reconciles.</h2>
+        <h2 id="tv-how-title">No surprises <em>at checkout.</em></h2>
       </div>
       <p>
-        Selling a phone plan means the money and the eSIM have to agree. Traverse is built so they
-        can't quietly disagree.
+        Buying data for a trip should be the easy part. Here's what you can count on every time.
       </p>
     </div>
     <div class="ps-feature-grid tv-feature-grid">
       <article class="ps-card">
         <span>01</span>
-        <h3>Immutable quotes</h3>
-        <p>Quotes expire after 15 minutes and never outlive the catalog snapshot they came from, so the price you approve is the price you pay.</p>
+        <h3>The price you see</h3>
+        <p>Your quote is held for 15 minutes, so the price you approve is the price you pay.</p>
       </article>
       <article class="ps-card">
         <span>02</span>
-        <h3>Verified payment</h3>
-        <p>A plan provisions only when the Stripe signature is valid, the session matches, the payment is paid, and the amount matches the order. Anything else goes to review.</p>
+        <h3>Safe, simple payment</h3>
+        <p>Pay by card or wallet through Stripe, with no account to create. Your eSIM is only issued once your payment is confirmed.</p>
       </article>
       <article class="ps-card">
         <span>03</span>
-        <h3>Freshest catalog</h3>
-        <p>The supplier catalog refreshes every six hours to stay inside its 24-hour freshness window. Missing inventory reads as unavailable &mdash; never as a silent fallback.</p>
+        <h3>Up-to-date plans</h3>
+        <p>Plans and prices are refreshed throughout the day. If something isn't available, we say so instead of swapping in something else.</p>
       </article>
       <article class="ps-card">
         <span>04</span>
-        <h3>Support built in</h3>
-        <p>eSIM sharing and gifts, paid top-ups, supplier-confirmed refunds, an AI assistant, and WhatsApp plus email threads that staff can follow end to end.</p>
+        <h3>Help when you need it</h3>
+        <p>Share or gift an eSIM, top up when you run low, and ask for a refund if plans change. Get help from the built-in assistant, WhatsApp or email.</p>
       </article>
     </div>
   </section>
@@ -203,10 +205,10 @@ const site = data.site ?? 'https://traverse.quest';
     <div class="tv-support-panel">
       <div>
         <p class="ps-index">05 / Support</p>
-        <h2 id="tv-support-title">Something wrong with your eSIM?</h2>
+        <h2 id="tv-support-title">Need help with <em>your eSIM?</em></h2>
         <p>
-          Traverse support runs through the site itself &mdash; an order reference gets you into the
-          right thread, and connection problems have their own report flow.
+          Get help right on the site. Have your order number handy and we'll pick up where you
+          left off. Trouble connecting? There's a quick form just for that.
         </p>
       </div>
       <div class="ps-actions">

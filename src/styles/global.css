@@ -2246,3 +2246,106 @@ button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   .ur-page .ps-section { padding-block: 58px; }
   .ur-page .ps-section h2 { font-size: clamp(19px, 5.4vw, 25px); }
 }
+
+/* ==========================================================================
+   Shared display treatment for Traverse, Overhear and Unroll.
+   These pages borrow PingScope's look: a full-bleed field with a faint grid,
+   heavy display headings with one accented phrase, a sans body and square
+   edges. Each page keeps its own palette through the --ps-* variables above.
+   ========================================================================== */
+.ps-display {
+  --ps-grid: rgba(255, 255, 255, 0.025);
+  position: relative;
+  isolation: isolate;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+:root[data-theme='light'] .ps-display { --ps-grid: rgba(16, 19, 26, 0.035); }
+
+.ps-display::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--ps-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ps-grid) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Same full-bleed band as PingScope. Below 900px the shared mobile rule pins
+   the page to the viewport edges instead. */
+@media (min-width: 901px) {
+  .ps-display {
+    width: calc(var(--vw) / var(--page-zoom));
+    margin-inline: calc((var(--vw) / var(--page-zoom) - 100%) / -2);
+    padding-inline: max(20px, calc((var(--vw) / var(--page-zoom) - 1380px) / 2));
+  }
+}
+
+.ps-display .ps-subnav { font-family: 'IBM Plex Sans', sans-serif; }
+
+.ps-display .ps-hero { padding-block: clamp(40px, 5vw, 72px) clamp(52px, 6vw, 84px); }
+.ps-display .ps-hero h1,
+.ps-display .ps-section h2 {
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.ps-display .ps-hero h1 { max-width: none; font-size: clamp(38px, 4.2vw, 70px); line-height: 0.94; }
+.ps-display .ps-section h2 { font-size: clamp(30px, 3.6vw, 58px); line-height: 1; }
+.ps-display :is(h1, h2) em { color: var(--ps-green); font-style: normal; }
+.ps-display .ps-lede { max-width: 54ch; margin-top: 24px; font-size: clamp(15px, 1.2vw, 18px); line-height: 1.55; }
+.ps-display .ps-actions { margin-top: 26px; }
+.ps-display .ps-release-note { margin-top: 16px; font-size: 11.5px; }
+
+.ps-display .ps-btn { min-height: 46px; border-radius: 3px; padding-inline: 16px; font-family: 'IBM Plex Sans', sans-serif; }
+
+.ps-display .ps-section { padding-block: clamp(72px, 9vw, 128px); }
+.ps-display .ps-section-head { margin-bottom: 44px; }
+.ps-display .ps-section-head > p:last-child { padding-top: 8px; font-size: 15px; line-height: 1.6; }
+
+/* Square edges on panels and cards; screenshots keep their rounded frames. */
+.ps-display :is(
+  .ps-feature-grid, .ps-download-panel, .ps-release-box,
+  .tv-compare-card, .tv-plan, .tv-support-panel,
+  .oh-reminder, .oh-privacy-panel, .oh-facts > div,
+  .ur-cascade, .ur-evidence-grid, .ur-mode, .ur-status-panel, .ur-hero-stats dl > div
+) { border-radius: 0; }
+.ps-display :is(.tv-caveat, .ur-rule) { border-radius: 0; }
+
+/* Body copy inside cards reads a size up now that it is set in a sans. */
+.ps-display :is(.ps-feature-grid .ps-card p, .tv-plan p, .tv-compare-note, .ur-cascade p, .ur-rule, .ur-evidence-grid p, .ur-mode p, .oh-calendar-list dd, .tv-steps li) { font-size: 14px; }
+.ps-display .ps-feature-grid .ps-card h3 { font-size: 18px; font-weight: 600; }
+.ps-display :is(.oh-privacy-panel, .ps-download-panel, .ps-support-grid, .tv-support-panel, .ur-status-panel) p:not(.ps-index) { font-size: 15px; }
+
+/* Big figures take the display face too. */
+.ps-display :is(.tv-compare-price, .ur-hero-stats dd, .ur-evidence-grid h3, .oh-facts dd) {
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+.ps-display .tv-compare-price { font-size: clamp(30px, 3.6vw, 52px); }
+.ps-display .ur-hero-stats dd { font-size: clamp(30px, 3.4vw, 48px); }
+.ps-display .ur-evidence-grid h3 { font-size: clamp(34px, 3.6vw, 52px); }
+.ps-display .oh-facts dd { font-size: 20px; }
+.ps-display .oh-reminder figcaption strong,
+.ps-display .ur-mode h3 { font-family: 'Archivo Black', sans-serif; font-weight: 400; letter-spacing: -0.035em; font-size: clamp(22px, 2.4vw, 34px); line-height: 1.08; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ps-display .ps-hero-copy { animation: ps-enter 620ms both ease-out; }
+  .ps-display .ps-hero > :last-child { animation: ps-enter 720ms 100ms both ease-out; }
+}
+
+@media (max-width: 900px) {
+  .ps-display .ps-section-head { gap: 18px; }
+}
+
+@media (max-width: 560px) {
+  .ps-display .ps-hero { padding-block: 52px 62px; }
+  .ps-display .ps-hero h1 { font-size: clamp(38px, 12vw, 56px); }
+  .ps-display .ps-lede { font-size: 16px; }
+  .ps-display .ps-section { padding-block: 70px; }
+  .ps-display .ps-section h2 { font-size: clamp(30px, 9.5vw, 44px); }
+}
