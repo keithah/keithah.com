@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T01:42:53.942Z",
+  "generatedAt": "2026-11-21T01:50:35.183Z",
   "merged": [
     {
       "number": 30367,
@@ -48,17 +48,6 @@
       "state": "open"
     },
     {
-      "number": 103,
-      "title": "jenkins: document why PR subjobs build the previous run's commit, and fix the cache prune",
-      "repo": "xbmc/infrastructure",
-      "topic": "infrastructure",
-      "lang": "Python",
-      "stars": 0,
-      "updatedAt": "2026-11-18T19:26:42Z",
-      "url": "https://github.com/xbmc/infrastructure/pull/103",
-      "state": "open"
-    },
-    {
       "number": 180,
       "title": "feat: ordered comparison operators in automation conditions",
       "repo": "omarshahine/HomeClaw",
@@ -67,6 +56,17 @@
       "stars": 196,
       "updatedAt": "2026-11-07T17:08:13Z",
       "url": "https://github.com/omarshahine/HomeClaw/pull/180",
+      "state": "open"
+    },
+    {
+      "number": 30278,
+      "title": "utils: avoid deprecated std::atomic_load/store on shared_ptr",
+      "repo": "xbmc/xbmc",
+      "topic": "open source",
+      "lang": "C++",
+      "stars": 21521,
+      "updatedAt": "2026-11-06T01:16:18Z",
+      "url": "https://github.com/xbmc/xbmc/pull/30278",
       "state": "open"
     }
   ]

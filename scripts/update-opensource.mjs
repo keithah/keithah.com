@@ -56,6 +56,9 @@ async function normalize(item, state) {
     topic: topicFor(repo, item.title),
     lang: metadata.language || '—',
     stars: metadata.stargazers_count,
+    // Public only: a private repository's pull-request titles must never be
+    // published, and the site is built from this snapshot.
+    private: metadata.private === true,
     updatedAt: item.updated_at,
     url: item.html_url,
     state,
@@ -84,18 +87,33 @@ try {
 
   const mergedRepos = upstreamOnly(mergedItems);
   const openRepos = upstreamOnly(openItems);
-  if (mergedRepos.length === 0 || openRepos.length === 0) {
-    throw new Error('GitHub returned no upstream merged or open pull requests');
+  if (mergedRepos.length === 0) {
+    throw new Error('GitHub returned no upstream merged pull requests');
   }
 
   // Fetch a wider pool for merged rows so the star ranking has something to
-  // choose from, then keep the most-starred projects.
-  const merged = await Promise.all(mergedRepos.slice(0, 24).map((item) => normalize(item, 'merged')));
-  const open = await Promise.all(openRepos.slice(0, 3).map((item) => normalize(item, 'open')));
+  // choose from. Over-fetch for open rows too, since private projects are
+  // dropped below and the visible list still needs filling.
+  const [mergedPool, openPool] = await Promise.all([
+    Promise.all(mergedRepos.slice(0, 24).map((item) => normalize(item, 'merged'))),
+    Promise.all(openRepos.slice(0, 12).map((item) => normalize(item, 'open'))),
+  ]);
+
+  // Public projects only, in both lists. The private flag is a build-time
+  // filter, so it is stripped before anything is written.
+  const publicOnly = (rows) => rows
+    .filter((row) => !row.private)
+    .map(({ private: _private, ...row }) => row);
 
   // Most-starred project first; ties fall back to name for a stable snapshot.
-  merged.sort((a, b) => b.stars - a.stars || a.repo.localeCompare(b.repo));
-  const featuredMerged = merged.slice(0, 3);
+  const featuredMerged = publicOnly(mergedPool)
+    .sort((a, b) => b.stars - a.stars || a.repo.localeCompare(b.repo))
+    .slice(0, 3);
+  const open = publicOnly(openPool).slice(0, 3);
+
+  // An empty open list is a valid state, not a failure: it means no upstream
+  // pull request is open right now.
+  if (open.length === 0) console.warn('No open upstream pull requests to publish.');
 
   await mkdir(path.dirname(output), { recursive: true });
   await writeFile(

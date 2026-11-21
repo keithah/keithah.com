@@ -24,6 +24,14 @@ const isUnroll = productSlug === 'unroll';
 const hideNav = isPingScope || isWattline || isStarwatch || isTraverse || isOverhear || isUnroll;
 // Not every product has a public repository; fall back to the site or store page.
 const primaryUrl = d.repo ?? d.site ?? d.appStore ?? '';
+// Label the primary action by where it actually goes: not every product is a
+// public repository, and "View on GitHub" onto an App Store page is a lie.
+const primaryLabel = !primaryUrl
+  ? null
+  : d.repo ? 'View on GitHub'
+  : d.appStore ? 'View on the App Store'
+  : 'Visit site';
+const supportUrl = d.repo ? `${d.repo}/issues/new` : primaryUrl;
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(productSlug));
@@ -51,7 +59,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           <a href="#features">features</a>
           <a href="#install">install</a>
           <a href="#support">support</a>
-          <a href={primaryUrl} target="_blank" rel="noopener">github</a>
+          {primaryUrl && <a href={primaryUrl} target="_blank" rel="noopener">{d.repo ? 'github' : d.appStore ? 'app store' : 'site'}</a>}
         </span>
       </nav>
 
@@ -524,7 +532,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href="#docs">docs</a>
       <a href="#changelog">changelog</a>
       <a href="#support">support</a>
-      <a href={primaryUrl} target="_blank" rel="noopener">github</a>
+      {primaryUrl && <a href={primaryUrl} target="_blank" rel="noopener">{d.repo ? 'github' : d.appStore ? 'app store' : 'site'}</a>}
     </span>
   </nav>
 
@@ -535,7 +543,9 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     </div>
     <p class="product-tagline">{d.tagline}</p>
     <div class="product-cta-row">
-      <a href={primaryUrl} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>
+      {primaryLabel && (
+        <a href={primaryUrl} class="btn" target="_blank" rel="noopener">{primaryLabel} &rarr;</a>
+      )}
       <span class="product-meta-row">
         {d.platforms.join(' / ')}
         <span class="product-meta-sep">&middot;</span>{d.lang}
@@ -574,7 +584,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     <div class="support-box">
       <h3>open an issue</h3>
       <p>Found a bug or have a request? Open an issue on GitHub. Include your OS version and what you were doing when it broke.</p>
-      <a href={d.repo ? `${d.repo}/issues/new` : primaryUrl} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
+      <a href={supportUrl} class="btn" target="_blank" rel="noopener">{d.repo ? 'open an issue on GitHub' : 'get support'} &rarr;</a>
     </div>
   </div>
     </>
