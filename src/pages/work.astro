@@ -13,10 +13,18 @@ const linkLabel = (url: string) => {
 
 // Sort: products first, then by status priority
 const rank = { active: 0, beta: 1, stable: 2, internal: 3, archived: 4 };
-const items = projects.sort((a, b) => {
+const sorted = projects.sort((a, b) => {
   if (a.data.isProduct !== b.data.isProduct) return a.data.isProduct ? -1 : 1;
   return (rank[a.data.status] ?? 9) - (rank[b.data.status] ?? 9);
 });
+
+// Archived projects get their own section below the current work.
+const items = sorted.filter(p => p.data.status !== 'archived');
+const archived = sorted.filter(p => p.data.status === 'archived');
+const sections = [
+  { id: 'work-grid', heading: null, list: items },
+  { id: 'archived-grid', heading: 'archived', list: archived },
+].filter(s => s.list.length > 0);
 
 const langTokens = (lang) => ['go', 'swift', 'typescript'].filter(l => lang.toLowerCase().includes(l));
 
@@ -39,37 +47,43 @@ const filters = [
     ))}
   </div>
 
-  <div class="card-grid" id="work-grid">
-    {items.map(p => {
-      const slug = p.id.replace('.json', '');
-      return (
-        <div class={`card ${p.data.isProduct ? 'is-product' : ''}`}
-             data-type={p.data.isProduct ? 'apps' : 'tools'}
-             data-langs={langTokens(p.data.lang).join(' ')}>
-          <div class="card-top">
-            <span class="card-name">{p.data.name}</span>
-            <div class="card-meta">
-              {p.data.isProduct && <span class="card-product-pill">app</span>}
-              <span class="card-lang">{p.data.lang}</span>
+  {sections.map(section => (
+    <section class="work-section" data-section={section.id}>
+      {section.heading && <div class="sh work-section-head">{section.heading}</div>}
+      <div class="card-grid" id={section.id}>
+        {section.list.map(p => {
+          const slug = p.id.replace('.json', '');
+          return (
+            <div class={`card ${p.data.isProduct ? 'is-product' : ''}`}
+                 data-type={p.data.isProduct ? 'apps' : 'tools'}
+                 data-langs={langTokens(p.data.lang).join(' ')}>
+              <div class="card-top">
+                <span class="card-name">{p.data.name}</span>
+                <div class="card-meta">
+                  {p.data.isProduct && <span class="card-product-pill">app</span>}
+                  <span class="card-lang">{p.data.lang}</span>
+                </div>
+              </div>
+              <p class="card-desc">{p.data.description}</p>
+              <div class="card-links">
+                {p.data.repoPublic && (
+                  <a href={p.data.repo} class="gh" target="_blank" rel="noopener">{linkLabel(p.data.repo)}</a>
+                )}
+                {p.data.isProduct && <a href={`/products/${slug}`} class="prod">product page &rarr;</a>}
+              </div>
             </div>
-          </div>
-          <p class="card-desc">{p.data.description}</p>
-          <div class="card-links">
-            {p.data.repoPublic && (
-              <a href={p.data.repo} class="gh" target="_blank" rel="noopener">{linkLabel(p.data.repo)}</a>
-            )}
-            {p.data.isProduct && <a href={`/products/${slug}`} class="prod">product page &rarr;</a>}
-          </div>
-        </div>
-      );
-    })}
-  </div>
+          );
+        })}
+      </div>
+    </section>
+  ))}
   <p style="font-size:10px;color:var(--dimmer);margin-top:12px">green border + “app” badge = has a product page</p>
 </Base>
 
 <script>
   const buttons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('#work-grid .card');
+  const cards = document.querySelectorAll('.work-section .card');
+  const sections = document.querySelectorAll('.work-section');
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const filter = btn.getAttribute('data-filter');
@@ -79,6 +93,11 @@ const filters = [
         const langs = (card.getAttribute('data-langs') || '').split(' ');
         const match = filter === 'all' || type === filter || langs.includes(filter);
         card.style.display = match ? '' : 'none';
+      });
+      // Hide a section, heading included, when the filter leaves it empty.
+      sections.forEach(section => {
+        const visible = [...section.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+        section.style.display = visible ? '' : 'none';
       });
     });
   });
