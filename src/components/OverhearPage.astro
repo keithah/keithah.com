@@ -14,6 +14,8 @@ const appStore = data.appStore ?? data.site ?? 'https://apps.apple.com/us/app/ov
 // The source is private, so nothing links to it: a 404 is a worse destination
 // than no link. Public support routes are used instead.
 const privacy = 'https://keithah.github.io/overhear/privacy.html';
+// Public TestFlight link, for early builds ahead of the App Store release.
+const testflight = 'https://testflight.apple.com/join/d7cA4a98';
 const supportEmail = 'mailto:keith+overhear@hadm.net';
 ---
 
@@ -195,13 +197,15 @@ const supportEmail = 'mailto:keith+overhear@hadm.net';
         <h2 id="oh-download-title">Set it up once. <em>Forget it's there.</em></h2>
         <p>
           Free on the Mac App Store for macOS 14 or later. Would rather skip the store? Download
-          it directly &mdash; it keeps itself up to date.
+          it directly &mdash; it keeps itself up to date. Want new features early? Join the
+          TestFlight beta.
         </p>
         <div class="ps-actions">
           <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
           {data.downloadUrl && (
             <a class="ps-btn" href={data.downloadUrl} download>Direct download</a>
           )}
+          <a class="ps-btn" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
           <a class="ps-btn" href={privacy} target="_blank" rel="noopener">Privacy policy</a>
         </div>
       </div>
