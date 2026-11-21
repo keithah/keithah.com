@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import TraversePage from '../../components/TraversePage.astro';
 import OverhearPage from '../../components/OverhearPage.astro';
+import UnrollPage from '../../components/UnrollPage.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -18,8 +19,9 @@ const isWattline = productSlug === 'wattline';
 const isStarwatch = productSlug === 'starwatch';
 const isTraverse = productSlug === 'traverse';
 const isOverhear = productSlug === 'overhear';
+const isUnroll = productSlug === 'unroll';
 // Pages with a bespoke layout bring their own sub-navigation.
-const hideNav = isPingScope || isWattline || isStarwatch || isTraverse || isOverhear;
+const hideNav = isPingScope || isWattline || isStarwatch || isTraverse || isOverhear || isUnroll;
 // Not every product has a public repository; fall back to the site or store page.
 const primaryUrl = d.repo ?? d.site ?? d.appStore ?? '';
 
@@ -27,7 +29,7 @@ const primaryUrl = d.repo ?? d.site ?? d.appStore ?? '';
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(productSlug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base title={d.name} description={d.tagline} hidePrimaryNav={hideNav}>
+<Base title={d.name} description={d.tagline} hidePrimaryNav={hideNav} noindex={d.noindex}>
   <Fragment slot="head">
     {(isPingScope || isWattline) && (
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
@@ -35,6 +37,8 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
   </Fragment>
   {isTraverse ? (
     <TraversePage data={d} />
+  ) : isUnroll ? (
+    <UnrollPage data={d} />
   ) : isOverhear ? (
     <OverhearPage data={d} />
   ) : isStarwatch ? (

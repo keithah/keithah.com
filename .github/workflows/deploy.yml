@@ -27,6 +27,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # The open-source PR snapshot reads the GitHub API. Without a token it
+          # is capped at 60 anonymous requests an hour and silently keeps the
+          # previous snapshot instead of refreshing.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist

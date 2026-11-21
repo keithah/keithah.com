@@ -1,0 +1,15 @@
+{
+  "name": "kvmctl",
+  "description": "Go CLI and MCP server for KVMD-compatible KVM devices: verified REST client plus agent-friendly workflows for status, screenshots, HID control, target selection and recovery.",
+  "repo": "https://github.com/keithah/kvmctl",
+  "lang": "Go",
+  "status": "active",
+  "tags": [
+    "kvm",
+    "glkvm",
+    "kvmd",
+    "go",
+    "mcp"
+  ],
+  "isProduct": false
+}

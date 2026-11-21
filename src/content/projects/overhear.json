@@ -4,7 +4,13 @@
   "repo": "https://apps.apple.com/us/app/overhear-meetings/id6781855070?mt=12",
   "lang": "Swift",
   "status": "stable",
-  "tags": ["swift", "macos", "menu bar", "calendar", "meetings"],
+  "tags": [
+    "swift",
+    "macos",
+    "menu bar",
+    "calendar",
+    "meetings"
+  ],
   "isProduct": true,
-  "featured": 6
+  "featured": 2
 }

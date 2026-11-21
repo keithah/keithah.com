@@ -42,6 +42,9 @@ const products = defineCollection({
     platforms: z.array(z.string()).default([]),
     tags: z.array(z.string()).default([]),
     license: z.string().default('MIT'),
+    // Unlisted pages: rendered and reachable by direct URL only. They carry
+    // noindex and are never linked from the site's navigation or listings.
+    noindex: z.boolean().default(false),
   }),
 });
 

@@ -1,0 +1,15 @@
+{
+  "name": "unifi-access-airbnb",
+  "description": "Puts UniFi Access on the Airbnb calendar: creates guest access from a Hostex API or ICS feed, assigns PINs by phone number, and removes access after checkout.",
+  "repo": "https://github.com/keithah/unifi-access-airbnb",
+  "lang": "Python",
+  "status": "active",
+  "tags": [
+    "unifi-access",
+    "airbnb",
+    "python",
+    "automation",
+    "access-control"
+  ],
+  "isProduct": false
+}

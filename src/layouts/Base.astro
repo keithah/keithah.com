@@ -5,12 +5,14 @@ interface Props {
   description?: string;
   activeNav?: string;
   hidePrimaryNav?: boolean;
+  noindex?: boolean;
 }
 const {
   title = 'Keith Herrington',
   description = 'Technical Product @ TuneIn · Exec Director, Kodi Foundation · aspirational slopcoder.',
   activeNav,
   hidePrimaryNav = false,
+  noindex = false,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -21,6 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
   <link rel="alternate" type="application/rss+xml" title="Keith Herrington" href="/rss.xml" />
   <script is:inline>
     // Resolve the theme before first paint so the page never flashes.
