@@ -13,9 +13,11 @@ permissions:
   contents: read
 
 # A pull-request build should not queue behind a production deploy, and it must
-# never cancel one, so each pull request gets its own group.
+# never cancel one, so each pull request gets its own group. Every non-PR run
+# (push, schedule, dispatch) stays in the single `pages` group so two
+# production deploys can never overlap.
 concurrency:
-  group: pages-${{ github.event_name }}-${{ github.event.pull_request.number || 'main' }}
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.event.pull_request.number) || 'pages' }}
   cancel-in-progress: false
 
 jobs:
