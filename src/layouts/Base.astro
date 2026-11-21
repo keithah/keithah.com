@@ -38,6 +38,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       } catch {
         document.documentElement.dataset.theme = 'dark';
       }
+
+      // Full-bleed sections are sized from the viewport, and 100vw counts the
+      // vertical scrollbar that the layout does not get to use. Publish the
+      // difference so CSS can subtract it; 0 when there is no scrollbar.
+      const setScrollbarWidth = () => {
+        const width = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.style.setProperty('--sbw', `${width > 0 ? width : 0}px`);
+      };
+      setScrollbarWidth();
+      addEventListener('resize', setScrollbarWidth, { passive: true });
+      // Content can be taller than the viewport by the time it finishes loading,
+      // which is when a vertical scrollbar first appears.
+      addEventListener('load', setScrollbarWidth, { once: true });
+      new ResizeObserver(setScrollbarWidth).observe(document.documentElement);
     })();
   </script>
   <slot name="head" />

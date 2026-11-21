@@ -1,0 +1,10 @@
+{
+  "name": "openwrt-starwatch",
+  "description": "Offline-first Starlink monitoring for OpenWrt and GL.iNet routers: a Go daemon, an embedded dashboard, and LuCI and GL.iNet panel apps.",
+  "repo": "https://github.com/keithah/openwrt-starwatch",
+  "lang": "Go",
+  "status": "active",
+  "tags": ["openwrt", "glinet", "luci", "starlink", "go", "opkg"],
+  "isProduct": false,
+  "repoPublic": true
+}

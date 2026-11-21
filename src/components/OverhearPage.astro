@@ -194,11 +194,14 @@ const supportEmail = 'mailto:keith+overhear@hadm.net';
         <p class="ps-index">04 / Download</p>
         <h2 id="oh-download-title">Install it and forget it's there.</h2>
         <p>
-          Free on the Mac App Store for macOS 14.0 or later. That is the supported install
-          route, and it is the one the app is signed and notarised for.
+          Free on the Mac App Store for macOS 14.0 or later. Prefer not to use the store? A
+          direct download is available, and it updates itself through Sparkle.
         </p>
         <div class="ps-actions">
           <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
+          {data.downloadUrl && (
+            <a class="ps-btn" href={data.downloadUrl} download>Direct download</a>
+          )}
           <a class="ps-btn" href={privacy} target="_blank" rel="noopener">Privacy policy</a>
         </div>
       </div>

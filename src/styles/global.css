@@ -57,14 +57,47 @@
 
 html { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
 /* Keep the readable scale while giving the desktop layout room to breathe. */
-body { zoom: 1.5; width: min(1200px, calc(100% - 40px)); margin: 0 auto; padding: 0 20px; }
+/* 100vw resolves against the viewport while percentages resolve against the
+   zoomed box, so inside `zoom: 1.5` the two disagree by the zoom factor. Rules
+   that need the true viewport width divide by this. */
+:root { --page-zoom: 1.5; }
+
+html { overflow-x: clip; }
+
+/* 100vw includes the vertical scrollbar, so a full-bleed element sized from it
+   is a scrollbar-width too wide. --sbw is set by a one-line script; it defaults
+   to 0 so nothing breaks without it. */
+:root { --sbw: 0px; --vw: calc(100vw - var(--sbw)); --body-pad: 20px; }
+
+body { zoom: var(--page-zoom); width: min(1200px, calc(100% - 40px)); margin: 0 auto; padding: 0 20px; }
 
 /* The 1.5 zoom is part of the desktop reading scale, but zoom multiplies the
    body's resolved width, so on a narrow viewport the page renders 1.5x wider
    than the screen and everything past the edge is unreachable. Drop the zoom
    for small screens and give the text a little of it back in spacing. */
 @media (max-width: 900px) {
+  :root { --page-zoom: 1; --body-pad: 16px; }
   body { zoom: 1; width: auto; max-width: 100%; padding: 0 16px; }
+  /* Every full-bleed band pins to the viewport edges rather than computing
+     them, so it cannot be off by a rounding pixel on a small screen. The
+     overshoot must match the body's own padding at this width, or the band
+     stops short of the edge and the page scrolls by the difference. */
+  .ps-page,
+  .ps-pingscope,
+  .ps-wattline {
+    width: auto;
+    max-width: none;
+    margin-inline: calc(-1 * var(--body-pad));
+    padding-inline: var(--body-pad);
+  }
+  /* .tv-page, .oh-page and .ur-page already bleed by --body-pad, so they only
+     need to stop computing a width here. */
+  .tv-page,
+  .oh-page,
+  .ur-page {
+    width: auto;
+    max-width: none;
+  }
 }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--muted); }
@@ -277,8 +310,13 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   --ps-green: #59db68;
   --ps-blue: #2f86ff;
   color: var(--ps-ink);
-  margin: -16px calc(50% - 50vw) 0;
-  padding: 0 max(20px, calc(50vw - 590px));
+  /* Full-bleed band. 100vw ignores the zoom while percentages do not, so the
+     true viewport width is 100vw / --page-zoom. Any sub-pixel excess at the
+     edges is clipped by the body rather than becoming a scrollbar. */
+  width: calc(var(--vw) / var(--page-zoom));
+  max-width: none;
+  margin: -16px calc((var(--vw) / var(--page-zoom) - 100%) / -2) 0;
+  padding: 0 max(20px, calc((var(--vw) / var(--page-zoom) - 1180px) / 2));
   background:
     linear-gradient(120deg, rgba(47, 134, 255, 0.16), transparent 34rem),
     linear-gradient(220deg, rgba(255, 156, 63, 0.12), transparent 30rem),
@@ -574,7 +612,7 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
 
 .ps-download-panel {
   display: grid;
-  grid-template-columns: 1fr 0.9fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
   gap: 20px;
   padding: 26px;
 }
@@ -633,7 +671,19 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   .ps-section-head,
   .ps-download-panel,
   .ps-support-grid {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr), not 1fr: a bare 1fr track refuses to shrink below its
+       content's min-content width, so one long unbreakable line (an install
+       command, say) can push the whole page wider than the viewport. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Let the copy column actually shrink; without this its min-content width
+     still sets the floor for the track above. */
+  .ps-hero-copy,
+  .ps-section-head > *,
+  .ps-download-panel > *,
+  .ps-support-grid > * {
+    min-width: 0;
   }
 
   .ps-shot-wrap {
@@ -689,10 +739,10 @@ footer { display: flex; align-items: center; justify-content: space-between; pad
   --ps-blue: #2e8cff;
   --ps-pink: #ff3f88;
   --ps-cyan: #00d7bd;
-  width: 100vw;
+  width: calc(var(--vw) / var(--page-zoom));
   max-width: none;
   overflow: clip;
-  padding-inline: max(20px, calc(50vw - 690px));
+  padding-inline: max(20px, calc((var(--vw) / var(--page-zoom) - 1380px) / 2));
   background:
     radial-gradient(circle at 84% 8%, rgba(255, 95, 31, 0.11), transparent 25rem),
     radial-gradient(circle at 4% 2%, rgba(46, 140, 255, 0.13), transparent 34rem),
@@ -969,10 +1019,10 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
   --ps-line: var(--wt-line);
   --ps-green: var(--wt-blue);
 
-  width: 100vw;
+  width: calc(var(--vw) / var(--page-zoom));
   max-width: none;
   overflow: clip;
-  padding-inline: max(20px, calc(50vw - 690px));
+  padding-inline: max(20px, calc((var(--vw) / var(--page-zoom) - 1380px) / 2));
   background:
     radial-gradient(circle at 76% 6%, rgba(82, 168, 255, 0.18), transparent 28rem),
     radial-gradient(circle at 11% 23%, rgba(167, 139, 250, 0.17), transparent 29rem),
@@ -1266,6 +1316,42 @@ body:has(.ps-pingscope) > :where(nav, footer) a:focus-visible {
    ========================================================================== */
 
 /* PingScope — light "diagnostic field" */
+/* The shared bespoke-page root. PingScope has its own extra remap below, but
+   Starwatch and Wattline read these variables directly, so they belong here. */
+:root[data-theme='light'] .ps-page {
+  --ps-bg: #fbfaf7;
+  --ps-ink: #16181d;
+  --ps-muted: #515a63;
+  --ps-dim: #646c75;
+  --ps-panel: #ffffff;
+  --ps-panel-2: #f4f2ed;
+  --ps-line: #d8d4ca;
+  --ps-green: #0d7f35;
+  --ps-blue: #1a63cf;
+  background:
+    linear-gradient(120deg, rgba(26, 99, 207, 0.07), transparent 34rem),
+    linear-gradient(220deg, rgba(180, 83, 9, 0.06), transparent 30rem),
+    repeating-linear-gradient(90deg, rgba(20, 24, 28, 0.035) 0 1px, transparent 1px 82px),
+    var(--ps-bg);
+  color: var(--ps-ink);
+}
+
+/* Elements inside the shared pages that paint their own dark surface instead of
+   reading a --ps-* variable. */
+:root[data-theme='light'] .ps-overlay-showcase {
+  background:
+    linear-gradient(120deg, rgba(13, 127, 53, 0.07), transparent 55%),
+    rgba(255, 255, 255, 0.92);
+}
+
+/* On the shared pages the primary button is near-black, which is correct on the
+   dark surface and unreadable on the light one. */
+:root[data-theme='light'] .ps-page .ps-btn.ps-primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+}
+
 :root[data-theme='light'] .ps-pingscope {
   --ps-bg: #f7f8f5;
   --ps-ink: #10131a;
@@ -1401,7 +1487,7 @@ button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   --tv-plans-bg: rgba(12, 37, 48, 0.6);
 
   width: auto;
-  margin-inline: -20px;
+  margin-inline: calc(-1 * var(--body-pad));
   overflow: clip;
   padding-inline: clamp(16px, 3.2vw, 44px);
   background:
@@ -1616,7 +1702,7 @@ button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   .tv-page .ps-hero,
   .tv-page .ps-section-head,
   .tv-setup-grid,
-  .tv-support-panel { grid-template-columns: 1fr; }
+  .tv-support-panel { grid-template-columns: minmax(0, 1fr); }
   .tv-page .ps-hero { padding-top: 46px; }
   .tv-page .ps-section-head { gap: 16px; }
   .tv-compare,
@@ -1670,7 +1756,7 @@ button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   --oh-box-bg: rgba(16, 19, 23, 0.7);
 
   width: auto;
-  margin-inline: -20px;
+  margin-inline: calc(-1 * var(--body-pad));
   overflow: clip;
   padding-inline: clamp(16px, 3.2vw, 44px);
   background:
@@ -1945,7 +2031,7 @@ button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   --ur-primary-hover: #ffc94d;
 
   width: auto;
-  margin-inline: -20px;
+  margin-inline: calc(-1 * var(--body-pad));
   overflow: clip;
   padding-inline: clamp(16px, 3.2vw, 44px);
   background:
