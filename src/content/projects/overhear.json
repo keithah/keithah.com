@@ -1,16 +1,10 @@
 {
   "name": "Overhear",
-  "description": "macOS menu-bar meeting launcher: shows the next meeting with a countdown and joins it in one click across 30+ services. Free on the Mac App Store, private by design.",
-  "repo": "https://apps.apple.com/us/app/overhear-meetings/id6781855070?mt=12",
+  "description": "macOS menu-bar launcher that shows your next meeting and joins it in one click.",
+  "repo": "https://github.com/keithah/overhear",
   "lang": "Swift",
-  "status": "stable",
-  "tags": [
-    "swift",
-    "macos",
-    "menu bar",
-    "calendar",
-    "meetings"
-  ],
+  "status": "beta",
+  "tags": ["swift", "macos", "calendar", "meetings"],
   "isProduct": true,
-  "featured": 2
+  "repoPublic": false
 }

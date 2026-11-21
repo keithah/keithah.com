@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import TraversePage from '../../components/TraversePage.astro';
 import OverhearPage from '../../components/OverhearPage.astro';
 import UnrollPage from '../../components/UnrollPage.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -22,19 +22,33 @@ const isOverhear = productSlug === 'overhear';
 const isUnroll = productSlug === 'unroll';
 // Pages with a bespoke layout bring their own sub-navigation.
 const hideNav = isPingScope || isWattline || isStarwatch || isTraverse || isOverhear || isUnroll;
-// Not every product has a public repository; fall back to the site or store page.
+
+// Repo visibility comes from the project entry, the single source for cards too.
+const project = await getEntry('projects', productSlug);
+const repoPublic = project?.data.repoPublic ?? true;
+if (!repoPublic && (isPingScope || isWattline || isStarwatch)) {
+  throw new Error(`${productSlug}: its custom layout links to GitHub and does not support a private repo`);
+}
+// The bespoke layouts below link to their own public destination (a site, a store
+// page or a download), so only the generic template needs a support address.
+if (!repoPublic && !d.supportEmail && !(isTraverse || isOverhear || isUnroll)) {
+  throw new Error(`${productSlug}: a private repo needs supportEmail in the product frontmatter`);
+}
+
 // One source of truth: the destination and its label are chosen together, so a
-// product with both a site and a store listing cannot end up mislabelled.
-const primary = d.repo
+// product with both a site and a store listing cannot end up mislabelled. A
+// private repo is never offered as a link.
+const primary = repoPublic && d.repo
   ? { url: d.repo, label: 'View on GitHub', short: 'github' }
-  : d.appStore
-    ? { url: d.appStore, label: 'View on the App Store', short: 'app store' }
-    : d.site
-      ? { url: d.site, label: 'Visit site', short: 'site' }
-      : null;
+  : d.downloadUrl
+    ? { url: d.downloadUrl, label: 'Download', short: 'download' }
+    : d.appStore
+      ? { url: d.appStore, label: 'View on the App Store', short: 'app store' }
+      : d.site
+        ? { url: d.site, label: 'Visit site', short: 'site' }
+        : null;
 const primaryUrl = primary?.url ?? null;
 const primaryLabel = primary?.label ?? null;
-const supportUrl = d.repo ? `${d.repo}/issues/new` : primaryUrl;
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(productSlug));
@@ -535,6 +549,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href="#docs">docs</a>
       <a href="#changelog">changelog</a>
       <a href="#support">support</a>
+      {d.privacyUrl && <a href={d.privacyUrl}>privacy</a>}
       {primary && <a href={primary.url} target="_blank" rel="noopener">{primary.short}</a>}
     </span>
   </nav>
@@ -584,11 +599,19 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   <div id="support">
     <div class="sh" style="margin-bottom:12px">support</div>
-    <div class="support-box">
-      <h3>open an issue</h3>
-      <p>Found a bug or have a request? Open an issue on GitHub. Include your OS version and what you were doing when it broke.</p>
-      <a href={supportUrl} class="btn" target="_blank" rel="noopener">{d.repo ? 'open an issue on GitHub' : 'get support'} &rarr;</a>
-    </div>
+    {d.supportEmail || !repoPublic ? (
+      <div class="support-box">
+        <h3>email support</h3>
+        <p>Found a bug or have a request? Email it. Include your OS version, the {d.name} version, and what you were doing when it broke.</p>
+        <a href={`mailto:${d.supportEmail}?subject=${encodeURIComponent(`${d.name} support`)}`} class="btn">{d.supportEmail} &rarr;</a>
+      </div>
+    ) : (
+      <div class="support-box">
+        <h3>open an issue</h3>
+        <p>Found a bug or have a request? Open an issue on GitHub. Include your OS version and what you were doing when it broke.</p>
+        <a href={`${d.repo}/issues/new`} class="btn" target="_blank" rel="noopener">open an issue on GitHub &rarr;</a>
+      </div>
+    )}
   </div>
     </>
   )}
