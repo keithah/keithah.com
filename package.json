@@ -12,7 +12,7 @@
     "validate:overhear": "npm run build && node scripts/validate-overhear-product-page.mjs"
   },
   "dependencies": {
-    "astro": "^7.1.1",
+    "astro": "^7.4.7",
     "@astrojs/rss": "^4.0.19"
   }
 }
