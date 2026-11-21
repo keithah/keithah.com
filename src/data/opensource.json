@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-11-21T01:56:03.210Z",
+  "generatedAt": "2026-11-21T22:17:02.790Z",
   "merged": [
     {
-      "number": 30367,
-      "title": "[github] Enable CodeRabbit reviews for non-default base branches",
-      "repo": "xbmc/xbmc",
-      "topic": "open source",
-      "lang": "C++",
-      "stars": 21521,
-      "updatedAt": "2026-11-07T19:47:02Z",
-      "url": "https://github.com/xbmc/xbmc/pull/30367",
+      "number": 180,
+      "title": "feat: ordered comparison operators in automation conditions",
+      "repo": "omarshahine/HomeClaw",
+      "topic": "home automation",
+      "lang": "Swift",
+      "stars": 196,
+      "updatedAt": "2026-11-21T02:34:36Z",
+      "url": "https://github.com/omarshahine/HomeClaw/pull/180",
       "state": "merged"
     },
     {
@@ -48,25 +48,25 @@
       "state": "open"
     },
     {
-      "number": 180,
-      "title": "feat: ordered comparison operators in automation conditions",
-      "repo": "omarshahine/HomeClaw",
-      "topic": "home automation",
-      "lang": "Swift",
-      "stars": 196,
-      "updatedAt": "2026-11-07T17:08:13Z",
-      "url": "https://github.com/omarshahine/HomeClaw/pull/180",
+      "number": 1,
+      "title": "Wait for reported state before updating Mitsubishi Comfort Cloud entities",
+      "repo": "nikolairahimi/core",
+      "topic": "open source",
+      "lang": "—",
+      "stars": 0,
+      "updatedAt": "2026-10-30T01:10:44Z",
+      "url": "https://github.com/nikolairahimi/core/pull/1",
       "state": "open"
     },
     {
-      "number": 30278,
-      "title": "utils: avoid deprecated std::atomic_load/store on shared_ptr",
-      "repo": "xbmc/xbmc",
-      "topic": "open source",
-      "lang": "C++",
-      "stars": 21521,
-      "updatedAt": "2026-11-06T01:16:18Z",
-      "url": "https://github.com/xbmc/xbmc/pull/30278",
+      "number": 1,
+      "title": "Document confirmed Mitsubishi Comfort Cloud state updates",
+      "repo": "nikolairahimi/home-assistant.io",
+      "topic": "home automation",
+      "lang": "—",
+      "stars": 0,
+      "updatedAt": "2026-10-29T04:23:13Z",
+      "url": "https://github.com/nikolairahimi/home-assistant.io/pull/1",
       "state": "open"
     }
   ]
