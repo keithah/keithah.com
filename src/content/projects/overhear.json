@@ -6,5 +6,6 @@
   "status": "beta",
   "tags": ["swift", "macos", "calendar", "meetings"],
   "isProduct": true,
-  "repoPublic": false
+  "repoPublic": false,
+  "featured": 2
 }

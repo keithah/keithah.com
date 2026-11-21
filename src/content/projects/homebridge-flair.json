@@ -1,0 +1,15 @@
+{
+  "name": "homebridge-flair",
+  "description": "Homebridge plugin for Flair Smart Vents: exposes vents, rooms and pucks to HomeKit so airflow can be controlled alongside the rest of the house.",
+  "repo": "https://github.com/keithah/homebridge-flair",
+  "lang": "TypeScript",
+  "status": "stable",
+  "tags": [
+    "homebridge",
+    "homekit",
+    "flair",
+    "hvac",
+    "typescript"
+  ],
+  "isProduct": false
+}

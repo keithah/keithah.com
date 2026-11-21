@@ -26,6 +26,8 @@ const projects = defineCollection({
     featured: z.number().optional(),
     // false for private repositories: cards then show no GitHub link.
     repoPublic: z.boolean().default(true),
+    // Keep an unlisted project out of the home and work listings.
+    noindex: z.boolean().default(false),
   }),
 });
 
@@ -35,7 +37,9 @@ const products = defineCollection({
     name: z.string(),
     tagline: z.string(),
     description: z.string(),
-    repo: z.string().url(),
+    repo: z.string().url().optional(),
+    site: z.string().url().optional(),
+    appStore: z.string().url().optional(),
     lang: z.string(),
     version: z.string(),
     status: z.enum(['active', 'beta', 'stable', 'archived']),
@@ -48,6 +52,9 @@ const products = defineCollection({
     privacyUrl: z.string().url().optional(),
     // Shown instead of "open an issue"; the build fails without it for a private repo.
     supportEmail: z.string().email().optional(),
+    // Unlisted pages: rendered and reachable by direct URL only. They carry
+    // noindex and are never linked from the site's navigation or listings.
+    noindex: z.boolean().default(false),
   }),
 });
 

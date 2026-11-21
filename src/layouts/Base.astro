@@ -5,12 +5,14 @@ interface Props {
   description?: string;
   activeNav?: string;
   hidePrimaryNav?: boolean;
+  noindex?: boolean;
 }
 const {
   title = 'Keith Herrington',
   description = 'Technical Product @ TuneIn · Exec Director, Kodi Foundation · aspirational slopcoder.',
   activeNav,
   hidePrimaryNav = false,
+  noindex = false,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -21,7 +23,37 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
   <link rel="alternate" type="application/rss+xml" title="Keith Herrington" href="/rss.xml" />
+  <script is:inline>
+    // Resolve the theme before first paint so the page never flashes.
+    // No stored choice means "follow the system", which is the default.
+    (() => {
+      try {
+        const stored = localStorage.getItem('theme');
+        const theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.dataset.theme = theme;
+      } catch {
+        document.documentElement.dataset.theme = 'dark';
+      }
+
+      // Full-bleed sections are sized from the viewport, and 100vw counts the
+      // vertical scrollbar that the layout does not get to use. Publish the
+      // difference so CSS can subtract it; 0 when there is no scrollbar.
+      const setScrollbarWidth = () => {
+        const width = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.style.setProperty('--sbw', `${width > 0 ? width : 0}px`);
+      };
+      setScrollbarWidth();
+      addEventListener('resize', setScrollbarWidth, { passive: true });
+      // Content can be taller than the viewport by the time it finishes loading,
+      // which is when a vertical scrollbar first appears.
+      addEventListener('load', setScrollbarWidth, { once: true });
+      new ResizeObserver(setScrollbarWidth).observe(document.documentElement);
+    })();
+  </script>
   <slot name="head" />
   <title>{title === 'Keith Herrington' ? title : `${title} · keithah`}</title>
 </head>
@@ -34,6 +66,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         <a href="/work" class:list={[{ active: activeNav === 'work' }]}>work</a>
         <a href="/about" class:list={[{ active: activeNav === 'about' }]}>about</a>
         <a href="/rss.xml">rss</a>
+        <button class="theme-toggle" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.2 14.6A8.4 8.4 0 1 1 9.4 3.8a6.8 6.8 0 0 0 10.8 10.8z"></path>
+          </svg>
+        </button>
       </div>
     </nav>
   )}
@@ -49,5 +90,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <a href="https://matrix.to/#/@keithah:beeper.com">matrix</a>
     </div>
   </footer>
+  <script is:inline>
+    document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch {}
+    });
+  </script>
 </body>
 </html>

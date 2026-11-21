@@ -1,0 +1,238 @@
+---
+interface Props {
+  data: {
+    name: string;
+    site?: string;
+    appStore?: string;
+    // Read by the download section; omitted, the button is not rendered.
+    downloadUrl?: string;
+    version: string;
+  };
+}
+const { data } = Astro.props;
+const appStore = data.appStore ?? data.site ?? 'https://apps.apple.com/us/app/overhear-meetings/id6781855070?mt=12';
+// The source is private, so nothing links to it: a 404 is a worse destination
+// than no link. Public support routes are used instead.
+const privacy = 'https://keithah.github.io/overhear/privacy.html';
+const supportEmail = 'mailto:keith+overhear@hadm.net';
+---
+
+<div class="ps-page oh-page">
+  <nav class="ps-subnav" aria-label="Overhear sections">
+    <a href="#top" class="ps-brand" aria-label="Overhear home">
+      <img src="/products/overhear/app-icon.png" alt="" width="26" height="26" />
+      <strong>Overhear</strong>
+    </a>
+    <span class="ps-subnav-links">
+      <a href="#features">Features</a>
+      <a href="#calendars">Calendars</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#download">Download</a>
+      <a href="#support">Support</a>
+    </span>
+  </nav>
+
+  <section id="top" class="ps-hero oh-hero" aria-labelledby="overhear-title">
+    <div class="ps-hero-copy">
+      <p class="ps-eyebrow"><span aria-hidden="true"></span> Free on the Mac App Store</p>
+      <h1 id="overhear-title">Your next meeting,<br />one click away.</h1>
+      <p class="ps-lede">
+        Overhear lives in your menu bar, shows the day's meetings from the calendars already on your
+        Mac, and opens the right join link in the right app. No account. No tracking. Nothing leaves
+        your machine.
+      </p>
+      <div class="ps-actions">
+        <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
+        <a class="ps-btn ps-ghost" href={privacy} target="_blank" rel="noopener">Privacy</a>
+      </div>
+      <p class="ps-release-note">
+        macOS 14.0 or later &middot; 2.1 MB &middot; English &middot; rated 4+ &middot; Data Not Collected.
+      </p>
+    </div>
+    <div class="oh-hero-capture" aria-label="Overhear meeting list and detail panel">
+      <img
+        class="oh-shot-list"
+        src="/products/overhear/meeting-list.png"
+        alt="Overhear meeting list with a NOW divider, NEXT badge, platform icons for Zoom, Teams and Meet, and Join buttons."
+        width="760"
+        height="1040"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <img
+        class="oh-shot-detail"
+        src="/products/overhear/meeting-detail.png"
+        alt="Overhear meeting detail panel showing time, organizer, participants and invite notes."
+        width="760"
+        height="1040"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="oh-menubar" aria-label="Example menu bar item">
+        <span>Thu 2:29 PM</span>
+        <strong>Design Review</strong>
+        <em>in 1m</em>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="ps-section oh-features" aria-labelledby="oh-features-title">
+    <div class="ps-section-head">
+      <p class="ps-index">01 / The point</p>
+      <div>
+        <h2 id="oh-features-title">The gap between meetings is not a place to live.</h2>
+      </div>
+      <p>
+        Finding the link, checking the time, guessing which app it opens in &mdash; Overhear removes all
+        of it. The next meeting is in the menu bar, and the click is one click.
+      </p>
+    </div>
+    <div class="ps-feature-grid oh-feature-grid">
+      <article class="ps-card">
+        <span>01</span>
+        <h3>What's next, at a glance</h3>
+        <p>The menu bar carries the next meeting and how long until it starts. Or a generic "Meeting" label when the title shouldn't be on screen.</p>
+      </article>
+      <article class="ps-card">
+        <span>02</span>
+        <h3>One click, right app</h3>
+        <p>Join from the menu bar, the list, a reminder, or a keyboard shortcut. Zoom, Meet, Teams, Webex and dozens more open in their own apps when installed.</p>
+      </article>
+      <article class="ps-card">
+        <span>03</span>
+        <h3>Details before you commit</h3>
+        <p>Time, organizer, participants and invite notes, with copy-link, open-in-Calendar, and hide.</p>
+      </article>
+      <article class="ps-card">
+        <span>04</span>
+        <h3>Reminders that snooze</h3>
+        <p>An in-app card or a system notification, cards that fold into a stack you dismiss at once, and optional auto-join when a meeting starts.</p>
+      </article>
+    </div>
+    <figure class="oh-reminder">
+      <figcaption>
+        <span>Reminders</span>
+        <strong>Platform icon, a clear status line, and snooze beside join.</strong>
+      </figcaption>
+      <img
+        src="/products/overhear/reminders.png"
+        alt="Overhear reminder cards showing the meeting platform icon, start time, and Join with a Snooze button."
+        width="808"
+        height="636"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+  </section>
+
+  <section id="calendars" class="ps-section oh-calendars" aria-labelledby="oh-calendars-title">
+    <div class="ps-section-head">
+      <p class="ps-index">02 / Calendars</p>
+      <div>
+        <h2 id="oh-calendars-title">Your calendars, without giving up an account.</h2>
+      </div>
+      <p>
+        Overhear reads what macOS already syncs. If you'd rather not add an account to Calendar at all,
+        add the calendar by its ICS link instead.
+      </p>
+    </div>
+    <div class="oh-calendar-grid">
+      <figure class="oh-calendar-shot">
+        <img
+          src="/products/overhear/settings-calendars.png"
+          alt="Overhear Settings on the Calendars pane, choosing calendars and which events to include."
+          width="1520"
+          height="1120"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption><span>Settings &middot; Calendars</span> Per-calendar selection, tentative and declined events, all-day events, and regex title filters.</figcaption>
+      </figure>
+      <dl class="oh-calendar-list">
+        <div>
+          <dt>Calendar links</dt>
+          <dd>Add Google, Outlook, Fastmail or iCloud by their ICS link and keep the account out of macOS Calendar. Overhear checks the link and shows how many events are coming up before saving, then refreshes every 15 minutes.</dd>
+        </div>
+        <div>
+          <dt>One meeting, once</dt>
+          <dd>When the same meeting arrives from two calendars, it shows once. Turn that off to see every copy.</dd>
+        </div>
+        <div>
+          <dt>Colour per calendar</dt>
+          <dd>A dot beside each calendar is a colour control &mdash; for linked calendars and macOS ones alike.</dd>
+        </div>
+        <div>
+          <dt>Honest about latency</dt>
+          <dd>A published Google link can take hours to update. For changes that land in minutes, add the account in System Settings &rarr; Internet Accounts instead.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="privacy" class="ps-section oh-privacy" aria-labelledby="oh-privacy-title">
+    <div class="oh-privacy-panel">
+      <div>
+        <p class="ps-index">03 / Privacy</p>
+        <h2 id="oh-privacy-title">Private by design, and specific about it.</h2>
+        <p>
+          Overhear reads calendars on your Mac and sends nothing anywhere. The App Store privacy label
+          says <strong>Data Not Collected</strong>, and meeting titles are kept out of the macOS log.
+          Calendar links live in your Keychain &mdash; once added, Overhear shows only the address,
+          never the full link.
+        </p>
+      </div>
+      <dl class="oh-facts">
+        <div><dt>Account</dt><dd>None</dd></div>
+        <div><dt>Tracking</dt><dd>None</dd></div>
+        <div><dt>Price</dt><dd>Free</dd></div>
+        <div><dt>Size</dt><dd>2.1 MB</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="download" class="ps-section oh-download" aria-labelledby="oh-download-title">
+    <div class="ps-download-panel">
+      <div>
+        <p class="ps-index">04 / Download</p>
+        <h2 id="oh-download-title">Install it and forget it's there.</h2>
+        <p>
+          Free on the Mac App Store for macOS 14.0 or later. Prefer not to use the store? A
+          direct download is available, and it updates itself through Sparkle.
+        </p>
+        <div class="ps-actions">
+          <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
+          {data.downloadUrl && (
+            <a class="ps-btn" href={data.downloadUrl} download>Direct download</a>
+          )}
+          <a class="ps-btn" href={privacy} target="_blank" rel="noopener">Privacy policy</a>
+        </div>
+      </div>
+      <dl class="ps-release-box">
+        <dt>Requires</dt>
+        <dd>macOS 14.0+</dd>
+        <dt>Category</dt>
+        <dd>Productivity</dd>
+        <dt>Languages</dt>
+        <dd>English</dd>
+        <dt>Age rating</dt>
+        <dd>4+</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="support" class="ps-section oh-support" aria-labelledby="oh-support-title">
+    <div class="ps-support-grid">
+      <div>
+        <h2 id="oh-support-title">Something not joining?</h2>
+        <p>
+          Email your macOS version, the meeting service, and what you expected to happen.
+          Overhear is a one-person project, so a reproducible report is the fastest path.
+        </p>
+      </div>
+      <div class="ps-actions">
+        <a class="ps-btn ps-primary" href={supportEmail}>Email support</a>
+        <a class="ps-btn" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
+      </div>
+    </div>
+  </section>
+</div>

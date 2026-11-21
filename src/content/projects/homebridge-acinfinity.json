@@ -1,0 +1,15 @@
+{
+  "name": "homebridge-acinfinity",
+  "description": "Homebridge plugin for AC Infinity UIS controllers: fan speed control, temperature and humidity monitoring, VPD and external probe sensors.",
+  "repo": "https://github.com/keithah/homebridge-acinfinity",
+  "lang": "TypeScript",
+  "status": "stable",
+  "tags": [
+    "homebridge",
+    "homekit",
+    "ac-infinity",
+    "grow",
+    "typescript"
+  ],
+  "isProduct": false
+}

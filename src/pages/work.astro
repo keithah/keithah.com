@@ -2,7 +2,14 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-const projects = await getCollection('projects');
+// Unlisted projects never appear in the listing.
+const projects = (await getCollection('projects')).filter(p => !p.data.noindex);
+
+const linkLabel = (url: string) => {
+  if (url.includes('github.com')) return 'github';
+  if (url.includes('apps.apple.com')) return 'app store';
+  return 'site';
+};
 
 // Sort: products first, then by status priority
 const rank = { active: 0, beta: 1, stable: 2, internal: 3, archived: 4 };
@@ -48,7 +55,9 @@ const filters = [
           </div>
           <p class="card-desc">{p.data.description}</p>
           <div class="card-links">
-            {p.data.repoPublic && <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>}
+            {p.data.repoPublic && (
+              <a href={p.data.repo} class="gh" target="_blank" rel="noopener">{linkLabel(p.data.repo)}</a>
+            )}
             {p.data.isProduct && <a href={`/products/${slug}`} class="prod">product page &rarr;</a>}
           </div>
         </div>

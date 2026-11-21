@@ -6,11 +6,18 @@ import contributionData from '../data/opensource.json';
 const posts    = await getCollection('posts',    p => !p.data.draft);
 const projects = await getCollection('projects');
 
+const linkLabel = (url: string) => {
+  if (url.includes('github.com')) return 'github';
+  if (url.includes('apps.apple.com')) return 'app store';
+  return 'site';
+};
+
 const recentPosts = posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0,5);
 
 // Featured work: explicit `featured` rank in each project's data (lower first).
 const featured = projects
-  .filter(p => p.data.featured != null)
+  // Unlisted products stay off every listing, even if they gain a featured rank.
+  .filter(p => p.data.featured != null && !p.data.noindex)
   .sort((a, b) => (a.data.featured as number) - (b.data.featured as number));
 
 const recentlyMerged = contributionData.merged;
@@ -62,7 +69,9 @@ const formatStars = (stars: number) => stars >= 1000 ? `${(stars / 1000).toFixed
         </div>
         <p class="card-desc">{p.data.description}</p>
         <div class="card-links">
-          {p.data.repoPublic && <a href={p.data.repo} class="gh" target="_blank" rel="noopener">github</a>}
+          {p.data.repoPublic && (
+            <a href={p.data.repo} class="gh" target="_blank" rel="noopener">{linkLabel(p.data.repo)}</a>
+          )}
           {p.data.isProduct && <a href={`/products/${p.id.replace('.json','')}`} class="prod">product page &rarr;</a>}
         </div>
       </div>

@@ -1,5 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
+import TraversePage from '../../components/TraversePage.astro';
+import OverhearPage from '../../components/OverhearPage.astro';
+import UnrollPage from '../../components/UnrollPage.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -14,27 +17,56 @@ const productSlug = product.id.replace(/\.md$/, '');
 const isPingScope = productSlug === 'pingscope';
 const isWattline = productSlug === 'wattline';
 const isStarwatch = productSlug === 'starwatch';
+const isTraverse = productSlug === 'traverse';
+const isOverhear = productSlug === 'overhear';
+const isUnroll = productSlug === 'unroll';
+// Pages with a bespoke layout bring their own sub-navigation.
+const hideNav = isPingScope || isWattline || isStarwatch || isTraverse || isOverhear || isUnroll;
+
 // Repo visibility comes from the project entry, the single source for cards too.
 const project = await getEntry('projects', productSlug);
 const repoPublic = project?.data.repoPublic ?? true;
 if (!repoPublic && (isPingScope || isWattline || isStarwatch)) {
   throw new Error(`${productSlug}: its custom layout links to GitHub and does not support a private repo`);
 }
-if (!repoPublic && !d.supportEmail) {
+// The bespoke layouts below link to their own public destination (a site, a store
+// page or a download), so only the generic template needs a support address.
+if (!repoPublic && !d.supportEmail && !(isTraverse || isOverhear || isUnroll)) {
   throw new Error(`${productSlug}: a private repo needs supportEmail in the product frontmatter`);
 }
+
+// One source of truth: the destination and its label are chosen together, so a
+// product with both a site and a store listing cannot end up mislabelled. A
+// private repo is never offered as a link.
+const primary = repoPublic && d.repo
+  ? { url: d.repo, label: 'View on GitHub', short: 'github' }
+  : d.downloadUrl
+    ? { url: d.downloadUrl, label: 'Download', short: 'download' }
+    : d.appStore
+      ? { url: d.appStore, label: 'View on the App Store', short: 'app store' }
+      : d.site
+        ? { url: d.site, label: 'Visit site', short: 'site' }
+        : null;
+const primaryUrl = primary?.url ?? null;
+const primaryLabel = primary?.label ?? null;
 
 // Pull related posts
 const posts = await getCollection('posts', p => !p.data.draft && p.data.products.includes(productSlug));
 posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base title={d.name} description={d.tagline} hidePrimaryNav={isPingScope || isWattline}>
+<Base title={d.name} description={d.tagline} hidePrimaryNav={hideNav} noindex={d.noindex}>
   <Fragment slot="head">
     {(isPingScope || isWattline) && (
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
     )}
   </Fragment>
-  {isStarwatch ? (
+  {isTraverse ? (
+    <TraversePage data={d} />
+  ) : isUnroll ? (
+    <UnrollPage data={d} />
+  ) : isOverhear ? (
+    <OverhearPage data={d} />
+  ) : isStarwatch ? (
     <div class="ps-page">
       <nav class="ps-subnav" aria-label="Starwatch sections">
         <a href="/" class="ps-breadcrumb">keithah.com</a>
@@ -44,7 +76,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
           <a href="#features">features</a>
           <a href="#install">install</a>
           <a href="#support">support</a>
-          <a href={d.repo} target="_blank" rel="noopener">github</a>
+          {primary && <a href={primary.url} target="_blank" rel="noopener">{primary.short}</a>}
         </span>
       </nav>
 
@@ -518,7 +550,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
       <a href="#changelog">changelog</a>
       <a href="#support">support</a>
       {d.privacyUrl && <a href={d.privacyUrl}>privacy</a>}
-      {repoPublic && <a href={d.repo} target="_blank" rel="noopener">github</a>}
+      {primary && <a href={primary.url} target="_blank" rel="noopener">{primary.short}</a>}
     </span>
   </nav>
 
@@ -529,8 +561,9 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
     </div>
     <p class="product-tagline">{d.tagline}</p>
     <div class="product-cta-row">
-      {d.downloadUrl && <a href={d.downloadUrl} class="btn">Download &rarr;</a>}
-      {repoPublic && <a href={d.repo} class="btn" target="_blank" rel="noopener">View on GitHub &rarr;</a>}
+      {primaryLabel && (
+        <a href={primaryUrl} class="btn" target="_blank" rel="noopener">{primaryLabel} &rarr;</a>
+      )}
       <span class="product-meta-row">
         {d.platforms.join(' / ')}
         <span class="product-meta-sep">&middot;</span>{d.lang}
@@ -566,7 +599,7 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   <div id="support">
     <div class="sh" style="margin-bottom:12px">support</div>
-    {d.supportEmail ? (
+    {d.supportEmail || !repoPublic ? (
       <div class="support-box">
         <h3>email support</h3>
         <p>Found a bug or have a request? Email it. Include your OS version, the {d.name} version, and what you were doing when it broke.</p>

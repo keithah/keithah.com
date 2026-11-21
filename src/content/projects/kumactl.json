@@ -1,0 +1,15 @@
+{
+  "name": "kumactl",
+  "description": "Python client and tooling for Uptime Kuma v2: a redacted, typed Socket.IO core, an operator CLI, a read-only MCP server for agents, and an optional Flask REST adapter.",
+  "repo": "https://github.com/keithah/kumactl",
+  "lang": "Python",
+  "status": "active",
+  "tags": [
+    "uptime-kuma",
+    "monitoring",
+    "python",
+    "mcp",
+    "cli"
+  ],
+  "isProduct": false
+}
