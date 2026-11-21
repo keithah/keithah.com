@@ -1,7 +1,7 @@
 ---
 name: Overhear
-tagline: Join your next meeting from the menu bar
-description: A macOS menu-bar app that shows your next meeting and opens its join link in one click. It reads your Mac's calendars and keeps everything on your Mac.
+tagline: Join your next meeting in one click, right from the menu bar
+description: A free Mac app that sits in your menu bar, shows what's coming up today, and opens the right meeting in the right app. No account, no tracking, and nothing leaves your Mac.
 repo: https://github.com/keithah/overhear
 lang: Swift
 version: 0.2.1
@@ -14,15 +14,15 @@ privacyUrl: https://keithah.github.io/overhear/privacy.html
 supportEmail: keith+overhear@hadm.net
 ---
 
-Overhear lives in your menu bar, watches your calendar, and gets out of the way until you need it.
+Overhear sits in your Mac's menu bar, keeps an eye on your calendar, and stays out of the way until you need it.
 
 ## Features
 
-- **Next meeting at a glance** — the menu bar shows what's next and how long until it starts
-- **One-click join** — opens Zoom, Google Meet, Microsoft Teams, Webex and dozens more, in their own apps when installed
-- **Meeting details** — time, organizer, participants and invite notes before you join
-- **Reminders** — a heads-up before meetings start, with snooze and optional auto-join
-- **Keyboard shortcuts** — join the next meeting or open the list without touching the mouse
-- **Private by design** — reads your calendars through macOS; no account, no tracking, and your calendar data never leaves your Mac (the direct download only checks for updates)
+- **See what's next** — your next meeting and how long until it starts, right in the menu bar
+- **Join in one click** — Zoom, Google Meet, Microsoft Teams, Webex and dozens more open straight in their own apps
+- **Know before you join** — the time, who's hosting, who's invited and the notes from the invite
+- **Reminders you can snooze** — a heads-up before each meeting, and Overhear can join for you when it starts
+- **Keyboard shortcuts** — join your next meeting or open your list without reaching for the mouse
+- **Private by design** — no account and no tracking, and your calendar never leaves your Mac
 
-The direct download updates itself through Sparkle. A Mac App Store version is on the way.
+Free on the Mac App Store. Prefer to skip the store? The direct download keeps itself up to date.
