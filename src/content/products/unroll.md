@@ -1,7 +1,7 @@
 ---
 name: Unroll
-tagline: Podcast ads, skipped before you hear them
-description: An iOS podcast app and self-hosted RSS proxy that detects and removes sponsor reads on-device, so episodes play without the ad break — no account, no cloud processing.
+tagline: Podcasts, minus the ad breaks
+description: An iPhone app that finds the ads in your podcasts and skips them before you hear them. Everything happens on your phone — no account, nothing uploaded.
 site: https://testflight.apple.com/join/1RdVtffd
 lang: Swift
 version: TestFlight
@@ -12,34 +12,32 @@ license: Proprietary
 noindex: true
 ---
 
-Unroll removes podcast advertising from the episode before you press play. The active product is a native iOS app that runs the whole pipeline on-device; a frozen Python reference remains in the repository as the behaviour contract the Swift port is tested against.
+Unroll finds the sponsor reads in your podcasts and skips them before you press play. Everything happens on your iPhone, with no account and nothing uploaded.
 
 ## How it works
 
-Detection runs as a cascade rather than a single model. Known recurring audio fingerprints and show-specific cue templates come first, then splice, loudness, silence and transition candidates, then transcript-aware sponsor segmentation, and finally a strict versioned policy gate before anything is cut or skipped.
+Unroll checks each episode several different ways before it touches anything. It recognises ads it has heard before, listens for the pauses and jumps in sound where an ad was dropped in, and follows what's being said. It only skips when all of that agrees.
 
-The gate is the point. A conservative rule that passes an ad through is a better outcome than a wrong cut, so uncertain segments are kept intact by default and the original audio is preserved so a later policy correction can re-render rather than permanently damage an episode.
+If there's any doubt, the audio stays in. You might hear the odd ad, but you won't lose part of your show — and the original audio is always kept, so nothing is ever permanently cut.
 
-## Measured detection
+## Test results
 
-Detection is evaluated, not sampled: 33 hand-annotated episodes across five corpora, plus 19 unannotated episodes used for false-positive auditing — 52 episodes, 55.9 hours.
+Unroll was tested on 52 episodes — nearly 56 hours of real podcasts — including 33 where every ad had been marked by hand.
 
-- **95.9%** of annotated advertising removed
-- **Precision 1.000** across that annotated set
-- **0.0 seconds** of programme cut
-- Includes an eight-episode set built and annotated *after* the detector was frozen
+- **95.9%** of ad time removed
+- **0** wrong cuts
+- **0.0 seconds** of the actual show lost
+- Includes eight episodes set aside until Unroll was finished, as a fair test on audio it had never heard
 
-The methodology and the four distinct ways this project previously produced a meaningless number are documented in the repository, because a detection figure you cannot audit is worth nothing.
+## Two ways to listen
 
-## Two delivery modes
-
-| Mode | Listener uses | What Unroll delivers |
+| | How you listen | What Unroll does |
 | --- | --- | --- |
-| **Proxy feed** | Their existing podcast app | A rewritten RSS feed plus rendered audio with accepted intervals removed |
-| **Simple player** | A narrow first-party app | Original audio plus persisted skip zones, with one-tap undo |
+| **In your own app** | Overcast, Pocket Casts, Apple Podcasts, Audiobookshelf | Gives you an ad-free version of the show's feed |
+| **In the Unroll app** | A simple built-in player | Plays the original and skips the ads, with one tap to undo |
 
-Automatic or pass-through, never a review queue: a listener must never have to approve individual episodes to get a usable feed. The proxy path works with Overcast, Pocket Casts, Apple Podcasts and Audiobookshelf. The same-Wi-Fi server is still a one-episode probe — if a player fetches from its own servers rather than the device, the LAN URL is unreachable, and that failure branch is documented rather than hidden.
+There's nothing to review or approve. Episodes show up ready to play. Listening in your own app is still early: for now it works one episode at a time, on the same Wi-Fi as your iPhone.
 
 ## Availability
 
-In TestFlight, iOS-first. Episode enrichment — summaries, topics and action items — runs through Apple Intelligence on-device and fails closed to empty fields when unavailable, while discovery uses Apple Podcasts and publisher RSS, so no Podcast Index credentials are involved.
+In private beta for iPhone, through TestFlight. On iPhones with Apple Intelligence, Unroll can also add a short summary and topic list to each episode, without anything leaving your phone.
