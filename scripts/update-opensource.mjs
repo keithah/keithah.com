@@ -15,7 +15,7 @@ if (token) headers.authorization = `Bearer ${token}`;
 // Repositories that must never appear on the site, in any section. Filtering
 // here rather than after the fetch keeps them out of the committed snapshot too,
 // so a rebuild cannot reintroduce them.
-const excludedRepos = new Set(['keithah/kodi-donor-radio', 'xbmc/xbmc']);
+const excludedRepos = new Set(['keithah/kodi-donor-radio', 'xbmc/xbmc', 'xbmc/kodiai']);
 const isExcluded = (repo) => excludedRepos.has(repo.replace(/^\/+|\/+$/g, '').toLowerCase());
 
 const topicFor = (repo, title) => {
