@@ -2347,3 +2347,15 @@ button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 .work-section + .work-section { margin-top: 28px; }
 .work-section-head { color: var(--dimmer); }
 .work-section[data-section='archived-grid'] .card { opacity: 0.75; }
+
+/* Open source page: full contribution history, grouped by project. */
+.oss-summary { font-size: 10px; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; }
+.oss-count { font-size: 10px; color: var(--dimmer); font-weight: 400; margin-left: 6px; }
+.oss-repo-group { margin-bottom: 22px; }
+.oss-repo-group h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 2px; font-size: 12px; }
+.oss-repo-group h3 a { color: var(--text); }
+.oss-repo-group h3 a:hover { color: var(--green); }
+.oss-repo-group h3 span { font-size: 9px; color: var(--dimmer); font-weight: 400; }
+.oss-repo-group .oss-detail-list { margin-bottom: 0; }
+.oss-more-rows summary { cursor: pointer; padding: 8px 0; font-size: 10px; color: var(--dim); }
+.oss-more-rows summary:hover { color: var(--green); }

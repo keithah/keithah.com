@@ -2,25 +2,79 @@
 import Base from '../layouts/Base.astro';
 import contributionData from '../data/opensource.json';
 
-const merged = contributionData.merged;
-const open = contributionData.open;
+type Row = (typeof contributionData.all.merged)[number];
+
+// Group pull requests by project, most-starred project first, newest pull
+// request first inside each.
+const byRepo = (rows: Row[]) => {
+  const groups = new Map<string, Row[]>();
+  for (const row of rows) groups.set(row.repo, [...(groups.get(row.repo) ?? []), row]);
+  return [...groups.entries()]
+    .map(([repo, list]) => ({
+      repo,
+      stars: list[0].stars,
+      lang: list[0].lang,
+      rows: list.sort((a, b) => b.date.localeCompare(a.date)),
+    }))
+    .sort((a, b) => b.stars - a.stars || a.repo.localeCompare(b.repo));
+};
+
+const merged = byRepo(contributionData.all.merged);
+const open = byRepo(contributionData.all.open);
+const mergedCount = contributionData.all.merged.length;
+const openCount = contributionData.all.open.length;
+const projectCount = new Set([...merged, ...open].map(g => g.repo)).size;
+
+// Long histories show their newest few; the rest sit behind a toggle.
+const visible = 5;
+const formatStars = (stars: number) => stars >= 1000 ? `${(stars / 1000).toFixed(1).replace('.0', '')}k` : `${stars}`;
+const day = (iso: string) => iso.slice(0, 10);
+const sections = [
+  { key: 'merged', title: 'merged', label: 'MERGED', count: mergedCount, groups: merged },
+  { key: 'open', title: 'open pull requests', label: 'OPEN', count: openCount, groups: open },
+];
 ---
 <Base title="Open source contributions" activeNav="work">
   <div class="sh">$ cat /opensource</div>
   <h1 class="page-title">open source contributions</h1>
   <div class="prose">
     <p>Open source is where I get to work on the connective tissue: the tools, integrations, and infrastructure that make the software around us more useful.</p>
-    <p>These are selected pull requests from projects I use, follow, or care about. They span media automation, travel search, infrastructure, AI tooling, and the communication layer around those systems.</p>
+    <p>These are my pull requests to projects I use, follow, or care about, grouped by project. They span media automation, travel search, infrastructure, AI tooling, and the communication layer around those systems.</p>
     <h2>why these projects</h2>
     <p>I’m interested in practical improvements that remove friction for real people: a better status summary, a new way to search, a safer interface, or a notification that arrives in the place a team already works.</p>
-    <h2>recently merged</h2>
-    <div class="oss-detail-list">
-      {merged.map(pr => <a href={pr.url} target="_blank" rel="noopener"><span class="oss-state merged">MERGED · #{pr.number}</span><span><b>{pr.title}</b><small>{pr.repo} · {pr.topic}</small></span></a>)}
-    </div>
-    <h2>open pull requests</h2>
-    <div class="oss-detail-list">
-      {open.map(pr => <a href={pr.url} target="_blank" rel="noopener"><span class="oss-state">OPEN · #{pr.number}</span><span><b>{pr.title}</b><small>{pr.repo} · {pr.topic}</small></span></a>)}
-    </div>
+    <p class="oss-summary">{mergedCount} merged &middot; {openCount} open &middot; {projectCount} projects</p>
+    {sections.map(section => (
+      <>
+        <h2 id={section.key}>{section.title} <span class="oss-count">{section.count}</span></h2>
+        {section.groups.map(group => {
+          const row = (pr: Row) => (
+            <a href={pr.url} target="_blank" rel="noopener">
+              <span class={`oss-state ${section.key === 'merged' ? 'merged' : ''}`}>{section.label} · #{pr.number}</span>
+              <span><b>{pr.title}</b><small>{day(pr.date)} · {pr.topic}</small></span>
+            </a>
+          );
+          return (
+            <section class="oss-repo-group">
+              <h3>
+                <a href={`https://github.com/${group.repo}`} target="_blank" rel="noopener">{group.repo}</a>
+                <span>{formatStars(group.stars)} ★ · {group.lang} · {group.rows.length} {group.rows.length === 1 ? 'pull request' : 'pull requests'}</span>
+              </h3>
+              <div class="oss-detail-list">
+                {group.rows.slice(0, visible).map(row)}
+              </div>
+              {group.rows.length > visible && (
+                <details class="oss-more-rows">
+                  <summary>show {group.rows.length - visible} more</summary>
+                  <div class="oss-detail-list">
+                    {group.rows.slice(visible).map(row)}
+                  </div>
+                </details>
+              )}
+            </section>
+          );
+        })}
+      </>
+    ))}
     <p class="oss-note">static snapshot · refreshed at build time</p>
   </div>
 </Base>
