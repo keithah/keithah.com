@@ -15,7 +15,7 @@ if (token) headers.authorization = `Bearer ${token}`;
 // Repositories that must never appear on the site, in any section. Filtering
 // here rather than after the fetch keeps them out of the committed snapshot too,
 // so a rebuild cannot reintroduce them.
-const excludedRepos = new Set(['keithah/kodi-donor-radio', 'xbmc/xbmc']);
+const excludedRepos = new Set(['keithah/kodi-donor-radio', 'xbmc/xbmc', 'xbmc/kodiai']);
 const isExcluded = (repo) => excludedRepos.has(repo.replace(/^\/+|\/+$/g, '').toLowerCase());
 
 const topicFor = (repo, title) => {
@@ -36,19 +36,36 @@ async function github(pathname) {
   return response.json();
 }
 
+// The search API returns at most 100 rows a page and 1000 rows a query.
 async function search(query) {
-  const result = await github(`/search/issues?q=${encodeURIComponent(query)}&per_page=50&sort=updated&order=desc`);
-  // Drop excluded repositories before the slice below, so the visible count
-  // still fills from allowed results.
-  return result.items.filter((item) => {
-    const repo = item.repository_url.replace(`${api}/repos/`, '');
-    return !isExcluded(repo);
+  const items = [];
+  for (let page = 1; page <= 10; page += 1) {
+    const result = await github(
+      `/search/issues?q=${encodeURIComponent(query)}&per_page=100&page=${page}&sort=updated&order=desc`,
+    );
+    items.push(...result.items);
+    if (result.items.length < 100) break;
+  }
+  // Only other people's projects count as contributions, and excluded
+  // repositories are dropped here so they never reach the snapshot.
+  return items.filter((item) => {
+    const repo = repoOf(item);
+    return !repo.startsWith('keithah/') && !isExcluded(repo);
   });
 }
 
+const repoOf = (item) => item.repository_url.replace(`${api}/repos/`, '');
+
+// One metadata request per repository, however many pull requests it has.
+const metadataCache = new Map();
+const metadataFor = (repo) => {
+  if (!metadataCache.has(repo)) metadataCache.set(repo, github(`/repos/${repo}`));
+  return metadataCache.get(repo);
+};
+
 async function normalize(item, state) {
-  const repo = item.repository_url.replace(`${api}/repos/`, '');
-  const metadata = await github(`/repos/${repo}`);
+  const repo = repoOf(item);
+  const metadata = await metadataFor(repo);
   return {
     number: item.number,
     title: item.title,
@@ -60,6 +77,8 @@ async function normalize(item, state) {
     // published, and the site is built from this snapshot.
     private: metadata.private === true,
     updatedAt: item.updated_at,
+    // Merge date for merged rows, opening date for open ones.
+    date: (state === 'merged' ? item.pull_request?.merged_at : item.created_at) || item.updated_at,
     url: item.html_url,
     state,
   };
@@ -70,24 +89,7 @@ try {
     search('author:keithah is:pr is:merged -user:keithah'),
     search('author:keithah is:pr is:open -user:keithah'),
   ]);
-  // Only other people's projects are highlighted, and one pull request per
-  // repository: dedupe BEFORE fetching metadata, because normalize() costs one
-  // API request per row and a single busy project can dominate the results.
-  const upstreamOnly = (items) => {
-    const seen = new Set();
-    const picked = [];
-    for (const item of items) {
-      const repo = item.repository_url.replace(`${api}/repos/`, '');
-      if (repo.startsWith('keithah/') || isExcluded(repo) || seen.has(repo)) continue;
-      seen.add(repo);
-      picked.push(item);
-    }
-    return picked;
-  };
-
-  const mergedRepos = upstreamOnly(mergedItems);
-  const openRepos = upstreamOnly(openItems);
-  if (mergedRepos.length === 0) {
+  if (mergedItems.length === 0) {
     throw new Error('GitHub returned no upstream merged pull requests');
   }
 
@@ -97,28 +99,33 @@ try {
     .filter((row) => !row.private)
     .map(({ private: _private, ...row }) => row);
 
-  // Fetch pooled candidates and stop once enough *public* rows are collected.
-  // Taking a fixed number of candidates first would let private repositories
-  // eat the quota and leave the published list short.
-  const collectPublic = async (items, state, want) => {
-    const picked = [];
-    const batch = 6;
-    for (let i = 0; i < items.length && picked.length < want; i += batch) {
-      const rows = await Promise.all(items.slice(i, i + batch).map((item) => normalize(item, state)));
-      picked.push(...publicOnly(rows));
+  // Every public contribution, most recently updated first. Requests go out in
+  // small batches so a long history does not open hundreds of sockets at once.
+  const collectAll = async (items, state) => {
+    const rows = [];
+    const batch = 8;
+    for (let i = 0; i < items.length; i += batch) {
+      rows.push(...await Promise.all(items.slice(i, i + batch).map((item) => normalize(item, state))));
     }
-    return picked.slice(0, want);
+    return publicOnly(rows);
   };
 
-  // Merged rows need a wider pool than the three shown, because the star
-  // ranking chooses among them.
-  const mergedPool = await collectPublic(mergedRepos.slice(0, 24), 'merged', 12);
-  const open = await collectPublic(openRepos.slice(0, 12), 'open', 3);
+  const allMerged = await collectAll(mergedItems, 'merged');
+  const allOpen = await collectAll(openItems, 'open');
 
-  // Most-starred project first; ties fall back to name for a stable snapshot.
-  const featuredMerged = mergedPool
+  // The home page highlights one pull request per repository.
+  const onePerRepo = (rows) => {
+    const seen = new Set();
+    return rows.filter((row) => !seen.has(row.repo) && seen.add(row.repo));
+  };
+
+  // Merged highlights: the most-starred projects among the twelve most recently
+  // touched; ties fall back to name for a stable snapshot.
+  const featuredMerged = onePerRepo(allMerged)
+    .slice(0, 12)
     .sort((a, b) => b.stars - a.stars || a.repo.localeCompare(b.repo))
     .slice(0, 3);
+  const open = onePerRepo(allOpen).slice(0, 3);
 
   // The published list is empty if every candidate was private, which the
   // search-level check above cannot see.
@@ -133,9 +140,18 @@ try {
   await mkdir(path.dirname(output), { recursive: true });
   await writeFile(
     output,
-    `${JSON.stringify({ generatedAt: new Date().toISOString(), merged: featuredMerged, open }, null, 2)}\n`,
+    `${JSON.stringify({
+      generatedAt: new Date().toISOString(),
+      merged: featuredMerged,
+      open,
+      // The full history, shown on /opensource.
+      all: { merged: allMerged, open: allOpen },
+    }, null, 2)}\n`,
   );
-  console.log(`Updated ${output}: ${featuredMerged.length} merged, ${open.length} open`);
+  console.log(
+    `Updated ${output}: ${featuredMerged.length} merged and ${open.length} open highlighted, `
+    + `${allMerged.length} merged and ${allOpen.length} open in all`,
+  );
 } catch (error) {
   try {
     await readFile(output);
