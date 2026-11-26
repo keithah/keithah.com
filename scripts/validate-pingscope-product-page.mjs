@@ -4,11 +4,14 @@ import { dirname, join } from 'node:path';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const html = await readFile(join(root, 'dist/products/pingscope/index.html'), 'utf8');
-// Overhear, Traverse and Unroll share PingScope's display fonts on purpose, so
-// only a page with its own type stays in this list.
 const unrelatedPages = await Promise.all([
   readFile(join(root, 'dist/products/starwatch/index.html'), 'utf8'),
 ]);
+// Pages with their own type must not pull in PingScope's display fonts.
+const ownTypePages = await Promise.all(
+  ['traverse', 'overhear', 'unroll'].map((slug) =>
+    readFile(join(root, `dist/products/${slug}/index.html`), 'utf8')),
+);
 const productFontRequest = 'family=Archivo+Black&family=IBM+Plex+Sans';
 const required = [
   'PingScope for Mac',
@@ -57,7 +60,7 @@ for (const value of stale) {
 const [head = '', body = ''] = html.split('</head>');
 if (!head.includes(productFontRequest)) throw new Error('PingScope font request must be in the document head');
 if (body.includes(productFontRequest)) throw new Error('PingScope font request leaked into the document body');
-if (unrelatedPages.some((page) => page.includes(productFontRequest))) {
+if ([...unrelatedPages, ...ownTypePages].some((page) => page.includes(productFontRequest))) {
   throw new Error('PingScope font request leaked into an unrelated product page');
 }
 if (html.includes('class="nav-logo"')) {

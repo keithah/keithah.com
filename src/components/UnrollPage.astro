@@ -7,169 +7,450 @@ interface Props {
 }
 const { data } = Astro.props;
 const testflight = data.site ?? 'https://testflight.apple.com/join/1RdVtffd';
+
+// An illustrative episode for the hero: a waveform with three ad breaks in it.
+// The heights are decorative, generated from a fixed seed so every build matches.
+const BAR_COUNT = 84;
+const adBreaks = [[11, 20], [42, 54], [71, 78]];
+const noise = (i: number) => {
+  const x = Math.sin((i + 1) * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+};
+const isAd = (i: number) => adBreaks.some(([from, to]) => i >= from && i < to);
+const segments: { ad: boolean; bars: number[] }[] = [];
+for (let i = 0; i < BAR_COUNT; i++) {
+  const ad = isAd(i);
+  // Ads are mastered loud and flat; the show breathes.
+  const height = ad
+    ? 78 + Math.round(noise(i) * 14)
+    : 18 + Math.round(noise(i) * 62 * (0.45 + 0.55 * Math.abs(Math.sin(i / 4.3))));
+  const last = segments[segments.length - 1];
+  if (last && last.ad === ad) last.bars.push(height);
+  else segments.push({ ad, bars: [height] });
+}
+const showSegments = segments.filter((segment) => !segment.ad);
+
+// The things you stop hearing.
+const cuts = [
+  'use code PODCAST at checkout',
+  'but first, a word from our sponsor',
+  'we’ll be right back',
+  'this episode is brought to you by',
+  'link in the show notes',
+  'free shipping on your first box',
+  'and now, back to the show',
+];
+
+const chain = [
+  { name: 'Déjà vu', title: 'It recognises repeat ads', body: 'The same sponsor spots turn up episode after episode. Unroll knows them when it hears them.' },
+  { name: 'The seam', title: 'It hears where ads are dropped in', body: 'Ads are usually inserted into an episode. Unroll listens for the telltale pauses and jumps in sound where one begins and ends.' },
+  { name: 'The script', title: 'It follows what’s being said', body: 'Sponsor talk sounds like sponsor talk. Unroll checks the words against what it heard, so both have to agree.' },
+  { name: 'The veto', title: 'It only skips when it’s sure', body: 'If there’s any doubt, the audio stays in. You might hear the odd ad, but you won’t lose part of your show.' },
+];
 ---
 
-<div class="ps-page ps-display ur-page">
-  <nav class="ps-subnav" aria-label="Unroll sections">
-    <a href="#top" class="ps-brand" aria-label="Unroll home">
+<div class="ur-page">
+  <nav class="ur-nav" aria-label="Unroll sections">
+    <a href="#top" class="ur-brand" aria-label="Unroll home">
+      <span class="ur-reel" aria-hidden="true"></span>
       <strong>Unroll</strong>
     </a>
-    <span class="ps-subnav-links">
+    <span class="ur-nav-links">
       <a href="#how">How it works</a>
-      <a href="#results">Results</a>
+      <a href="#perks">What you get</a>
       <a href="#listen">Listen</a>
-      <a href="#beta">Beta</a>
+      <a class="ur-nav-cta" href="#beta">Beta</a>
     </span>
   </nav>
 
-  <section id="top" class="ps-hero ur-hero" aria-labelledby="unroll-title">
-    <div class="ps-hero-copy">
-      <p class="ps-eyebrow"><span aria-hidden="true"></span> Private beta &middot; iPhone</p>
-      <h1 id="unroll-title">Podcasts, minus the <em>ad breaks.</em></h1>
-      <p class="ps-lede">
-        Unroll finds the sponsor reads in your podcasts and skips them before you ever hear them.
-        Everything happens on your iPhone &mdash; no account, nothing uploaded.
-      </p>
-      <div class="ps-actions">
-        <a class="ps-btn ps-primary" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
-      </div>
-      <p class="ps-release-note">
-        Tested on 52 episodes &mdash; nearly 56 hours of real podcasts.
-      </p>
+  <section id="top" class="ur-hero" aria-labelledby="unroll-title">
+    <p class="ur-label">Private beta &middot; iPhone</p>
+    <h1 id="unroll-title">This episode is brought to you by&hellip; <em>nobody.</em></h1>
+    <p class="ur-lede">
+      Unroll finds the sponsor reads in your podcasts and skips them before you ever hear them.
+      Everything happens on your iPhone &mdash; no account, nothing uploaded.
+    </p>
+    <div class="ur-actions">
+      <a class="ur-btn ur-btn-play" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
+      <a class="ur-btn ur-btn-line" href="#how">How it works</a>
     </div>
-    <div class="ur-hero-stats" aria-label="Test results: 95.9% of ads removed, no wrong cuts, none of the show lost, 55.9 hours tested.">
-      <dl>
-        <div><dt>Ads removed</dt><dd>95.9<small>%</small></dd></div>
-        <div><dt>Wrong cuts</dt><dd>0</dd></div>
-        <div><dt>Of your show lost</dt><dd>0.0<small>s</small></dd></div>
-        <div><dt>Hours tested</dt><dd>55.9<small>h</small></dd></div>
-      </dl>
+
+    <div class="ur-deck" role="img" aria-label="Illustration: an episode's waveform with three ad breaks marked, and below it the same episode with the ad breaks cut out.">
+      <div class="ur-track ur-track-raw" aria-hidden="true">
+        <p class="ur-track-name"><span>What they sent</span><span>show + ads</span></p>
+        <div class="ur-wave">
+          {segments.map((segment) => (
+            <span class:list={['ur-seg', { 'ur-seg-ad': segment.ad }]} style={`flex-grow:${segment.bars.length}`}>
+              {segment.ad && <b>Ad</b>}
+              {segment.bars.map((height) => <i style={`height:${height}%`}></i>)}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div class="ur-track ur-track-cut" aria-hidden="true">
+        <p class="ur-track-name"><span>What you hear</span><span>just the show</span></p>
+        <div class="ur-wave">
+          <span class="ur-playhead"></span>
+          {showSegments.map((segment) => (
+            <span class="ur-seg" style={`flex-grow:${segment.bars.length}`}>
+              {segment.bars.map((height) => <i style={`height:${height}%`}></i>)}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="how" class="ps-section ur-detection" aria-labelledby="ur-detection-title">
-    <div class="ps-section-head">
-      <p class="ps-index">01 / How it works</p>
-      <div>
-        <h2 id="ur-detection-title">It listens first, <em>so you don't have to.</em></h2>
-      </div>
+  <div class="ur-ticker" aria-hidden="true">
+    <div>
+      {[...cuts, ...cuts].map((cut) => <s>{cut}</s>)}
+    </div>
+  </div>
+
+  <section id="how" class="ur-section" aria-labelledby="ur-how-title">
+    <header class="ur-head">
+      <p class="ur-label">How it works</p>
+      <h2 id="ur-how-title">It listens first, <em>so you don't have to.</em></h2>
       <p>
         Unroll checks each episode several different ways before it touches anything, and it only
         skips what it's sure about.
       </p>
-    </div>
-    <ol class="ur-cascade">
-      <li>
-        <span>01</span>
-        <div>
-          <h3>It recognises repeat ads</h3>
-          <p>The same sponsor spots turn up episode after episode. Unroll knows them when it hears them.</p>
-        </div>
-      </li>
-      <li>
-        <span>02</span>
-        <div>
-          <h3>It hears where ads are dropped in</h3>
-          <p>Ads are usually inserted into an episode. Unroll listens for the telltale pauses and jumps in sound where one begins and ends.</p>
-        </div>
-      </li>
-      <li>
-        <span>03</span>
-        <div>
-          <h3>It follows what's being said</h3>
-          <p>Sponsor talk sounds like sponsor talk. Unroll checks the words against what it heard, so both have to agree.</p>
-        </div>
-      </li>
-      <li>
-        <span>04</span>
-        <div>
-          <h3>It only skips when it's sure</h3>
-          <p>If there's any doubt, the audio stays in. You might hear the odd ad, but you won't lose part of your show.</p>
-        </div>
-      </li>
+    </header>
+    <ol class="ur-chain">
+      {chain.map((unit, i) => (
+        <li>
+          <span class="ur-unit-name"><i aria-hidden="true"></i>{String(i + 1).padStart(2, '0')} &middot; {unit.name}</span>
+          <h3>{unit.title}</h3>
+          <p>{unit.body}</p>
+        </li>
+      ))}
     </ol>
-    <p class="ur-rule">
-      <strong>Nothing for you to do.</strong> No reviewing, no approving, no settings to babysit.
-      Episodes show up ready to play, and when Unroll isn't confident it simply plays the episode
-      untouched.
-    </p>
   </section>
 
-  <section id="results" class="ps-section ur-evidence" aria-labelledby="ur-evidence-title">
-    <div class="ps-section-head">
-      <p class="ps-index">02 / Results</p>
-      <div>
-        <h2 id="ur-evidence-title">Tested on <em>real episodes.</em></h2>
-      </div>
+  <section id="perks" class="ur-section" aria-labelledby="ur-perks-title">
+    <header class="ur-head">
+      <p class="ur-label">What you get</p>
+      <h2 id="ur-perks-title">More show. <em>Less &ldquo;but first&hellip;&rdquo;</em></h2>
       <p>
-        Unroll was checked against podcasts where every ad had been marked by hand, then against
-        episodes it had never heard before.
+        No mattress. No meal kit. No promo code you'll never use. Just the bit you pressed play for.
       </p>
-    </div>
-    <div class="ur-evidence-grid">
+    </header>
+    <div class="ur-perks">
       <article>
-        <h3>33</h3>
-        <p>episodes with every ad marked by hand, so there's no guessing about what Unroll should catch.</p>
+        <h3>Nothing for you to do</h3>
+        <p>No reviewing, no approving, no settings to babysit. Episodes show up ready to play.</p>
       </article>
       <article>
-        <h3>19</h3>
-        <p>more episodes used only to make sure it never cuts something that isn't an ad.</p>
+        <h3>Your show stays whole</h3>
+        <p>When Unroll isn't confident, it simply plays the episode untouched. An ad might sneak through; your show never goes missing.</p>
       </article>
       <article>
-        <h3>8</h3>
-        <p>episodes set aside until Unroll was finished &mdash; a fair test on audio it had never heard.</p>
-      </article>
-      <article>
-        <h3>52</h3>
-        <p>episodes in all, adding up to nearly 56 hours of listening.</p>
+        <h3>It never leaves your phone</h3>
+        <p>Everything happens on your iPhone. No account to create, and nothing gets uploaded anywhere.</p>
       </article>
     </div>
   </section>
 
-  <section id="listen" class="ps-section ur-modes" aria-labelledby="ur-modes-title">
-    <div class="ps-section-head">
-      <p class="ps-index">03 / Listen</p>
-      <div>
-        <h2 id="ur-modes-title">Keep your podcast app, <em>or use ours.</em></h2>
-      </div>
-      <p>
-        Two ways to listen. Either way, the ads are handled before you press play.
-      </p>
-    </div>
-    <div class="ur-mode-grid">
+  <section id="listen" class="ur-section" aria-labelledby="ur-listen-title">
+    <header class="ur-head">
+      <p class="ur-label">Listen</p>
+      <h2 id="ur-listen-title">Keep your podcast app, <em>or use ours.</em></h2>
+      <p>Two ways to listen. Either way, the ads are handled before you press play.</p>
+    </header>
+    <div class="ur-modes">
       <article class="ur-mode">
-        <p class="ps-index">In your own app</p>
+        <p class="ur-label">Side A &middot; In your own app</p>
         <h3>Works with the app you already use</h3>
         <p>Unroll gives you an ad-free version of a show's feed. Add it to Overcast, Pocket Casts, Apple Podcasts or Audiobookshelf &mdash; or any app that accepts a custom feed &mdash; and listen as usual.</p>
-        <p class="ur-mode-caveat">Still early: for now this works one episode at a time, on the same Wi-Fi as your iPhone. Apps that download through their own servers can't reach it yet.</p>
+        <p class="ur-small">Still early: for now this works one episode at a time, on the same Wi-Fi as your iPhone. Apps that download through their own servers can't reach it yet.</p>
       </article>
-      <article class="ur-mode ur-mode-player">
-        <p class="ps-index">In the Unroll app</p>
+      <article class="ur-mode ur-mode-b">
+        <p class="ur-label">Side B &middot; In the Unroll app</p>
         <h3>A simple player that skips for you</h3>
         <p>Play an episode in Unroll and it jumps over the ads on its own. The original audio is never changed, so if it skips something you wanted to hear, one tap brings it back.</p>
-        <p class="ur-mode-caveat">Simple on purpose. It plays, it skips, and it gets out of the way.</p>
+        <p class="ur-small">Simple on purpose. It plays, it skips, and it gets out of the way.</p>
       </article>
     </div>
   </section>
 
-  <section id="beta" class="ps-section ur-status" aria-labelledby="ur-status-title">
-    <div class="ur-status-panel">
+  <section id="beta" class="ur-section" aria-labelledby="ur-beta-title">
+    <div class="ur-beta">
       <div>
-        <p class="ps-index">04 / Beta</p>
-        <h2 id="ur-status-title">Try it <em>before everyone else.</em></h2>
+        <p class="ur-label">Beta</p>
+        <h2 id="ur-beta-title">Try it <em>before everyone else.</em></h2>
         <p>
           Unroll is in private beta for iPhone, through Apple's TestFlight. Find shows through
           Apple Podcasts or a show's own feed, with nothing extra to sign up for. On iPhones with
           Apple Intelligence, Unroll can also add a short summary and topic list to each episode
           &mdash; again, without anything leaving your phone.
         </p>
-        <p>
-          It's an early build, so expect a few rough edges.
-        </p>
+        <p class="ur-small">It's an early build, so expect a few rough edges.</p>
       </div>
-      <div class="ps-actions">
-        <a class="ps-btn ps-primary" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
-      </div>
+      <a class="ur-btn ur-btn-play" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
     </div>
   </section>
 </div>
+
+<style is:global>
+  /* Unroll: an editing deck. Amber on near-black, a waveform with the ads
+     cut out, chunky type. */
+  .ur-page {
+    --ur-bg: #0d0b08;
+    --ur-bg2: #17130d;
+    --ur-ink: #f7f0e3;
+    --ur-muted: #bdb2a0;
+    --ur-dim: #948977;
+    --ur-line: rgba(247, 240, 227, 0.14);
+    --ur-amber: #f5b62e;
+    --ur-fill: #f5b62e;
+    --ur-fill-fg: #1a1203;
+    --ur-ad: #ef6a52;
+    --ur-display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+    --ur-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    position: relative;
+    isolation: isolate;
+    margin-inline: calc(-1 * var(--body-pad));
+    padding-inline: var(--body-pad);
+    padding-bottom: 56px;
+    background: var(--ur-bg);
+    color: var(--ur-ink);
+    font-family: var(--ur-display);
+    font-size: 16px;
+    line-height: 1.55;
+    overflow: clip;
+  }
+  :root[data-theme='light'] .ur-page {
+    --ur-bg: #f8f1e2;
+    --ur-bg2: #efe4cd;
+    --ur-ink: #1c160c;
+    --ur-muted: #51483a;
+    --ur-dim: #6a5f4d;
+    --ur-line: rgba(28, 22, 12, 0.17);
+    --ur-amber: #8f5400;
+    --ur-fill: #f0aa1c;
+    --ur-ad: #b8351f;
+  }
+  @media (min-width: 901px) {
+    .ur-page {
+      width: calc(var(--vw) / var(--page-zoom));
+      margin-inline: calc((var(--vw) / var(--page-zoom) - 100%) / -2);
+      padding-inline: max(20px, calc((var(--vw) / var(--page-zoom) - 1120px) / 2));
+    }
+  }
+  .ur-page a { color: inherit; }
+  .ur-page :where(a, button):focus-visible { outline: 2px solid var(--ur-amber); outline-offset: 3px; }
+
+  .ur-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 20px;
+    margin: 0;
+    padding: 18px 0;
+    border-bottom: 0;
+  }
+  .ur-brand { display: inline-flex; align-items: center; gap: 9px; }
+  .ur-brand strong { font-size: 22px; font-weight: 800; letter-spacing: -0.04em; }
+  /* A tape reel. */
+  .ur-reel {
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--ur-amber);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--ur-amber) 0 2.5px, transparent 3px);
+  }
+  .ur-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; font-size: 14px; font-weight: 500; }
+  .ur-nav-links a { color: var(--ur-muted); }
+  .ur-nav-links a:hover { color: var(--ur-amber); }
+  .ur-page .ur-nav-cta { padding: 5px 15px; border: 1.5px solid var(--ur-amber); border-radius: 999px; color: var(--ur-amber); }
+
+  .ur-label {
+    margin-bottom: 16px;
+    color: var(--ur-amber);
+    font: 500 11px/1.4 var(--ur-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .ur-page h1,
+  .ur-page h2 { font-weight: 800; letter-spacing: -0.045em; text-wrap: balance; }
+  .ur-page :is(h1, h2) em { color: var(--ur-amber); font-style: normal; }
+  .ur-page h1 { max-width: 13ch; font-size: clamp(44px, 5.2vw, 82px); line-height: 0.95; }
+  .ur-page h2 { font-size: clamp(32px, 3.5vw, 54px); line-height: 1; }
+  .ur-page h3 { font-size: 21px; font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; }
+
+  .ur-hero { padding-block: clamp(40px, 5vw, 72px) clamp(36px, 4vw, 56px); }
+  .ur-lede { max-width: 52ch; margin-top: 24px; color: var(--ur-muted); font-size: 18px; }
+  .ur-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .ur-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 0 24px;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    font-size: 15.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+  .ur-page .ur-btn-play,
+  .ur-page .ur-btn-play:hover { background: var(--ur-fill); color: var(--ur-fill-fg); }
+  .ur-btn-play::before {
+    content: '';
+    border-left: 11px solid currentColor;
+    border-block: 7px solid transparent;
+  }
+  .ur-page .ur-btn-play:hover { transform: translateY(-2px); box-shadow: 0 10px 30px color-mix(in srgb, var(--ur-fill) 35%, transparent); }
+  .ur-btn-line { border-color: var(--ur-line); font-weight: 600; }
+  .ur-page .ur-btn-line:hover { border-color: var(--ur-amber); color: var(--ur-ink); }
+
+  /* The editing deck. */
+  .ur-deck {
+    display: grid;
+    gap: 14px;
+    margin-top: clamp(40px, 5vw, 64px);
+    padding: clamp(14px, 2vw, 22px);
+    border: 1.5px solid var(--ur-line);
+    border-radius: 22px;
+    background: var(--ur-bg2);
+  }
+  .ur-track-name {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    color: var(--ur-dim);
+    font: 500 10.5px/1.4 var(--ur-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .ur-track-cut .ur-track-name span:first-child { color: var(--ur-amber); }
+  .ur-wave { position: relative; display: flex; gap: 3px; height: clamp(64px, 8vw, 104px); }
+  .ur-seg { position: relative; display: flex; flex: 1 1 0; align-items: center; gap: 3px; min-width: 0; }
+  .ur-seg i { flex: 1 1 0; min-width: 1px; border-radius: 999px; background: var(--ur-dim); }
+  .ur-track-cut .ur-seg i { background: var(--ur-amber); }
+  .ur-track-cut .ur-seg + .ur-seg { margin-left: 5px; padding-left: 8px; border-left: 1.5px dashed var(--ur-line); }
+  .ur-seg-ad {
+    border-radius: 8px;
+    background: repeating-linear-gradient(-45deg, color-mix(in srgb, var(--ur-ad) 22%, transparent) 0 6px, transparent 6px 12px);
+    outline: 1.5px dashed var(--ur-ad);
+    outline-offset: 1px;
+  }
+  .ur-seg-ad i { background: var(--ur-ad); opacity: 0.55; }
+  .ur-seg-ad b {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--ur-ad);
+    color: var(--ur-bg);
+    font: 700 10px/1.2 var(--ur-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transform: translate(-50%, -50%) rotate(-6deg);
+  }
+  .ur-playhead {
+    position: absolute;
+    top: -6px;
+    bottom: -6px;
+    left: 0;
+    z-index: 2;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--ur-ink);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ur-ink) 18%, transparent);
+  }
+  .ur-playhead { left: 34%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .ur-playhead { animation: ur-play 14s linear infinite; }
+    @keyframes ur-play { from { left: 0; } to { left: 100%; } }
+    .ur-wave i { animation: ur-grow 700ms both cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: center; }
+    @keyframes ur-grow { from { transform: scaleY(0.1); opacity: 0; } }
+  }
+
+  /* What you stop hearing. */
+  .ur-ticker {
+    margin-inline: calc(-1 * var(--body-pad));
+    padding-block: 14px;
+    border-block: 1.5px solid var(--ur-line);
+    overflow: hidden;
+    color: var(--ur-dim);
+    font: 500 12.5px/1.4 var(--ur-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .ur-ticker > div { display: inline-flex; gap: 44px; padding-left: 44px; }
+  .ur-ticker s { text-decoration-color: var(--ur-ad); text-decoration-thickness: 2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .ur-ticker > div { animation: ur-roll 46s linear infinite; }
+    @keyframes ur-roll { to { transform: translateX(-50%); } }
+  }
+
+  .ur-section { padding-block: clamp(60px, 7vw, 104px); }
+  .ur-section + .ur-section {
+    border-top: 0;
+    background: repeating-linear-gradient(90deg, var(--ur-line) 0 1.5px, transparent 1.5px 12px) top left / 100% 9px no-repeat;
+  }
+  .ur-head { max-width: 760px; margin-bottom: 40px; }
+  .ur-head > p:last-child,
+  .ur-beta p:not(.ur-label):not(.ur-small) { max-width: 58ch; margin-top: 18px; color: var(--ur-muted); font-size: 17px; }
+
+  /* Signal chain. */
+  .ur-chain { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 14px; list-style: none; }
+  .ur-chain li { position: relative; padding: 20px 20px 24px; border: 1.5px solid var(--ur-line); border-radius: 18px; background: var(--ur-bg2); }
+  .ur-chain li:last-child { border-color: var(--ur-amber); }
+  .ur-unit-name { display: flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--ur-amber); font: 500 10.5px/1.4 var(--ur-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+  .ur-unit-name i { width: 8px; height: 8px; border-radius: 50%; background: var(--ur-amber); box-shadow: 0 0 10px var(--ur-amber); }
+  .ur-chain h3 { margin-bottom: 8px; }
+  .ur-chain p { color: var(--ur-muted); font-size: 15px; }
+  @media (min-width: 1300px) {
+    /* Patch cables between the units. */
+    .ur-chain li + li::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: -16px;
+      width: 16px;
+      border-top: 2px solid var(--ur-amber);
+    }
+  }
+
+  .ur-perks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 34px 40px; }
+  .ur-perks article { padding-top: 18px; border-top: 4px solid var(--ur-amber); }
+  .ur-perks h3 { margin-bottom: 8px; font-size: 24px; }
+  .ur-perks p { color: var(--ur-muted); }
+
+  .ur-modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+  .ur-mode { padding: clamp(22px, 3vw, 34px); border: 1.5px solid var(--ur-line); border-radius: 22px; background: var(--ur-bg2); }
+  .ur-mode-b { border-color: transparent; background: var(--ur-fill); color: var(--ur-fill-fg); }
+  .ur-mode h3 { margin-bottom: 12px; font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+  .ur-mode p:not(.ur-label) { color: var(--ur-muted); }
+  .ur-mode-b .ur-label,
+  .ur-mode-b p:not(.ur-label) { color: var(--ur-fill-fg); }
+  .ur-small { margin-top: 14px; font-size: 13.5px; opacity: 0.85; }
+  .ur-page .ur-beta .ur-small { color: var(--ur-dim); }
+
+  .ur-beta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px 44px;
+    align-items: end;
+    justify-items: start;
+  }
+  @media (min-width: 1100px) {
+    .ur-beta { grid-template-columns: minmax(0, 1fr) auto; }
+  }
+
+  @media (max-width: 560px) {
+    .ur-wave, .ur-seg { gap: 1.5px; }
+    .ur-nav-links { gap: 6px 16px; font-size: 13px; }
+    .ur-lede { font-size: 17px; }
+    .ur-seg-ad b { padding: 2px 6px; font-size: 9px; }
+  }
+</style>
