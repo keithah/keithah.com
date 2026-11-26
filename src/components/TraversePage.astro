@@ -8,214 +8,634 @@ interface Props {
 }
 const { data } = Astro.props;
 const site = data.site ?? 'https://traverse.quest';
+
+// The itinerary: the same five setup steps, told as stops on a trip.
+const stops = [
+  { when: 'On the sofa', title: 'Check your phone', body: 'It needs to be unlocked and able to use an eSIM. In Settings, Carrier Lock should say “No SIM restrictions”. It takes about 30 seconds.' },
+  { when: 'Still on the sofa', title: 'Pick a plan', body: 'Where you’re going, for how long, and roughly how much data.' },
+  { when: 'Checkout', title: 'Pay once', body: 'No subscription, no daily fee. Your QR code and install link show up on your order page and in your email.' },
+  { when: 'On Wi-Fi', title: 'Install', body: 'Open Settings → Cellular → Add eSIM while you’re on Wi-Fi, at home or at the gate.' },
+  { when: 'Wheels down', title: 'Go', body: 'When you land, turn off roaming on your home line so your carrier can’t charge you for data.' },
+];
 ---
 
-<div class="ps-page ps-display tv-page">
-  <nav class="ps-subnav" aria-label="Traverse sections">
-    <a href={site} class="ps-brand" aria-label="Traverse home" target="_blank" rel="noopener">
+<div class="tv-page">
+  <nav class="tv-nav" aria-label="Traverse sections">
+    <a href={site} class="tv-brand" aria-label="Traverse home" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M22 2 2 10.2l7.2 2.6L11.8 20z" /></svg>
       <strong>Traverse</strong>
     </a>
-    <span class="ps-subnav-links">
-      <a href="#pricing">Pricing</a>
-      <a href="#setup">Setup</a>
+    <span class="tv-nav-links">
+      <a href="#pricing">Fares</a>
+      <a href="#setup">Itinerary</a>
       <a href="#destinations">Destinations</a>
-      <a href="#support">Support</a>
-      <a href={site} target="_blank" rel="noopener">Visit site</a>
+      <a href="#support">Help desk</a>
+      <a class="tv-nav-cta" href={site} target="_blank" rel="noopener">Visit site</a>
     </span>
   </nav>
 
-  <section id="top" class="ps-hero tv-hero" aria-labelledby="traverse-title">
-    <div class="ps-hero-copy">
-      <p class="ps-eyebrow"><span aria-hidden="true"></span> Travel eSIMs &middot; traverse.quest</p>
-      <h1 id="traverse-title">Keep your number. <em>Skip the roaming bill.</em></h1>
-      <p class="ps-lede">
-        Your carrier charges <span class="tv-nowrap">$10&ndash;15</span> for every day you use data
-        abroad. Traverse is one price for the whole trip: choose where you're going, choose how
-        much data you need, and set it up before you fly.
+  <section id="top" class="tv-hero" aria-labelledby="traverse-title">
+    <div class="tv-hero-copy">
+      <p class="tv-kicker">Travel eSIMs &middot; traverse.quest</p>
+      <h1 id="traverse-title">Land. Connect. <em>Skip the roaming bill.</em></h1>
+      <p class="tv-lede">
+        Your carrier wants <span class="tv-nowrap">$10&ndash;15</span> for every day you dare to
+        open a map abroad. Traverse is one price for the whole trip: choose where you're going,
+        choose how much data you need, and set it up before you fly.
       </p>
-      <div class="ps-actions">
-        <a class="ps-btn ps-primary" href={site} target="_blank" rel="noopener">Find your eSIM</a>
-        <a class="ps-btn" href={`${site}/help/phone`} target="_blank" rel="noopener">Check my phone</a>
+      <div class="tv-actions">
+        <a class="tv-btn tv-btn-primary" href={site} target="_blank" rel="noopener">Find your eSIM</a>
+        <a class="tv-btn" href={`${site}/help/phone`} target="_blank" rel="noopener">Check my phone</a>
       </div>
-      <p class="ps-release-note">
+      <p class="tv-fineprint">
         Data only &middot; no subscription, no daily fees &middot; your home number keeps working on phones that support two lines.
-        <a class="tv-note-link" href={`${site}/setup`} target="_blank" rel="noopener">Read the setup guide</a>
+        <a href={`${site}/setup`} target="_blank" rel="noopener">Read the setup guide</a>
       </p>
     </div>
-    <div class="tv-hero-capture">
-      <figure class="tv-shot-frame">
-        <img
-          src="/products/traverse/storefront.png"
-          alt="Traverse storefront: a destination form with trip length and data amount, beside an interactive globe of selectable countries."
-          width="2880"
-          height="1800"
-          decoding="async"
-          fetchpriority="high"
-        />
-        <figcaption>
-          <span>01</span> Where, how long, how much data. One price for the trip.
-        </figcaption>
-      </figure>
+
+    <div class="tv-pass" role="img" aria-label="A boarding pass for your data: from home to anywhere, one price, no daily fees, no subscription, set up before you fly.">
+      <div class="tv-pass-main" aria-hidden="true">
+        <header>
+          <strong>Traverse</strong>
+          <span>Data pass</span>
+        </header>
+        <div class="tv-pass-route">
+          <div><small>From</small><b>Home</b></div>
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M22 2 2 10.2l7.2 2.6L11.8 20z" /></svg>
+          <div><small>To</small><b>Anywhere</b></div>
+        </div>
+        <dl>
+          <div><dt>Passenger</dt><dd>You + your phone</dd></div>
+          <div><dt>Fare</dt><dd>One price</dd></div>
+          <div><dt>Daily fees</dt><dd>None</dd></div>
+          <div><dt>Subscription</dt><dd>None</dd></div>
+          <div><dt>Boarding</dt><dd>Before you fly</dd></div>
+          <div><dt>Carry-on</dt><dd>Your own number</dd></div>
+        </dl>
+      </div>
+      <div class="tv-pass-stub" aria-hidden="true">
+        <span>Roaming</span>
+        <b>Off</b>
+        <i class="tv-barcode"></i>
+      </div>
+      <span class="tv-stamp" aria-hidden="true">No daily fees</span>
     </div>
   </section>
 
-  <section id="pricing" class="ps-section tv-pricing" aria-labelledby="tv-pricing-title">
-    <div class="ps-section-head">
-      <p class="ps-index">01 / Pricing</p>
-      <div>
-        <h2 id="tv-pricing-title">A week abroad, <em>two ways.</em></h2>
-      </div>
+  <section id="pricing" class="tv-section" aria-labelledby="tv-pricing-title">
+    <header class="tv-head">
+      <p class="tv-kicker">The roaming racket</p>
+      <h2 id="tv-pricing-title">A week abroad, <em>two fares.</em></h2>
       <p>
         A carrier day pass charges you for every day you use data, whether it's a lot or a little.
         With Traverse you pay once, for the whole trip.
       </p>
-    </div>
-    <div class="tv-compare">
-      <article class="tv-compare-card">
-        <p class="ps-index">Carrier pass</p>
-        <strong class="tv-compare-price">$70&ndash;105</strong>
-        <p class="tv-compare-note">7 days at $10&ndash;15 a day &mdash; and you're charged for any day you use data at all.</p>
+    </header>
+    <div class="tv-fares">
+      <article class="tv-fare tv-fare-carrier">
+        <header><span>Carrier day pass</span><span>The long way round</span></header>
+        <strong>$70&ndash;105</strong>
+        <p>7 days at $10&ndash;15 a day &mdash; and you're charged for any day you use data at all.</p>
+        <span class="tv-stamp tv-stamp-red" aria-hidden="true">Per day. Every day.</span>
       </article>
-      <article class="tv-compare-card tv-compare-win">
-        <p class="ps-index">Traverse eSIM</p>
-        <strong class="tv-compare-price">One price</strong>
-        <p class="tv-compare-note">For the whole trip. Single-country plans start at a few dollars, with regional and worldwide plans for when you cross borders.</p>
+      <article class="tv-fare tv-fare-win">
+        <header><span>Traverse eSIM</span><span>Direct</span></header>
+        <strong>One price</strong>
+        <p>For the whole trip. Single-country plans start at a few dollars, with regional and worldwide plans for when you cross borders.</p>
+        <span class="tv-stamp" aria-hidden="true">Paid once</span>
       </article>
     </div>
-    <div class="tv-plans">
-      <div class="tv-plan">
+    <div class="tv-tags">
+      <article class="tv-tag">
+        <small>For the planner</small>
         <h3>Fixed data</h3>
         <p>From 1 GB to 100 GB to use across your trip. The best value when you know how long you're away and roughly how much you'll use.</p>
-      </div>
-      <div class="tv-plan">
+      </article>
+      <article class="tv-tag">
+        <small>For the wanderer</small>
         <h3>Daily</h3>
         <p>Not sure how much you'll need? Pay only for the days you use.</p>
-      </div>
-      <div class="tv-plan">
+      </article>
+      <article class="tv-tag">
+        <small>For the border-hopper</small>
         <h3>Regional &amp; global</h3>
         <p>One plan for Europe (35 countries) or the whole world (117 countries), so a multi-stop trip needs just one eSIM. Add extra countries when you need them.</p>
-      </div>
+      </article>
     </div>
   </section>
 
-  <section id="setup" class="ps-section tv-setup" aria-labelledby="tv-setup-title">
-    <div class="ps-section-head">
-      <p class="ps-index">02 / Setup</p>
-      <div>
-        <h2 id="tv-setup-title">Set up in minutes, <em>with pictures.</em></h2>
-      </div>
+  <section id="setup" class="tv-section" aria-labelledby="tv-setup-title">
+    <header class="tv-head">
+      <p class="tv-kicker">Your itinerary</p>
+      <h2 id="tv-setup-title">Five stops. <em>Done before takeoff.</em></h2>
       <p>
         Five simple steps, each shown on a phone screen, including the settings that stop your
         carrier from charging you. Most plans only start when you first connect abroad, so
         installing early costs nothing.
       </p>
-    </div>
+    </header>
     <div class="tv-setup-grid">
-      <figure class="tv-setup-shot">
-        <img
-          src="/products/traverse/setup-guide.png"
-          alt="Traverse setup guide showing step one: tap Add eSIM in Settings, with an annotated phone screenshot."
-          width="2880"
-          height="2000"
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption>
-          <span>02</span> Five steps, each shown on a phone screen.
-        </figcaption>
-      </figure>
-      <div class="tv-steps">
-        <ol>
-          <li><strong>Check your phone.</strong> It needs to be unlocked and able to use an eSIM. In Settings, Carrier Lock should say <em>No SIM restrictions</em>. It takes about 30 seconds.</li>
-          <li><strong>Pick a plan.</strong> Where you're going, for how long, and roughly how much data.</li>
-          <li><strong>Pay once.</strong> No subscription, no daily fee. Your QR code and install link show up on your order page and in your email.</li>
-          <li><strong>Install.</strong> Open Settings &rarr; Cellular &rarr; Add eSIM while you're on Wi-Fi, at home or at the gate.</li>
-          <li><strong>Go.</strong> When you land, turn off roaming on your home line so your carrier can't charge you for data.</li>
-        </ol>
-        <p class="tv-caveat">
-          Good to know: some plans can only be installed once, so don't delete the eSIM after
-          setting it up. Traverse is data only &mdash; regular calls and texts still go through
-          your home line, at your carrier's rates.
+      <ol class="tv-itinerary">
+        {stops.map((stop, i) => (
+          <li>
+            <span class="tv-stop-when">Stop {String(i + 1).padStart(2, '0')} &middot; {stop.when}</span>
+            <h3>{stop.title}</h3>
+            <p>{stop.body}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="tv-setup-side">
+        <figure class="tv-postcard">
+          <img
+            src="/products/traverse/setup-guide.png"
+            alt="Traverse setup guide showing step one: tap Add eSIM in Settings, with an annotated phone screenshot."
+            width="2880"
+            height="2000"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>The setup guide: five steps, each shown on a phone screen.</figcaption>
+        </figure>
+        <p class="tv-smallprint">
+          <strong>Before you board:</strong> some plans can only be installed once, so don't delete
+          the eSIM after setting it up. Traverse is data only &mdash; regular calls and texts still
+          go through your home line, at your carrier's rates.
         </p>
       </div>
     </div>
   </section>
 
-  <section id="destinations" class="ps-section tv-dest" aria-labelledby="tv-dest-title">
-    <div class="ps-section-head">
-      <p class="ps-index">03 / Destinations</p>
-      <div>
-        <h2 id="tv-dest-title">Pick a country. <em>See the price.</em></h2>
-      </div>
+  <section id="destinations" class="tv-section" aria-labelledby="tv-dest-title">
+    <header class="tv-head">
+      <p class="tv-kicker">Departures</p>
+      <h2 id="tv-dest-title">Spin the globe. <em>See the price.</em></h2>
       <p>
         Every destination has its own page with today's plans, the local networks you'll connect
         to, and the price for the trip length you choose.
       </p>
+    </header>
+    <div class="tv-postcards">
+      <figure class="tv-postcard">
+        <img
+          src="/products/traverse/storefront.png"
+          alt="Traverse storefront: a destination form with trip length and data amount, beside an interactive globe of selectable countries."
+          width="2880"
+          height="1800"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Where, how long, how much data. One price for the trip.</figcaption>
+      </figure>
+      <figure class="tv-postcard">
+        <img
+          src="/products/traverse/destination-italy.png"
+          alt="Traverse Italy page listing fixed-data plans from 1 GB to 100 GB with prices, TIM/Iliad/Wind networks, and a suggested 5 GB plan."
+          width="2880"
+          height="2000"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Italy: plans, networks and multi-country options on one page.</figcaption>
+      </figure>
     </div>
-    <figure class="tv-dest-shot">
-      <img
-        src="/products/traverse/destination-italy.png"
-        alt="Traverse Italy page listing fixed-data plans from 1 GB to 100 GB with prices, TIM/Iliad/Wind networks, and a suggested 5 GB plan."
-        width="2880"
-        height="2000"
-        loading="lazy"
-        decoding="async"
-      />
-      <figcaption>
-        <span>03</span> Italy: plans, networks and multi-country options on one page.
-      </figcaption>
-    </figure>
   </section>
 
-  <section id="why" class="ps-section tv-how" aria-labelledby="tv-how-title">
-    <div class="ps-section-head">
-      <p class="ps-index">04 / Peace of mind</p>
-      <div>
-        <h2 id="tv-how-title">No surprises <em>at checkout.</em></h2>
-      </div>
+  <section id="why" class="tv-section" aria-labelledby="tv-why-title">
+    <header class="tv-head">
+      <p class="tv-kicker">Customs</p>
+      <h2 id="tv-why-title">Nothing <em>to declare.</em></h2>
       <p>
         Buying data for a trip should be the easy part. Here's what you can count on every time.
       </p>
-    </div>
-    <div class="ps-feature-grid tv-feature-grid">
-      <article class="ps-card">
-        <span>01</span>
+    </header>
+    <div class="tv-declare">
+      <article>
+        <span aria-hidden="true">01</span>
         <h3>The price you see</h3>
         <p>Your quote is held for 15 minutes, so the price you approve is the price you pay.</p>
       </article>
-      <article class="ps-card">
-        <span>02</span>
+      <article>
+        <span aria-hidden="true">02</span>
         <h3>Safe, simple payment</h3>
         <p>Pay by card or wallet through Stripe, with no account to create. Your eSIM is only issued once your payment is confirmed.</p>
       </article>
-      <article class="ps-card">
-        <span>03</span>
+      <article>
+        <span aria-hidden="true">03</span>
         <h3>Up-to-date plans</h3>
         <p>Plans and prices are refreshed throughout the day. If something isn't available, we say so instead of swapping in something else.</p>
       </article>
-      <article class="ps-card">
-        <span>04</span>
+      <article>
+        <span aria-hidden="true">04</span>
         <h3>Help when you need it</h3>
         <p>Share or gift an eSIM, top up when you run low, and ask for a refund if plans change. Get help from the built-in assistant, WhatsApp or email.</p>
       </article>
     </div>
   </section>
 
-  <section id="support" class="ps-section tv-support" aria-labelledby="tv-support-title">
-    <div class="tv-support-panel">
+  <section id="support" class="tv-section tv-support" aria-labelledby="tv-support-title">
+    <div class="tv-desk">
       <div>
-        <p class="ps-index">05 / Support</p>
-        <h2 id="tv-support-title">Need help with <em>your eSIM?</em></h2>
+        <p class="tv-kicker">Help desk</p>
+        <h2 id="tv-support-title">Stuck at <em>the gate?</em></h2>
         <p>
           Get help right on the site. Have your order number handy and we'll pick up where you
           left off. Trouble connecting? There's a quick form just for that.
         </p>
       </div>
-      <div class="ps-actions">
-        <a class="ps-btn ps-primary" href={`${site}/support`} target="_blank" rel="noopener">Support</a>
-        <a class="ps-btn" href={`${site}/refunds`} target="_blank" rel="noopener">Refunds</a>
-        <a class="ps-btn ps-ghost" href="mailto:info@traverse.quest">info@traverse.quest</a>
+      <div class="tv-actions">
+        <a class="tv-btn tv-btn-primary" href={`${site}/support`} target="_blank" rel="noopener">Support</a>
+        <a class="tv-btn" href={`${site}/refunds`} target="_blank" rel="noopener">Refunds</a>
+        <a class="tv-btn tv-btn-quiet" href="mailto:info@traverse.quest">info@traverse.quest</a>
       </div>
     </div>
   </section>
 </div>
+
+<style is:global>
+  /* Traverse: a boarding pass. Night sky and paper tickets in dark, a paper
+     desk in light. Tickets stay paper-coloured in both. */
+  .tv-page {
+    --tv-bg: #0b1520;
+    --tv-bg2: #122131;
+    --tv-ink: #f3ecdc;
+    --tv-muted: #b3bcc6;
+    --tv-dim: #8a96a3;
+    --tv-line: rgba(243, 236, 220, 0.15);
+    --tv-teal: #4fd1b5;
+    --tv-sun: #e8b83d;
+    --tv-red: #f0806a;
+    --tv-paper: #f4ecd9;
+    --tv-paper-edge: #e6dabd;
+    --tv-paper-ink: #17283a;
+    --tv-paper-muted: #55616d;
+    --tv-paper-line: rgba(23, 40, 58, 0.24);
+    --tv-paper-teal: #0b7563;
+    --tv-paper-red: #b93a22;
+    --tv-btn-fg: #0b1520;
+    --tv-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    --tv-serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+    --tv-sans: 'DM Sans', system-ui, sans-serif;
+    --tv-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    position: relative;
+    isolation: isolate;
+    margin-inline: calc(-1 * var(--body-pad));
+    padding-inline: var(--body-pad);
+    padding-bottom: 40px;
+    background: var(--tv-bg);
+    color: var(--tv-ink);
+    font-family: var(--tv-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow: clip;
+  }
+  :root[data-theme='light'] .tv-page {
+    --tv-bg: #f1e9d6;
+    --tv-bg2: #e7dcc3;
+    --tv-ink: #14263a;
+    --tv-muted: #46525f;
+    --tv-dim: #5d6873;
+    --tv-line: rgba(20, 38, 58, 0.18);
+    --tv-teal: #0b7563;
+    --tv-sun: #8f6200;
+    --tv-red: #b93a22;
+    --tv-paper: #fffdf6;
+    --tv-paper-edge: #efe6d0;
+    --tv-btn-fg: #fffdf6;
+    --tv-shadow: 0 20px 44px rgba(60, 44, 12, 0.18);
+  }
+  @media (min-width: 901px) {
+    .tv-page {
+      width: calc(var(--vw) / var(--page-zoom));
+      margin-inline: calc((var(--vw) / var(--page-zoom) - 100%) / -2);
+      padding-inline: max(20px, calc((var(--vw) / var(--page-zoom) - 1180px) / 2));
+    }
+  }
+  /* Globe contour lines, top right. */
+  .tv-page::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: -340px;
+    right: -260px;
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    background: repeating-radial-gradient(circle, transparent 0 38px, var(--tv-line) 38px 39px);
+    -webkit-mask-image: radial-gradient(circle, #000 20%, transparent 70%);
+    mask-image: radial-gradient(circle, #000 20%, transparent 70%);
+    pointer-events: none;
+  }
+  .tv-page a { color: inherit; }
+  .tv-page :where(a, button):focus-visible { outline: 2px solid var(--tv-teal); outline-offset: 3px; }
+  .tv-nowrap { white-space: nowrap; }
+
+  .tv-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 20px;
+    margin: 0;
+    padding: 18px 0;
+    border-bottom: 1px dashed var(--tv-line);
+  }
+  .tv-brand { display: inline-flex; align-items: center; gap: 8px; }
+  .tv-brand svg, .tv-pass-route svg { fill: var(--tv-teal); }
+  .tv-brand strong { font-family: var(--tv-serif); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  .tv-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; font-size: 13px; font-weight: 500; }
+  .tv-nav-links a { color: var(--tv-muted); }
+  .tv-nav-links a:hover { color: var(--tv-teal); }
+  .tv-page .tv-nav-cta { padding: 6px 14px; border: 1px solid var(--tv-line); border-radius: 999px; color: var(--tv-ink); }
+
+  .tv-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    color: var(--tv-sun);
+    font: 500 11px/1.4 var(--tv-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .tv-kicker::before { content: ''; width: 22px; border-top: 1px dashed currentColor; }
+
+  .tv-page h1,
+  .tv-page h2 { font-family: var(--tv-serif); font-weight: 600; letter-spacing: -0.025em; text-wrap: balance; }
+  .tv-page :is(h1, h2) em { color: var(--tv-teal); font-style: italic; font-weight: 500; }
+  .tv-page h1 { font-size: clamp(40px, 4.3vw, 66px); line-height: 1; }
+  .tv-page h2 { font-size: clamp(32px, 3.3vw, 50px); line-height: 1.04; }
+  .tv-page h3 { font-family: var(--tv-serif); font-size: 21px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+
+  .tv-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+    padding-block: clamp(48px, 6vw, 84px);
+  }
+  @media (min-width: 1100px) {
+    .tv-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); gap: 44px; }
+  }
+  .tv-lede { max-width: 50ch; margin-top: 22px; color: var(--tv-muted); font-size: 16.5px; }
+  .tv-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .tv-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 0 22px;
+    border: 1.5px solid var(--tv-line);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+  }
+  .tv-page .tv-btn:hover { color: var(--tv-ink); border-color: var(--tv-teal); transform: translateY(-2px); }
+  .tv-page .tv-btn-primary,
+  .tv-page .tv-btn-primary:hover { background: var(--tv-teal); border-color: var(--tv-teal); color: var(--tv-btn-fg); }
+  .tv-btn-quiet { border-style: dashed; font-weight: 500; }
+  .tv-fineprint { max-width: 54ch; margin-top: 18px; color: var(--tv-dim); font-size: 12.5px; }
+  .tv-page .tv-fineprint a { margin-left: 4px; color: var(--tv-teal); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* The data pass. */
+  .tv-pass {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 92px;
+    max-width: 520px;
+    width: 100%;
+    justify-self: center;
+    color: var(--tv-paper-ink);
+    filter: drop-shadow(var(--tv-shadow));
+    transform: rotate(-2deg);
+  }
+  .tv-pass-main,
+  .tv-pass-stub { background: var(--tv-paper); }
+  .tv-pass-main { padding: 0 0 58px; border-radius: 16px 10px 10px 16px; overflow: hidden; }
+  .tv-pass-main > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 13px 22px;
+    background: var(--tv-paper-ink);
+    color: var(--tv-paper);
+  }
+  .tv-pass-main > header strong { font-family: var(--tv-serif); font-size: 18px; font-weight: 600; }
+  .tv-pass-main > header span,
+  .tv-pass small,
+  .tv-pass dt,
+  .tv-pass-stub span { font: 500 9.5px/1.3 var(--tv-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+  .tv-pass small, .tv-pass dt { display: block; color: var(--tv-paper-muted); }
+  .tv-pass-route {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: end;
+    gap: 14px;
+    padding: 20px 22px 18px;
+    border-bottom: 1px dashed var(--tv-paper-line);
+  }
+  .tv-pass-route b { font-family: var(--tv-serif); font-size: clamp(21px, 5.6vw, 27px); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; }
+  .tv-pass-route svg { justify-self: center; margin-bottom: 6px; fill: var(--tv-paper-teal); }
+  .tv-pass-route > div:last-child { text-align: right; }
+  .tv-pass dl { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; padding: 18px 22px 0; }
+  .tv-pass dd { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+  .tv-pass-stub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 18px 10px;
+    border-left: 2px dashed var(--tv-bg);
+    border-radius: 10px 16px 16px 10px;
+    text-align: center;
+  }
+  .tv-pass-stub span { color: var(--tv-paper-muted); }
+  .tv-pass-stub b { font-family: var(--tv-serif); font-size: 26px; line-height: 1; color: var(--tv-paper-red); }
+  .tv-barcode {
+    flex: 1;
+    width: 46px;
+    min-height: 90px;
+    margin-top: 12px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--tv-paper-ink) 0 2px, transparent 2px 4px,
+      var(--tv-paper-ink) 4px 5px, transparent 5px 8px,
+      var(--tv-paper-ink) 8px 12px, transparent 12px 13px,
+      var(--tv-paper-ink) 13px 14px, transparent 14px 18px
+    );
+  }
+  .tv-stamp {
+    position: absolute;
+    right: 104px;
+    bottom: 14px;
+    padding: 5px 10px;
+    border: 2px solid currentColor;
+    border-radius: 6px;
+    color: var(--tv-paper-teal);
+    font: 500 10px/1.2 var(--tv-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transform: rotate(-9deg);
+    opacity: 0.9;
+  }
+  .tv-stamp-red { color: var(--tv-paper-red); }
+  @media (prefers-reduced-motion: no-preference) {
+    .tv-hero-copy { animation: tv-rise 600ms both ease-out; }
+    .tv-pass { animation: tv-land 800ms 120ms both cubic-bezier(0.2, 0.8, 0.2, 1); }
+    @keyframes tv-rise { from { opacity: 0; transform: translateY(16px); } }
+    @keyframes tv-land { from { opacity: 0; transform: translate(40px, -30px) rotate(6deg); } }
+  }
+
+  .tv-section { padding-block: clamp(64px, 7vw, 104px); border-top: 1px dashed var(--tv-line); }
+  .tv-head { max-width: 720px; margin-bottom: 40px; }
+  .tv-head > p:last-child,
+  .tv-desk p:not(.tv-kicker) { max-width: 58ch; margin-top: 16px; color: var(--tv-muted); font-size: 16px; }
+
+  /* Two fares, as tickets. */
+  .tv-fares { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 22px; }
+  .tv-fare {
+    position: relative;
+    padding: 0 0 26px;
+    border-radius: 14px;
+    background: var(--tv-paper);
+    color: var(--tv-paper-ink);
+    overflow: hidden;
+    box-shadow: var(--tv-shadow);
+  }
+  .tv-fare > header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--tv-paper-line);
+    font: 500 10px/1.4 var(--tv-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tv-paper-muted);
+  }
+  .tv-fare > strong { display: block; padding: 22px 22px 0; font-family: var(--tv-serif); font-size: clamp(38px, 4vw, 54px); font-weight: 600; line-height: 1; letter-spacing: -0.03em; }
+  .tv-fare > p { max-width: 40ch; padding: 12px 22px 0; color: var(--tv-paper-muted); font-size: 14.5px; }
+  .tv-fare .tv-stamp { right: 18px; bottom: 16px; }
+  .tv-fare-carrier { transform: rotate(-1deg); }
+  .tv-fare-carrier > strong { color: var(--tv-paper-muted); text-decoration: line-through; text-decoration-color: var(--tv-paper-red); text-decoration-thickness: 3px; }
+  .tv-fare-win { transform: rotate(1deg); }
+  .tv-fare-win > header { background: var(--tv-paper-ink); border-bottom-color: transparent; color: var(--tv-paper); }
+  .tv-fare-win > strong { color: var(--tv-paper-teal); }
+  .tv-fare > p { padding-bottom: 30px; }
+
+  /* Plans, as luggage tags. */
+  .tv-tags { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 18px; margin-top: 44px; }
+  .tv-tag {
+    position: relative;
+    padding: 44px 22px 24px;
+    border: 1.5px solid var(--tv-line);
+    border-radius: 14px;
+    background: var(--tv-bg2);
+    clip-path: polygon(22px 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%, 0 22px);
+  }
+  .tv-tag::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    border: 1.5px solid var(--tv-sun);
+    border-radius: 50%;
+    background: var(--tv-bg);
+  }
+  .tv-tag small { color: var(--tv-sun); font: 500 10px/1.4 var(--tv-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+  .tv-tag h3 { margin: 6px 0 8px; }
+  .tv-tag p { color: var(--tv-muted); font-size: 14.5px; }
+
+  /* Itinerary. */
+  .tv-setup-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: start; }
+  @media (min-width: 1100px) {
+    .tv-setup-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; }
+  }
+  .tv-itinerary { list-style: none; margin-left: 7px; border-left: 2px dashed var(--tv-line); }
+  .tv-itinerary li { position: relative; padding: 0 0 30px 30px; }
+  .tv-itinerary li:last-child { padding-bottom: 0; }
+  .tv-itinerary li::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 2px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--tv-teal);
+    border-radius: 50%;
+    background: var(--tv-bg);
+  }
+  .tv-itinerary li:last-child::before { background: var(--tv-teal); }
+  .tv-stop-when { color: var(--tv-teal); font: 500 10.5px/1.4 var(--tv-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+  .tv-itinerary h3 { margin: 4px 0 6px; }
+  .tv-itinerary p { max-width: 52ch; color: var(--tv-muted); font-size: 15px; }
+  .tv-smallprint {
+    margin-top: 22px;
+    padding: 16px 18px;
+    border: 1px dashed var(--tv-sun);
+    border-radius: 12px;
+    color: var(--tv-muted);
+    font-size: 13.5px;
+  }
+  .tv-smallprint strong { color: var(--tv-sun); }
+
+  /* Screenshots, as postcards. */
+  .tv-postcard {
+    padding: 10px 10px 0;
+    border-radius: 12px;
+    background: var(--tv-paper);
+    color: var(--tv-paper-muted);
+    box-shadow: var(--tv-shadow);
+  }
+  .tv-postcard img { display: block; width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--tv-paper-edge); }
+  .tv-postcard figcaption { padding: 10px 6px 12px; font-family: var(--tv-serif); font-style: italic; font-size: 14.5px; line-height: 1.4; }
+  .tv-postcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 26px; align-items: start; }
+  .tv-postcards .tv-postcard:first-child { transform: rotate(-1.2deg); }
+  .tv-postcards .tv-postcard:last-child { transform: rotate(1deg); margin-top: 18px; }
+
+  /* Nothing to declare. */
+  .tv-declare { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 30px 26px; }
+  .tv-declare article > span {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 16px;
+    border: 2px solid var(--tv-teal);
+    border-radius: 50%;
+    outline: 1px dashed var(--tv-teal);
+    outline-offset: 4px;
+    color: var(--tv-teal);
+    font: 500 13px var(--tv-mono);
+    transform: rotate(-8deg);
+  }
+  .tv-declare h3 { margin-bottom: 8px; }
+  .tv-declare p { color: var(--tv-muted); font-size: 14.5px; }
+
+  .tv-desk {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 28px 40px;
+    align-items: end;
+    padding: clamp(26px, 4vw, 44px);
+    border: 1.5px dashed var(--tv-line);
+    border-radius: 20px;
+    background: var(--tv-bg2);
+  }
+  .tv-desk .tv-actions { margin-top: 0; }
+
+  @media (max-width: 560px) {
+    .tv-nav-links { gap: 6px 16px; font-size: 12.5px; }
+    .tv-pass { grid-template-columns: minmax(0, 1fr) 70px; transform: rotate(-1deg); }
+    .tv-pass dl { gap: 12px 12px; padding-inline: 16px; }
+    .tv-pass-route, .tv-pass-main > header { padding-inline: 16px; }
+    .tv-pass dd { font-size: 13px; }
+    .tv-pass > .tv-stamp { right: 84px; }
+    .tv-barcode { width: 34px; }
+    .tv-fare-carrier, .tv-fare-win, .tv-postcards .tv-postcard { transform: none; }
+    .tv-postcards .tv-postcard:last-child { margin-top: 0; }
+  }
+</style>

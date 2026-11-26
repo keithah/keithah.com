@@ -56,8 +56,15 @@ posts.sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 <Base title={d.name} description={d.tagline} hidePrimaryNav={hideNav} noindex={d.noindex}>
   <Fragment slot="head">
-    {(isPingScope || isWattline || isTraverse || isOverhear || isUnroll) && (
+    {(isPingScope || isWattline) && (
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" />
+    )}
+    {/* Each of these pages has its own type. Overhear uses the system font. */}
+    {isTraverse && (
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" />
+    )}
+    {isUnroll && (
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;display=swap" />
     )}
   </Fragment>
   {isTraverse ? (

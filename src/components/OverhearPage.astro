@@ -17,102 +17,103 @@ const privacy = 'https://keithah.github.io/overhear/privacy.html';
 // Public TestFlight link, for early builds ahead of the App Store release.
 const testflight = 'https://testflight.apple.com/join/d7cA4a98';
 const supportEmail = 'mailto:keith+overhear@hadm.net';
+
+// Features, laid out like a day's agenda. Each takes a calendar colour.
+const agenda = [
+  { tone: 'green', tag: 'Menu bar', title: 'See what’s next', body: 'Your next meeting and how long until it starts, right in the menu bar. Sharing your screen? Switch to a plain “Meeting” label and keep the title to yourself.' },
+  { tone: 'blue', tag: 'One click', title: 'Join in one click', body: 'Join from the menu bar, your meeting list, a reminder or a keyboard shortcut. Zoom, Google Meet, Teams, Webex and dozens more open straight in their own apps.' },
+  { tone: 'purple', tag: 'The details', title: 'Know before you join', body: 'See the time, who’s hosting, who’s invited and the notes from the invite. Copy the link or open the event in Calendar.' },
+  { tone: 'orange', tag: 'Reminders', title: 'Reminders you can snooze', body: 'A heads-up before each meeting, with snooze right beside join. If you like, Overhear can join for you the moment a meeting starts.' },
+];
 ---
 
-<div class="ps-page ps-display oh-page">
-  <nav class="ps-subnav" aria-label="Overhear sections">
-    <a href="#top" class="ps-brand" aria-label="Overhear home">
-      <img src="/products/overhear/app-icon.png" alt="" width="26" height="26" />
+<div class="oh-page">
+  <nav class="oh-menubar" aria-label="Overhear sections">
+    <a href="#top" class="oh-brand" aria-label="Overhear home">
+      <img src="/products/overhear/app-icon.png" alt="" width="20" height="20" />
       <strong>Overhear</strong>
     </a>
-    <span class="ps-subnav-links">
+    <span class="oh-menus">
       <a href="#features">Features</a>
       <a href="#calendars">Calendars</a>
       <a href="#privacy">Privacy</a>
       <a href="#download">Download</a>
       <a href="#support">Support</a>
     </span>
+    <span class="oh-status" aria-label="Example menu bar item: Design Review in 1 minute">
+      <i aria-hidden="true"></i>
+      <strong>Design Review</strong>
+      <em>in 1m</em>
+      <span>Thu 2:29 PM</span>
+    </span>
   </nav>
 
-  <section id="top" class="ps-hero oh-hero" aria-labelledby="overhear-title">
-    <div class="ps-hero-copy">
-      <p class="ps-eyebrow"><span aria-hidden="true"></span> Free on the Mac App Store</p>
-      <h1 id="overhear-title">Your next meeting, <em>one click away.</em></h1>
-      <p class="ps-lede">
-        Overhear sits in your Mac's menu bar, shows what's coming up today, and opens the right
-        meeting in the right app when it's time. No account, no tracking, and nothing leaves your Mac.
-      </p>
-      <div class="ps-actions">
-        <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
-        <a class="ps-btn ps-ghost" href={privacy} target="_blank" rel="noopener">Privacy</a>
-      </div>
-      <p class="ps-release-note">
-        Free &middot; macOS 14 or later &middot; a tiny 2.1 MB download &middot; no data collected.
-      </p>
+  <section id="top" class="oh-hero" aria-labelledby="overhear-title">
+    <img class="oh-icon" src="/products/overhear/app-icon.png" alt="" width="88" height="88" />
+    <p class="oh-eyebrow">Free on the Mac App Store</p>
+    <h1 id="overhear-title">Never hunt for <em>the meeting link</em> again.</h1>
+    <p class="oh-lede">
+      Overhear sits in your Mac's menu bar, shows what's coming up today, and opens the right
+      meeting in the right app when it's time. No account, no tracking, and nothing leaves your Mac.
+    </p>
+    <div class="oh-actions">
+      <a class="oh-btn oh-btn-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
+      <a class="oh-btn" href={privacy} target="_blank" rel="noopener">Privacy</a>
     </div>
-    <div class="oh-hero-capture" aria-label="Overhear meeting list and detail panel">
-      <img
-        class="oh-shot-list"
-        src="/products/overhear/meeting-list.png"
-        alt="Overhear meeting list with a NOW divider, NEXT badge, platform icons for Zoom, Teams and Meet, and Join buttons."
-        width="760"
-        height="1040"
-        decoding="async"
-        fetchpriority="high"
-      />
-      <img
-        class="oh-shot-detail"
-        src="/products/overhear/meeting-detail.png"
-        alt="Overhear meeting detail panel showing time, organizer, participants and invite notes."
-        width="760"
-        height="1040"
-        loading="lazy"
-        decoding="async"
-      />
-      <div class="oh-menubar" aria-label="Example menu bar item">
-        <span>Thu 2:29 PM</span>
-        <strong>Design Review</strong>
-        <em>in 1m</em>
-      </div>
+    <p class="oh-note">
+      Free &middot; macOS 14 or later &middot; a tiny 2.1 MB download &middot; no data collected.
+    </p>
+
+    <div class="oh-stage" aria-label="Overhear meeting list and detail panel">
+      <figure class="oh-popover oh-popover-list">
+        <img
+          src="/products/overhear/meeting-list.png"
+          alt="Overhear meeting list with a NOW divider, NEXT badge, platform icons for Zoom, Teams and Meet, and Join buttons."
+          width="760"
+          height="1040"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <figcaption>Click the menu bar. There's your day.</figcaption>
+      </figure>
+      <figure class="oh-popover oh-popover-detail">
+        <img
+          src="/products/overhear/meeting-detail.png"
+          alt="Overhear meeting detail panel showing time, organizer, participants and invite notes."
+          width="760"
+          height="1040"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Click a meeting. There's everything else.</figcaption>
+      </figure>
     </div>
   </section>
 
-  <section id="features" class="ps-section oh-features" aria-labelledby="oh-features-title">
-    <div class="ps-section-head">
-      <p class="ps-index">01 / Features</p>
-      <div>
-        <h2 id="oh-features-title">Stop hunting for <em>the link.</em></h2>
-      </div>
+  <section id="features" class="oh-section" aria-labelledby="oh-features-title">
+    <header class="oh-head">
+      <p class="oh-eyebrow">Features</p>
+      <h2 id="oh-features-title">Look up. <em>That's the whole workflow.</em></h2>
       <p>
         Finding the invite, checking the time, wondering which app it opens in &mdash; Overhear
         handles all of it. Your next meeting is always in the menu bar, one click from joining.
       </p>
-    </div>
-    <div class="ps-feature-grid oh-feature-grid">
-      <article class="ps-card">
-        <span>01</span>
-        <h3>See what's next</h3>
-        <p>Your next meeting and how long until it starts, right in the menu bar. Sharing your screen? Switch to a plain "Meeting" label and keep the title to yourself.</p>
-      </article>
-      <article class="ps-card">
-        <span>02</span>
-        <h3>Join in one click</h3>
-        <p>Join from the menu bar, your meeting list, a reminder or a keyboard shortcut. Zoom, Google Meet, Teams, Webex and dozens more open straight in their own apps.</p>
-      </article>
-      <article class="ps-card">
-        <span>03</span>
-        <h3>Know before you join</h3>
-        <p>See the time, who's hosting, who's invited and the notes from the invite. Copy the link or open the event in Calendar.</p>
-      </article>
-      <article class="ps-card">
-        <span>04</span>
-        <h3>Reminders you can snooze</h3>
-        <p>A heads-up before each meeting, with snooze right beside join. If you like, Overhear can join for you the moment a meeting starts.</p>
-      </article>
+    </header>
+    <div class="oh-agenda">
+      <p class="oh-agenda-day"><span>Today</span><span>4 things Overhear does for you</span></p>
+      {agenda.map((item, i) => (
+        <article class={`oh-event oh-${item.tone}`}>
+          <div>
+            <h3>{item.title}{i === 0 && <b>Next</b>}</h3>
+            <p>{item.body}</p>
+          </div>
+          <span>{item.tag}</span>
+        </article>
+      ))}
     </div>
     <figure class="oh-reminder">
       <figcaption>
-        <span>Reminders</span>
+        <span class="oh-eyebrow">Reminders</span>
         <strong>A clear heads-up, with snooze right beside join.</strong>
       </figcaption>
       <img
@@ -126,19 +127,18 @@ const supportEmail = 'mailto:keith+overhear@hadm.net';
     </figure>
   </section>
 
-  <section id="calendars" class="ps-section oh-calendars" aria-labelledby="oh-calendars-title">
-    <div class="ps-section-head">
-      <p class="ps-index">02 / Calendars</p>
-      <div>
-        <h2 id="oh-calendars-title">Works with the calendars <em>you already have.</em></h2>
-      </div>
+  <section id="calendars" class="oh-section" aria-labelledby="oh-calendars-title">
+    <header class="oh-head">
+      <p class="oh-eyebrow">Calendars</p>
+      <h2 id="oh-calendars-title">Works with the calendars <em>you already have.</em></h2>
       <p>
         Overhear shows the calendars already set up on your Mac. Would rather not add an account
         to your Mac? Paste in the calendar's link instead.
       </p>
-    </div>
+    </header>
     <div class="oh-calendar-grid">
-      <figure class="oh-calendar-shot">
+      <figure class="oh-window">
+        <div class="oh-titlebar" aria-hidden="true"><i></i><i></i><i></i><span>Settings &mdash; Calendars</span></div>
         <img
           src="/products/overhear/settings-calendars.png"
           alt="Overhear Settings on the Calendars pane, choosing calendars and which events to include."
@@ -147,22 +147,22 @@ const supportEmail = 'mailto:keith+overhear@hadm.net';
           loading="lazy"
           decoding="async"
         />
-        <figcaption><span>Settings &middot; Calendars</span> Choose which calendars appear, whether to show tentative, declined and all-day events, and hide meetings by title.</figcaption>
+        <figcaption>Choose which calendars appear, whether to show tentative, declined and all-day events, and hide meetings by title.</figcaption>
       </figure>
       <dl class="oh-calendar-list">
-        <div>
+        <div class="oh-blue">
           <dt>Add a calendar with a link</dt>
           <dd>Paste the calendar link from Google, Outlook, Fastmail or iCloud. Overhear checks that it works, shows how many events are coming up, and refreshes every 15 minutes.</dd>
         </div>
-        <div>
+        <div class="oh-red">
           <dt>No duplicates</dt>
           <dd>If the same meeting is on two calendars, you see it once. Want every copy? You can turn that off.</dd>
         </div>
-        <div>
+        <div class="oh-purple">
           <dt>A colour for each calendar</dt>
           <dd>Give every calendar its own colour, so you can tell work from personal at a glance.</dd>
         </div>
-        <div>
+        <div class="oh-orange">
           <dt>Good to know</dt>
           <dd>Google can take a few hours to update a calendar link. If you need changes to show up within minutes, add the account in System Settings &rarr; Internet Accounts instead.</dd>
         </div>
@@ -170,11 +170,11 @@ const supportEmail = 'mailto:keith+overhear@hadm.net';
     </div>
   </section>
 
-  <section id="privacy" class="ps-section oh-privacy" aria-labelledby="oh-privacy-title">
-    <div class="oh-privacy-panel">
+  <section id="privacy" class="oh-section" aria-labelledby="oh-privacy-title">
+    <div class="oh-panel oh-privacy">
       <div>
-        <p class="ps-index">03 / Privacy</p>
-        <h2 id="oh-privacy-title">Your calendar <em>stays yours.</em></h2>
+        <p class="oh-eyebrow">Privacy</p>
+        <h2 id="oh-privacy-title">Nosy name. <em>Zero snooping.</em></h2>
         <p>
           Overhear reads your calendars on your Mac and sends nothing anywhere. Its App Store
           privacy label is <strong>Data Not Collected</strong>. Calendar links are locked away in
@@ -190,52 +190,313 @@ const supportEmail = 'mailto:keith+overhear@hadm.net';
     </div>
   </section>
 
-  <section id="download" class="ps-section oh-download" aria-labelledby="oh-download-title">
-    <div class="ps-download-panel">
+  <section id="download" class="oh-section" aria-labelledby="oh-download-title">
+    <div class="oh-panel oh-download">
       <div>
-        <p class="ps-index">04 / Download</p>
+        <p class="oh-eyebrow">Download</p>
         <h2 id="oh-download-title">Set it up once. <em>Forget it's there.</em></h2>
         <p>
           Free on the Mac App Store for macOS 14 or later. Would rather skip the store? Download
           it directly &mdash; it keeps itself up to date. Want new features early? Join the
           TestFlight beta.
         </p>
-        <div class="ps-actions">
-          <a class="ps-btn ps-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
+        <div class="oh-actions">
+          <a class="oh-btn oh-btn-primary" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
           {data.downloadUrl && (
-            <a class="ps-btn" href={data.downloadUrl} download>Direct download</a>
+            <a class="oh-btn" href={data.downloadUrl} download>Direct download</a>
           )}
-          <a class="ps-btn" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
-          <a class="ps-btn" href={privacy} target="_blank" rel="noopener">Privacy policy</a>
+          <a class="oh-btn" href={testflight} target="_blank" rel="noopener">Join the TestFlight</a>
+          <a class="oh-btn" href={privacy} target="_blank" rel="noopener">Privacy policy</a>
         </div>
       </div>
-      <dl class="ps-release-box">
-        <dt>Requires</dt>
-        <dd>macOS 14.0+</dd>
-        <dt>Category</dt>
-        <dd>Productivity</dd>
-        <dt>Languages</dt>
-        <dd>English</dd>
-        <dt>Age rating</dt>
-        <dd>4+</dd>
+      <dl class="oh-specs">
+        <div><dt>Requires</dt><dd>macOS 14.0+</dd></div>
+        <div><dt>Category</dt><dd>Productivity</dd></div>
+        <div><dt>Languages</dt><dd>English</dd></div>
+        <div><dt>Age rating</dt><dd>4+</dd></div>
       </dl>
     </div>
   </section>
 
-  <section id="support" class="ps-section oh-support" aria-labelledby="oh-support-title">
-    <div class="ps-support-grid">
-      <div>
-        <h2 id="oh-support-title">Need a <em>hand?</em></h2>
-        <p>
-          Send an email with your macOS version, the meeting service you were using, and what you
-          expected to happen. Overhear is made by one person, so the more detail you share, the
-          faster the fix.
-        </p>
-      </div>
-      <div class="ps-actions">
-        <a class="ps-btn ps-primary" href={supportEmail}>Email support</a>
-        <a class="ps-btn" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
-      </div>
+  <section id="support" class="oh-section oh-support" aria-labelledby="oh-support-title">
+    <h2 id="oh-support-title">Need a <em>hand?</em></h2>
+    <p>
+      Send an email with your macOS version, the meeting service you were using, and what you
+      expected to happen. Overhear is made by one person, so the more detail you share, the
+      faster the fix.
+    </p>
+    <div class="oh-actions">
+      <a class="oh-btn oh-btn-primary" href={supportEmail}>Email support</a>
+      <a class="oh-btn" href={appStore} target="_blank" rel="noopener">Mac App Store</a>
     </div>
   </section>
 </div>
+
+<style is:global>
+  /* Overhear: looks like it belongs on a Mac. System type, a menu bar across
+     the top, soft glass panels over a blurred wallpaper. No web fonts. */
+  .oh-page {
+    --oh-bg: #131316;
+    --oh-ink: #f5f5f7;
+    --oh-muted: #b0b0b8;
+    --oh-dim: #8e8e96;
+    --oh-glass: rgba(255, 255, 255, 0.06);
+    --oh-glass-strong: rgba(40, 40, 46, 0.72);
+    --oh-line: rgba(255, 255, 255, 0.11);
+    --oh-accent: #30d158;
+    --oh-accent-fg: #06260f;
+    --oh-green: #30d158;
+    --oh-blue: #409cff;
+    --oh-purple: #bf5af2;
+    --oh-orange: #ff9f0a;
+    --oh-red: #ff6961;
+    --oh-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 0.5px rgba(255, 255, 255, 0.14);
+    --oh-wash: 0.34;
+
+    position: relative;
+    isolation: isolate;
+    margin-inline: calc(-1 * var(--body-pad));
+    padding-inline: var(--body-pad);
+    padding-bottom: 56px;
+    background: var(--oh-bg);
+    color: var(--oh-ink);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow: clip;
+  }
+  :root[data-theme='light'] .oh-page {
+    --oh-bg: #f2f2f5;
+    --oh-ink: #1d1d1f;
+    --oh-muted: #4b4b50;
+    --oh-dim: #66666c;
+    --oh-glass: rgba(255, 255, 255, 0.66);
+    --oh-glass-strong: rgba(255, 255, 255, 0.78);
+    --oh-line: rgba(0, 0, 0, 0.1);
+    --oh-accent: #1c7c36;
+    --oh-accent-fg: #ffffff;
+    --oh-green: #1c7c36;
+    --oh-blue: #0066cc;
+    --oh-purple: #8e3dc4;
+    --oh-orange: #b25c00;
+    --oh-red: #c9302a;
+    --oh-shadow: 0 24px 54px rgba(20, 20, 40, 0.16), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+    --oh-wash: 0.3;
+  }
+  @media (min-width: 901px) {
+    .oh-page {
+      width: calc(var(--vw) / var(--page-zoom));
+      margin-inline: calc((var(--vw) / var(--page-zoom) - 100%) / -2);
+      padding-inline: max(20px, calc((var(--vw) / var(--page-zoom) - 1080px) / 2));
+    }
+  }
+  /* Wallpaper. */
+  .oh-page::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0 0 auto;
+    height: 1100px;
+    opacity: var(--oh-wash);
+    background:
+      radial-gradient(520px 380px at 18% 22%, #30d158, transparent 70%),
+      radial-gradient(560px 420px at 82% 14%, #0a84ff, transparent 70%),
+      radial-gradient(620px 460px at 55% 62%, #bf5af2, transparent 72%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  .oh-page a { color: inherit; }
+  .oh-page :where(a, button):focus-visible { outline: 3px solid color-mix(in srgb, var(--oh-blue) 70%, transparent); outline-offset: 2px; }
+
+  /* The menu bar is the navigation. */
+  .oh-menubar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2px 4px;
+    margin: 0 calc(-1 * var(--body-pad));
+    padding: 5px var(--body-pad);
+    border-bottom: 0.5px solid var(--oh-line);
+    background: var(--oh-glass);
+    -webkit-backdrop-filter: blur(30px) saturate(1.6);
+    backdrop-filter: blur(30px) saturate(1.6);
+    font-size: 13px;
+  }
+  @media (min-width: 901px) {
+    .oh-menubar {
+      margin-inline: calc(-1 * max(20px, (var(--vw) / var(--page-zoom) - 1080px) / 2));
+      padding-inline: 20px;
+    }
+  }
+  .oh-brand { display: inline-flex; align-items: center; gap: 7px; padding: 3px 9px 3px 4px; border-radius: 5px; }
+  .oh-brand img { border-radius: 5px; }
+  .oh-brand strong { font-weight: 700; }
+  .oh-menus { display: flex; flex-wrap: wrap; }
+  .oh-menus a { padding: 3px 9px; border-radius: 5px; }
+  .oh-page .oh-brand:hover,
+  .oh-page .oh-menus a:hover { background: var(--oh-line); color: var(--oh-ink); }
+  .oh-status { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; padding: 3px 4px; white-space: nowrap; }
+  .oh-status i { width: 7px; height: 7px; border-radius: 50%; background: var(--oh-accent); }
+  .oh-status strong { font-weight: 600; }
+  .oh-status em { color: var(--oh-accent); font-style: normal; font-weight: 600; }
+  .oh-status span { margin-left: 10px; color: var(--oh-muted); font-variant-numeric: tabular-nums; }
+
+  .oh-eyebrow { display: block; margin-bottom: 12px; color: var(--oh-accent); font-size: 13px; font-weight: 600; }
+  .oh-page h1,
+  .oh-page h2 { font-weight: 700; letter-spacing: -0.035em; text-wrap: balance; }
+  .oh-page :is(h1, h2) em { color: var(--oh-accent); font-style: normal; }
+  .oh-page h1 { max-width: 15ch; font-size: clamp(40px, 4.2vw, 64px); line-height: 1.03; }
+  .oh-page h2 { font-size: clamp(30px, 3.1vw, 46px); line-height: 1.07; }
+  .oh-page h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+
+  .oh-hero { display: flex; flex-direction: column; align-items: center; padding-block: clamp(44px, 5vw, 72px) clamp(40px, 5vw, 64px); text-align: center; }
+  .oh-icon { margin-bottom: 22px; border-radius: 20px; filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.35)); }
+  .oh-lede { max-width: 56ch; margin-top: 20px; color: var(--oh-muted); font-size: 17px; }
+  .oh-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .oh-hero .oh-actions, .oh-support .oh-actions { justify-content: center; }
+  .oh-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 18px;
+    border: 0.5px solid var(--oh-line);
+    border-radius: 10px;
+    background: var(--oh-glass);
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 1px 2px rgba(0, 0, 0, 0.14);
+    transition: filter 140ms ease, transform 140ms ease;
+  }
+  .oh-page .oh-btn:hover { color: var(--oh-ink); filter: brightness(1.12); transform: translateY(-1px); }
+  .oh-page .oh-btn-primary,
+  .oh-page .oh-btn-primary:hover { border-color: transparent; background: var(--oh-accent); color: var(--oh-accent-fg); font-weight: 600; }
+  .oh-note { margin-top: 16px; color: var(--oh-dim); font-size: 12.5px; }
+
+  /* Popovers hanging under the menu bar. */
+  .oh-stage { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 34px 28px; width: 100%; margin-top: clamp(40px, 5vw, 64px); }
+  .oh-popover { position: relative; width: min(100%, 320px); }
+  .oh-popover img { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: var(--oh-shadow); }
+  .oh-popover::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    border-radius: 3px;
+    background: var(--oh-glass-strong);
+    box-shadow: -0.5px -0.5px 0 0.5px var(--oh-line);
+    transform: rotate(45deg);
+  }
+  .oh-popover-detail { margin-top: 44px; }
+  .oh-popover figcaption { margin-top: 14px; color: var(--oh-muted); font-size: 13px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .oh-popover { animation: oh-drop 520ms 200ms both cubic-bezier(0.2, 0.9, 0.3, 1.15); transform-origin: top center; }
+    .oh-popover-detail { animation-delay: 380ms; }
+    @keyframes oh-drop { from { opacity: 0; transform: translateY(-14px) scale(0.94); } }
+  }
+
+  .oh-section { padding-block: clamp(52px, 6vw, 88px); }
+  .oh-head { max-width: 640px; margin: 0 auto 36px; text-align: center; }
+  .oh-head > p:last-child,
+  .oh-panel p:not(.oh-eyebrow),
+  .oh-support > p { max-width: 58ch; margin-top: 14px; color: var(--oh-muted); font-size: 16px; }
+  .oh-head > p:last-child, .oh-support > p { margin-inline: auto; }
+
+  .oh-agenda,
+  .oh-panel,
+  .oh-reminder,
+  .oh-window {
+    border: 0.5px solid var(--oh-line);
+    border-radius: 18px;
+    background: var(--oh-glass);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+  }
+
+  /* Features as a day's agenda. */
+  .oh-green { --oh-tone: var(--oh-green); }
+  .oh-blue { --oh-tone: var(--oh-blue); }
+  .oh-purple { --oh-tone: var(--oh-purple); }
+  .oh-orange { --oh-tone: var(--oh-orange); }
+  .oh-red { --oh-tone: var(--oh-red); }
+  .oh-agenda { max-width: 760px; margin-inline: auto; padding: 8px 18px 10px; }
+  .oh-agenda-day { display: flex; justify-content: space-between; gap: 12px; padding: 10px 4px; color: var(--oh-dim); font-size: 12px; font-weight: 600; }
+  .oh-agenda-day span:first-child { color: var(--oh-red); text-transform: uppercase; letter-spacing: 0.04em; }
+  .oh-event {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 18px;
+    align-items: start;
+    margin-bottom: 8px;
+    padding: 14px 16px 15px 18px;
+    border-left: 4px solid var(--oh-tone);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--oh-tone) 13%, transparent);
+  }
+  .oh-event h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .oh-event h3 b { padding: 1px 7px; border-radius: 999px; background: var(--oh-tone); color: var(--oh-accent-fg); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .oh-event p { margin-top: 4px; color: var(--oh-muted); font-size: 14.5px; }
+  .oh-event > span { color: var(--oh-tone); font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+  .oh-reminder {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 24px 36px;
+    align-items: center;
+    max-width: 880px;
+    margin: 28px auto 0;
+    padding: clamp(20px, 3vw, 34px);
+  }
+  .oh-reminder strong { display: block; font-size: clamp(22px, 2.2vw, 30px); font-weight: 700; line-height: 1.15; letter-spacing: -0.03em; text-wrap: balance; }
+  .oh-reminder img { display: block; width: 100%; height: auto; border-radius: 12px; }
+
+  .oh-calendar-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; align-items: start; }
+  @media (min-width: 1100px) {
+    .oh-calendar-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 36px; }
+  }
+  .oh-window { overflow: hidden; box-shadow: var(--oh-shadow); }
+  .oh-titlebar { position: relative; display: flex; align-items: center; gap: 7px; padding: 11px 14px; border-bottom: 0.5px solid var(--oh-line); }
+  .oh-titlebar i { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+  .oh-titlebar i:nth-child(2) { background: #febc2e; }
+  .oh-titlebar i:nth-child(3) { background: #28c840; }
+  .oh-titlebar span { position: absolute; inset: 0; display: grid; place-items: center; color: var(--oh-muted); font-size: 12.5px; font-weight: 600; pointer-events: none; }
+  .oh-window img { display: block; width: 100%; height: auto; }
+  .oh-window figcaption { padding: 13px 16px 15px; border-top: 0.5px solid var(--oh-line); color: var(--oh-muted); font-size: 13.5px; }
+  .oh-calendar-list { display: grid; gap: 20px; }
+  .oh-calendar-list > div { padding-left: 16px; border-left: 4px solid var(--oh-tone); border-radius: 2px; }
+  .oh-calendar-list dt { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .oh-calendar-list dd { margin-top: 4px; color: var(--oh-muted); font-size: 14.5px; }
+
+  .oh-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 30px 44px;
+    align-items: center;
+    padding: clamp(24px, 4vw, 48px);
+  }
+  .oh-panel strong { color: var(--oh-ink); }
+  .oh-facts, .oh-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .oh-facts > div, .oh-specs > div { padding: 14px 16px; border: 0.5px solid var(--oh-line); border-radius: 12px; background: var(--oh-glass); }
+  .oh-facts dt, .oh-specs dt { color: var(--oh-dim); font-size: 12px; font-weight: 600; }
+  .oh-facts dd { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; }
+  .oh-specs dd { font-size: 15px; font-weight: 600; }
+
+  .oh-support { text-align: center; }
+
+  @media (max-width: 700px) {
+    .oh-status span { display: none; }
+    .oh-menubar { gap: 2px 0; }
+    .oh-menus a { padding-inline: 7px; }
+  }
+  @media (max-width: 560px) {
+    .oh-status { display: none; }
+    .oh-popover-detail { margin-top: 0; }
+    .oh-event { grid-template-columns: minmax(0, 1fr); }
+    .oh-event > span { order: -1; }
+  }
+</style>
