@@ -29,14 +29,11 @@ Unroll was tested on 52 episodes — nearly 56 hours of real podcasts — includ
 - **0.0 seconds** of the actual show lost
 - Includes eight episodes set aside until Unroll was finished, as a fair test on audio it had never heard
 
-## Two ways to listen
+## The player
 
-| | How you listen | What Unroll does |
-| --- | --- | --- |
-| **In your own app** | Overcast, Pocket Casts, Apple Podcasts, Audiobookshelf | Gives you an ad-free version of the show's feed |
-| **In the Unroll app** | A simple built-in player | Plays the original and skips the ads, with one tap to undo |
+Unroll is a simple podcast player. Play an episode and it skips the ads on its own; the original audio is never changed, so one tap brings back anything it skipped.
 
-There's nothing to review or approve. Episodes show up ready to play. Listening in your own app is still early: for now it works one episode at a time, on the same Wi-Fi as your iPhone.
+There's nothing to review or approve. Episodes show up ready to play.
 
 ## Availability
 

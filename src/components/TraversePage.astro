@@ -22,7 +22,7 @@ const stops = [
 <div class="tv-page">
   <nav class="tv-nav" aria-label="Traverse sections">
     <a href={site} class="tv-brand" aria-label="Traverse home" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M22 2 2 10.2l7.2 2.6L11.8 20z" /></svg>
+      <svg class="tv-mark" viewBox="0 0 46 38" width="29" height="24" aria-hidden="true"><path d="M2 36 22 3l5 7-16 26z" /><path d="m14 36 13-22 6 9 4-5 10 18z" /></svg>
       <strong>Traverse</strong>
     </a>
     <span class="tv-nav-links">
@@ -252,26 +252,26 @@ const stops = [
 </div>
 
 <style is:global>
-  /* Traverse: a boarding pass. Night sky and paper tickets in dark, a paper
-     desk in light. Tickets stay paper-coloured in both. */
+  /* Traverse: a boarding pass in the storefront's colours. Navy ink, warm
+     paper, teal and sun yellow. Tickets stay paper-coloured in both themes. */
   .tv-page {
-    --tv-bg: #0b1520;
-    --tv-bg2: #122131;
-    --tv-ink: #f3ecdc;
-    --tv-muted: #b3bcc6;
-    --tv-dim: #8a96a3;
-    --tv-line: rgba(243, 236, 220, 0.15);
-    --tv-teal: #4fd1b5;
-    --tv-sun: #e8b83d;
-    --tv-red: #f0806a;
-    --tv-paper: #f4ecd9;
-    --tv-paper-edge: #e6dabd;
-    --tv-paper-ink: #17283a;
-    --tv-paper-muted: #55616d;
-    --tv-paper-line: rgba(23, 40, 58, 0.24);
-    --tv-paper-teal: #0b7563;
+    --tv-bg: #0e1830;
+    --tv-bg2: #14213d;
+    --tv-ink: #fbfaf6;
+    --tv-muted: #b9c2d3;
+    --tv-dim: #8c98ae;
+    --tv-line: rgba(251, 250, 246, 0.15);
+    --tv-teal: #4cc9b8;
+    --tv-sun: #ffc83d;
+    --tv-red: #f08a72;
+    --tv-paper: #fbfaf6;
+    --tv-paper-edge: #e3e0d4;
+    --tv-paper-ink: #14213d;
+    --tv-paper-muted: #3a4660;
+    --tv-paper-line: rgba(20, 33, 61, 0.22);
+    --tv-paper-teal: #0a6b62;
     --tv-paper-red: #b93a22;
-    --tv-btn-fg: #0b1520;
+    --tv-btn-fg: #14213d;
     --tv-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
     --tv-serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
     --tv-sans: 'DM Sans', system-ui, sans-serif;
@@ -288,21 +288,25 @@ const stops = [
     font-size: 15px;
     line-height: 1.6;
     overflow: clip;
+    --tv-mark-a: #fbfaf6;
+    --tv-mark-b: #4cc9b8;
   }
   :root[data-theme='light'] .tv-page {
-    --tv-bg: #f1e9d6;
-    --tv-bg2: #e7dcc3;
-    --tv-ink: #14263a;
-    --tv-muted: #46525f;
-    --tv-dim: #5d6873;
-    --tv-line: rgba(20, 38, 58, 0.18);
-    --tv-teal: #0b7563;
-    --tv-sun: #8f6200;
+    --tv-bg: #fbfaf6;
+    --tv-bg2: #f2efe4;
+    --tv-ink: #14213d;
+    --tv-muted: #3a4660;
+    --tv-dim: #55607a;
+    --tv-line: rgba(20, 33, 61, 0.16);
+    --tv-teal: #0a6b62;
+    --tv-sun: #8a5c00;
     --tv-red: #b93a22;
-    --tv-paper: #fffdf6;
-    --tv-paper-edge: #efe6d0;
-    --tv-btn-fg: #fffdf6;
-    --tv-shadow: 0 20px 44px rgba(60, 44, 12, 0.18);
+    --tv-paper: #ffffff;
+    --tv-paper-edge: #e3e0d4;
+    --tv-btn-fg: #fbfaf6;
+    --tv-shadow: 0 20px 44px rgba(20, 33, 61, 0.14);
+    --tv-mark-a: #0c3541;
+    --tv-mark-b: #08736e;
   }
   @media (min-width: 901px) {
     .tv-page {
@@ -341,8 +345,10 @@ const stops = [
     border-bottom: 1px dashed var(--tv-line);
   }
   .tv-brand { display: inline-flex; align-items: center; gap: 8px; }
-  .tv-brand svg, .tv-pass-route svg { fill: var(--tv-teal); }
-  .tv-brand strong { font-family: var(--tv-serif); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  .tv-pass-route svg { fill: var(--tv-teal); }
+  .tv-mark path:first-child { fill: var(--tv-mark-a); }
+  .tv-mark path:last-child { fill: var(--tv-mark-b); }
+  .tv-brand strong { font-family: var(--tv-sans); font-size: 15px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; }
   .tv-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; font-size: 13px; font-weight: 500; }
   .tv-nav-links a { color: var(--tv-muted); }
   .tv-nav-links a:hover { color: var(--tv-teal); }
