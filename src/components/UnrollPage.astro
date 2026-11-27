@@ -56,6 +56,7 @@ const chain = [
       <strong>Unroll</strong>
     </a>
     <span class="ur-nav-links">
+      <a href="#app">The app</a>
       <a href="#how">How it works</a>
       <a href="#perks">What you get</a>
       <a href="#listen">Listen</a>
@@ -106,6 +107,28 @@ const chain = [
       {[...cuts, ...cuts].map((cut) => <s>{cut}</s>)}
     </div>
   </div>
+
+  <section id="app" class="ur-section" aria-labelledby="ur-app-title">
+    <header class="ur-head">
+      <p class="ur-label">The app</p>
+      <h2 id="ur-app-title">Looks like a podcast app. <em>Because it is one.</em></h2>
+      <p>Your shows, your queue, your new episodes. The only thing missing is the bit where someone sells you a mattress.</p>
+    </header>
+    <div class="ur-phones">
+      <figure class="ur-phone">
+        <img src="/products/unroll/library.png" alt="Unroll library on iPhone: For you shelves, playlists, and a list of subscribed podcasts with unplayed counts." width="602" height="1310" loading="lazy" decoding="async" />
+        <figcaption>Your library: new this week, quick listens, every show you follow.</figcaption>
+      </figure>
+      <figure class="ur-phone">
+        <img src="/products/unroll/show.png" alt="Unroll show page on iPhone: artwork, a Play all button and a list of recent episodes with download buttons." width="602" height="1310" loading="lazy" decoding="async" />
+        <figcaption>A show page: tap an episode and Unroll gets it ready.</figcaption>
+      </figure>
+      <figure class="ur-phone">
+        <img src="/products/unroll/player.png" alt="Unroll player on iPhone playing the built-in demo episode, with a skipped ad marked on the timeline and an Undo skip button." width="602" height="1310" loading="lazy" decoding="async" />
+        <figcaption>The player, on its built-in demo episode: ad marked on the timeline, Undo skip one tap away.</figcaption>
+      </figure>
+    </div>
+  </section>
 
   <section id="how" class="ur-section" aria-labelledby="ur-how-title">
     <header class="ur-head">
@@ -430,6 +453,12 @@ const chain = [
   .ur-mode-b p:not(.ur-label) { color: var(--ur-fill-fg); }
   .ur-small { margin-top: 14px; font-size: 13.5px; opacity: 0.85; }
   .ur-page .ur-beta .ur-small { color: var(--ur-dim); }
+
+  .ur-phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 34px 28px; justify-items: center; align-items: start; }
+  .ur-phone { width: 100%; max-width: 290px; }
+  .ur-phone img { display: block; width: 100%; height: auto; border: 7px solid #05080f; border-radius: 42px; box-shadow: 0 0 0 1px var(--ur-line), 0 30px 60px rgba(0, 0, 0, 0.4); }
+  .ur-phone figcaption { margin-top: 16px; color: var(--ur-muted); font-size: 14.5px; line-height: 1.45; text-align: center; }
+  @media (min-width: 760px) { .ur-phone:nth-child(2) { margin-top: 44px; } }
 
   .ur-beta {
     display: grid;

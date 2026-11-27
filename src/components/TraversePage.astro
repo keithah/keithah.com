@@ -122,6 +122,30 @@ const stops = [
         <p>One plan for Europe (35 countries) or the whole world (117 countries), so a multi-stop trip needs just one eSIM. Add extra countries when you need them.</p>
       </article>
     </div>
+    <div class="tv-postcards tv-postcards-gap">
+      <figure class="tv-postcard">
+        <img
+          src="/products/traverse/compare.png"
+          alt="Traverse comparison tool: choose your US phone plan, destination, trip length and data to see what your carrier charges abroad."
+          width="2000"
+          height="1389"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Curious what your carrier would charge? Look your plan up before you go.</figcaption>
+      </figure>
+      <figure class="tv-postcard">
+        <img
+          src="/products/traverse/japan.png"
+          alt="Traverse Japan page with fixed, daily and unlimited tabs, trip lengths, and a grid of data plans with a price on each."
+          width="2000"
+          height="1389"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Japan, seven days: pick the data, see the price. That&rsquo;s the whole menu.</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section id="setup" class="tv-section" aria-labelledby="tv-setup-title">
@@ -145,6 +169,17 @@ const stops = [
         ))}
       </ol>
       <div class="tv-setup-side">
+        <figure class="tv-postcard">
+          <img
+            src="/products/traverse/phone-check.png"
+            alt="Traverse phone check page: three steps in Settings, with a phone screen showing Carrier Lock: No SIM restrictions."
+            width="2000"
+            height="1389"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Stop 01, illustrated: the two lines to look for in Settings.</figcaption>
+        </figure>
         <figure class="tv-postcard">
           <img
             src="/products/traverse/setup-guide.png"
@@ -229,6 +264,19 @@ const stops = [
         <h3>Help when you need it</h3>
         <p>Share or gift an eSIM, top up when you run low, and ask for a refund if plans change. Get help from the built-in assistant, WhatsApp or email.</p>
       </article>
+    </div>
+    <div class="tv-postcards tv-postcards-gap tv-postcards-solo">
+      <figure class="tv-postcard">
+        <img
+          src="/products/traverse/keep-number.png"
+          alt="Traverse pre-trip guide: keep your number and reduce roaming costs, in seven linked steps."
+          width="2000"
+          height="1389"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Optional extra: a step-by-step guide to keeping your home number while Traverse handles the data.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -599,6 +647,9 @@ const stops = [
   .tv-postcard img { display: block; width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--tv-paper-edge); }
   .tv-postcard figcaption { padding: 10px 6px 12px; font-family: var(--tv-serif); font-style: italic; font-size: 14.5px; line-height: 1.4; }
   .tv-postcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 26px; align-items: start; }
+  .tv-postcards-gap { margin-top: 44px; }
+  .tv-postcards-solo { max-width: 620px; }
+  .tv-setup-side .tv-postcard + .tv-postcard { margin-top: 22px; }
   .tv-postcards .tv-postcard:first-child { transform: rotate(-1.2deg); }
   .tv-postcards .tv-postcard:last-child { transform: rotate(1deg); margin-top: 18px; }
 
