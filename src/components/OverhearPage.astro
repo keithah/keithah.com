@@ -236,20 +236,20 @@ const agenda = [
   /* Overhear: looks like it belongs on a Mac. System type, a menu bar across
      the top, soft glass panels over a blurred wallpaper. No web fonts. */
   .oh-page {
-    --oh-bg: #131316;
+    --oh-bg: #1c1c1e;
     --oh-ink: #f5f5f7;
     --oh-muted: #b0b0b8;
     --oh-dim: #8e8e96;
     --oh-glass: rgba(255, 255, 255, 0.06);
     --oh-glass-strong: rgba(40, 40, 46, 0.72);
     --oh-line: rgba(255, 255, 255, 0.11);
-    --oh-accent: #30d158;
-    --oh-accent-fg: #06260f;
-    --oh-green: #30d158;
-    --oh-blue: #409cff;
-    --oh-purple: #bf5af2;
-    --oh-orange: #ff9f0a;
-    --oh-red: #ff6961;
+    --oh-accent: #7c74ff;
+    --oh-accent-fg: #ffffff;
+    --oh-green: #7de394;
+    --oh-blue: #5a9bff;
+    --oh-purple: #a59fff;
+    --oh-orange: #ffb824;
+    --oh-red: #ff453a;
     --oh-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 0.5px rgba(255, 255, 255, 0.14);
     --oh-wash: 0.34;
 
@@ -265,6 +265,7 @@ const agenda = [
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     overflow: clip;
+    --oh-badge-fg: #141416;
   }
   :root[data-theme='light'] .oh-page {
     --oh-bg: #f2f2f5;
@@ -274,15 +275,16 @@ const agenda = [
     --oh-glass: rgba(255, 255, 255, 0.66);
     --oh-glass-strong: rgba(255, 255, 255, 0.78);
     --oh-line: rgba(0, 0, 0, 0.1);
-    --oh-accent: #1c7c36;
+    --oh-accent: #5a50e0;
     --oh-accent-fg: #ffffff;
-    --oh-green: #1c7c36;
-    --oh-blue: #0066cc;
-    --oh-purple: #8e3dc4;
-    --oh-orange: #b25c00;
-    --oh-red: #c9302a;
+    --oh-green: #1b7f3b;
+    --oh-blue: #1f63d6;
+    --oh-purple: #5a50e0;
+    --oh-orange: #a35f00;
+    --oh-red: #d12f26;
     --oh-shadow: 0 24px 54px rgba(20, 20, 40, 0.16), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
     --oh-wash: 0.3;
+    --oh-badge-fg: #ffffff;
   }
   @media (min-width: 901px) {
     .oh-page {
@@ -300,9 +302,9 @@ const agenda = [
     height: 1100px;
     opacity: var(--oh-wash);
     background:
-      radial-gradient(520px 380px at 18% 22%, #30d158, transparent 70%),
-      radial-gradient(560px 420px at 82% 14%, #0a84ff, transparent 70%),
-      radial-gradient(620px 460px at 55% 62%, #bf5af2, transparent 72%);
+      radial-gradient(520px 380px at 18% 22%, #2978fa, transparent 70%),
+      radial-gradient(560px 420px at 82% 14%, #7c74ff, transparent 70%),
+      radial-gradient(460px 320px at 58% 66%, rgba(255, 69, 58, 0.4), transparent 72%);
     filter: blur(60px);
     pointer-events: none;
   }
@@ -439,7 +441,7 @@ const agenda = [
     background: color-mix(in srgb, var(--oh-tone) 13%, transparent);
   }
   .oh-event h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .oh-event h3 b { padding: 1px 7px; border-radius: 999px; background: var(--oh-tone); color: var(--oh-accent-fg); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .oh-event h3 b { padding: 1px 7px; border-radius: 999px; background: var(--oh-tone); color: var(--oh-badge-fg); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
   .oh-event p { margin-top: 4px; color: var(--oh-muted); font-size: 14.5px; }
   .oh-event > span { color: var(--oh-tone); font-size: 12px; font-weight: 600; white-space: nowrap; }
 
